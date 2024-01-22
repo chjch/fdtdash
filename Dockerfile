@@ -1,15 +1,15 @@
-FROM node:8.9.0
+# Use the official lightweight Python image.
+# https://hub.docker.com/_/python
+FROM python:3.9
 
-WORKDIR /deck-gl
-ENV PATH /deck-gl/node_modules/.bin:$PATH
+# Copy local code to the container image.
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . ./
 
-# Install XVFB dependencies into container
-ENV DISPLAY :99
-ADD .buildkite/xvfb /etc/init.d/xvfb
+# Install production dependencies.
+RUN pip install -r requirements.txt
 
-RUN apt-get update
-RUN apt-get -y install xvfb && chmod a+x /etc/init.d/xvfb
+EXPOSE 8080
 
-COPY package.json yarn.lock /deck-gl/
-
-RUN yarn
+CMD python app/app.py
