@@ -1,0 +1,36 @@
+{
+  "name": "fdtdash",
+  "version": "1.0.0",
+  "description": "Florida Digital Twin dashboard application",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chjch/fdtdash.git"
+  },
+  "keywords": [
+    "Digital Twin",
+    "Florida",
+    "deck.gl",
+    "dash"
+  ],
+  "author": "Changjie Chen",
+  "license": "MIT",
+  "dependencies": {
+    "@arcgis/core": "~4.29.0",
+    "@deck.gl/arcgis": "^8.9.35",
+    "@deck.gl/layers": "^8.9.35"
+  },
+  "devDependencies": {
+    "css-loader": "^6.10.0",
+    "babel-loader": "^8.2.2",
+    "mini-css-extract-plugin": "^2.8.1",
+    "source-map-loader": "^5.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack -w",
+    "start": "webpack serve --mode development"
+  }
+}
