@@ -1,0 +1,9 @@
+@import url("https://js.arcgis.com/4.29/esri/themes/light/main.css");
+html,
+body,
+#deckgl-container {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+}
