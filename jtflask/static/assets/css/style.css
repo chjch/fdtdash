@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url("https://js.arcgis.com/4.29/esri/themes/light/main.css");
+
+:root {
+    --main-color: #5932EA;
+}
+
 html,
 body,
 #deckgl-container {
@@ -6,4 +12,85 @@ body,
     margin: 0;
     height: 100vh;
     width: 100vw;
+}
+
+.esri-attribution__sources {
+    display: none;
+}
+
+.esri-attribution__powered-by {
+    position: absolute;
+    width: 10vw;
+    right: 0;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.sidebar {
+    width: 80px;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #f4f4f4; /* Choose a background color that fits your app's theme */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Optional: adds shadow to the sidebar */
+}
+
+.sidebar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0 0;
+    text-align: center;
+}
+
+.sidebar-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.sidebar-icon {
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+#sidebar-brand-logo {
+    padding: 0;
+    margin: 0;
+    width: 32px;
+    height: 32px;
+    flex-direction: column;
+    align-items: center;
+    color: var(--main-color);
+}
+
+.mantine-NavLink-body {
+    display: none;
+}
+
+.mantine-NavLink-icon {
+    margin: 0;
+    display: flex;
+}
+
+.iconify {
+    width: 24px;
+    height: 24px;
+    transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for size changes */
+}
+
+/* Adjust icon sizes on larger screens */
+@media (min-width: 1600px) {
+    .iconify {
+        width: 32px; /* Larger size for large screens */
+        height: 32px; /* Keep width and height the same for consistency */
+    }
 }
