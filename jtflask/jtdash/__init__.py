@@ -6,16 +6,18 @@ from dash.exceptions import PreventUpdate
 from flask import Flask
 from dash_extensions import DeferScript, EventListener
 import dash_mantine_components as dmc
+from dash_iconify import DashIconify
 # import dash_bootstrap_components as dbc
 
 from .layout import html_layout
 from .linecharts import means_to_work
+from .sidebar import sidebar
 
 external_scripts = [
-    # {"src": "https://unpkg.com/deck.gl@8.9.35/dist.min.js"},
-    # {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
+    {"src": "https://unpkg.com/deck.gl@8.9.35/dist.min.js"},
+    {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
     {"src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"},
-    # {"src": "https://unpkg.com/@turf/turf@6/turf.min.js"},
+    {"src": "https://unpkg.com/@turf/turf@6/turf.min.js"},
     # {"src": "../static/assets/js/arcgis-defer.js", "defer": True},
     # {"src": "{{ url_for('static', filename='node_modules/@loaders.gl/i3s/dist/index.js') }}"}
 ]
@@ -69,19 +71,22 @@ def init_dashboard(server: Flask):
     # )
     # JavaScript event(s) that we want to listen to and what properties to collect.
     event = {"event": "click", "props": ["srcElement.parentElement.dataset.geoid20"]}
-    dash_app.layout = html.Div(
-        [
-            DeferScript(src="../static/assets/js/arcgis-defer.js",),
-            html.Div(id="deckgl-container"),
-            # EventListener(
-            #     html.Div(id="deckgl-container", **{"data-geoid20": ""}),
-            #     events=[event],
-            #     # logging=True,
-            #     id="deckgl-container-el",
-            # ),
-            # dmc_card,
-            # dcc.Input(id="GEOID20", value="", type="text"),
-        ]
+    dash_app.layout = dmc.MantineProvider(
+        html.Div(
+            [
+                DeferScript(src="../static/assets/js/arcgis-defer.js",),
+                html.Div(id="deckgl-container"),
+                sidebar(),
+                # EventListener(
+                #     html.Div(id="deckgl-container", **{"data-geoid20": ""}),
+                #     events=[event],
+                #     # logging=True,
+                #     id="deckgl-container-el",
+                # ),
+                # dmc_card,
+                # dcc.Input(id="GEOID20", value="", type="text"),
+            ]
+        )
     )
 
     # @callback(
