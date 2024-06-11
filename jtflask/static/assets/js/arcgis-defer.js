@@ -7,6 +7,12 @@
 
 const BLKGRP = 'https://taurus.at.geoplan.ufl.edu/arcgis/rest/services/fgdl/USCB/Mapserver/10/' +
     'query?where=COUNTY=31&outFields=TOTALPOP,GEOID20&f=geojson';
+
+// const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/ArcGIS/rest/services/" +
+//     "PLW_Jacksonville_BLD_2018/SceneServer/layers/0";
+
+const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer/layers/0";
+
 //
 // const layer = new vendors.DeckLayer({
 //     'deck.layers': [
@@ -157,7 +163,7 @@ function getSymbol(color) {
 
 var renderer = {
     type: "unique-value", // autocasts as new UniqueValueRenderer()
-    defaultSymbol: getSymbol("#FFFFFF"),
+    defaultSymbol: getSymbol([255, 255, 200, 0.5]),
     defaultLabel: "Other",
     field: "TOTALPOP",
     // uniqueValueInfos: [
@@ -220,9 +226,37 @@ const buildingsLayer = new vendors.GeoJSONLayer({
     outFields: ["GEOID20", "TOTALPOP"]
 });
 
+let sceneLayer = new vendors.SceneLayer({
+    url: BLDG_JAX_DT,
+    renderer: {
+        type: "simple",
+        symbol: {
+            type: "mesh-3d",
+            symbolLayers: [
+                {
+                    type: "fill",
+                    material: {
+                        color: [255, 255, 255],
+                        colorMixMode: "replace"
+                    },
+                    edges: {
+                        type: "solid",
+                        color: [0, 0, 0, 1],
+                        size: 0.5
+                    }
+                }
+            ]
+        }
+    }
+
+});
+
 const map = new vendors.Map({
-    basemap: "topo-3d",
-    layers: [buildingsLayer],
+    basemap: "satellite",
+    layers: [
+        // buildingsLayer,
+        sceneLayer
+    ],
     ground: "world-elevation"
 });
 
@@ -241,7 +275,7 @@ const view = new vendors.SceneView({
         // },
         // heading: 0,
         // tilt: 0.49
-        position: [-75.09519011, 38.32524201, 682.98652],
+        position: [-81.644013, 30.341590, 682.98652],
         heading: 53.86,
         tilt: 48.52
     }
