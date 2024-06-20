@@ -14,7 +14,7 @@ from .linecharts import means_to_work
 from .sidebar import sidebar
 
 external_scripts = [
-    {"src": "https://unpkg.com/deck.gl@8.9.35/dist.min.js"},
+    # {"src": "https://unpkg.com/deck.gl@8.9.35/dist.min.js"},
     {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
     {"src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"},
     {"src": "https://unpkg.com/@turf/turf@6/turf.min.js"},

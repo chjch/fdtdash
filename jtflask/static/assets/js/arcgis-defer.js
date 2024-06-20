@@ -281,6 +281,42 @@ const view = new vendors.SceneView({
     }
 });
 
+// let zoom = new vendors.Zoom({
+//   view: view
+// });
+
+let basemapToggle = new vendors.BasemapToggle({
+  view: view,  // The view that provides access to the map's "streets-vector" basemap
+  nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+});
+//
+// let compass = new vendors.Compass({
+//   view: view
+// });
+
+// let navigationToggle = new vendors.NavigationToggle({
+//   view: view
+// });
+
+let locateWidget = new vendors.Locate({
+  view: view,   // Attaches the Locate button to the view
+  graphic: new vendors.Graphic({
+    symbol: { type: "simple-marker" }  // overwrites the default symbol used for the
+    // graphic placed at the location of the user when found
+  })
+});
+
+// add home button - zoom back to JaxTwin extent
+// add full screen button
+//     minimize sidebar
+
+
+
+view.ui.move([ "zoom", "compass",  "navigation-toggle"  ], "top-right")
+view.ui.add([  basemapToggle, "attribution" ], "bottom-right")
+view.ui.add(locateWidget, "top-right")
+
+
 // const renderer = new vendors.DeckRenderer(view, {
 //     layers: [
 //         new vendors.ScatterplotLayer({

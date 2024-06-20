@@ -87,6 +87,12 @@ body,
     transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for size changes */
 }
 
+/*.esri-ui-bottom-right {*/
+/*  flex-flow:column !important;*/
+/*  bottom:0;*/
+/*  right:0;*/
+/*}*/
+
 /* Adjust icon sizes on larger screens */
 @media (min-width: 1600px) {
     .iconify {
