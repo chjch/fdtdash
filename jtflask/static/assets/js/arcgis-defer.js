@@ -275,9 +275,9 @@ const view = new vendors.SceneView({
         // },
         // heading: 0,
         // tilt: 0.49
-        position: [-81.644013, 30.341590, 682.98652],
-        heading: 53.86,
-        tilt: 48.52
+        position: [-81.66916428, 30.29352027, 2569],
+        heading: 13.89,
+        tilt: 51
     }
 });
 

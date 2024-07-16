@@ -1,6 +1,9 @@
+
+import dash
 from dash import html
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
+
 
 def get_icon(icon, icon_id=None):
     if icon_id is None:
@@ -52,11 +55,14 @@ sidebar_main = html.Div(
 )
 
 collapse_button = dmc.Button(
-    DashIconify(icon="akar-icons:chevron-left", id="collapse-icon"),
+    DashIconify(icon="fluent:chevron-left-24-filled", id="collapse-icon", color="black"),
     id="collapse-button",
-    variant="outline",
+    variant="light",
+    color="gray",
     compact=True,
-    style={"margin": "auto", "display": "block"}
+    fullWidth=True,
+    style={"margin": "auto", "display": "block"},
+
 )
 
 collapse_button_container = html.Div(
@@ -64,15 +70,21 @@ collapse_button_container = html.Div(
     id="collapse-button-container",
 )
 
+svgblur = html.Img(src=dash.get_asset_url('svg/sidebar.svg'),
+                   id="svgblur")
+
 drawer_content = dmc.SimpleGrid(
     cols=2,
     children=[
         html.Div(
-            [sidebar_brand, sidebar_main],
+            [sidebar_brand, sidebar_main
+             ],
             style={"height": "100%"},
             id="sidebar-col1"
         ),
         collapse_button_container
+
+
     ],
     id="drawer-body",
     style={"height": "100%"}
@@ -89,6 +101,6 @@ def sidebar():
         closeOnClickOutside=False,  # Do not take focus or close on outside click
         withOverlay=False,  # Disable overlay to prevent taking focus
         withCloseButton=False,
-        transition="rotate",
+        transition="slide-left",
         transitionDuration=1000
     )

@@ -1,0 +1,89 @@
+
+/*.sidebar {*/
+/*    width: 80px;*/
+/*    height: 100vh;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    background-color: #f4f4f4; !* Choose a background color that fits your app's theme *!*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    box-shadow: 2px 0 5px rgba(0,0,0,0.1); !* Optional: adds shadow to the sidebar *!*/
+/*}*/
+
+/*.sidebar-brand {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    !*margin: 20px 0 0;*!*/
+/*    margin: 0 auto;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.sidebar-main {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    flex-grow: 1;*/
+/*    justify-content: center;*/
+/*}*/
+
+/*#drawer-body {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    gap: 10px;*/
+
+/*}*/
+
+/*#drawer {*/
+/*    background-color: chartreuse;*/
+
+/*}*/
+
+/*#collapse-button-container {*/
+/*    height: 100%;*/
+/*    width: 15px;*/
+/*    background-color: white;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    !*border-radius: 5px;*!*/
+/*}*/
+
+/*#collapse-button {*/
+/*    height: 100%;*/
+/*    width: 15px;*/
+/*    !*background-color: gre*/
+/*    en;*!*/
+/*    cursor: pointer;*/
+/*    padding-left: 0px;*/
+/*    padding-right: 0px;*/
+/*    border-radius: 0px;*/
+/*}*/
+
+/*.sidebar-icon {*/
+/*    !*padding: 0;*!*/
+/*    margin: 20px 0px 20px 0px;*/
+/*}*/
+
+/*#sidebar-brand-logo {*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    width: 32px;*/
+/*    height: 32px;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    color: var(--main-color);*/
+/*}*/
+/*#sidebar-col1 {*/
+/*    height: auto !important;*/
+/*    width: auto;*/
+/*    padding-left: 25px;*/
+/*}*/
