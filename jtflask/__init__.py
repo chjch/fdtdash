@@ -12,6 +12,7 @@ def init_app():  # init a flask app
 
         # init a dash app inside the flask app
         from .jtdash import init_dashboard
+
         app = init_dashboard(app)
 
         return app

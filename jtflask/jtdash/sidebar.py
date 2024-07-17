@@ -1,8 +1,8 @@
-
 import dash
 from dash import html
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
+
 
 
 def get_icon(icon, icon_id=None):
