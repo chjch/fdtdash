@@ -11,3 +11,8 @@ COPY . ./
 RUN pip install -r requirements.txt
 
 EXPOSE 8080
+
+# Set the PYTHONPATH to include the /app directory
+ENV PYTHONPATH=/app
+
+CMD python jtflask/main.py
