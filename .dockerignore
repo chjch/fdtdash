@@ -1,0 +1,11 @@
+node_modules
+.dockerignore
+.gitignore
+.git
+.env
+venv
+.vscode
+__pycache__
+*.pyc
+
+package-lock.json
