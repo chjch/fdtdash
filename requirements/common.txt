@@ -6,7 +6,7 @@ dash-core-components==2.0.0
 dash-html-components==2.0.0
 dash-extensions==1.0.12
 dash-iconify==0.1.2
-dash-mantine-components==0.12.1
+dash-mantine-components==0.14.3
 dash-table==5.0.0
 Flask==2.2.2
 Flask-Compress==1.13
@@ -29,4 +29,4 @@ traitlets==5.4.0
 Werkzeug==2.2.2
 
 # Local package in ./libs
-./libs/dash_deck-0.0.3.tar.gz
+# ./libs/dash_deck-0.0.3.tar.gz
