@@ -15,9 +15,7 @@
   "author": "Changjie Chen",
   "license": "MIT",
   "dependencies": {
-    "@arcgis/core": "~4.29.0",
-    "@deck.gl/arcgis": "^8.9.35",
-    "@deck.gl/layers": "^8.9.35"
+    "@arcgis/core": "~4.29.0"
   },
   "devDependencies": {
     "css-loader": "^6.10.0",
