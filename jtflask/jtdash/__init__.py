@@ -27,6 +27,7 @@ external_stylesheets = [
     {"src":  "https://unpkg.com/@mantine/dates@7/styles.css"}
 ]
 
+
 def init_dashboard(server: Flask):
     """Create a Plotly Dash dashboard within a running Flask jtflask."""
 
@@ -49,7 +50,7 @@ def init_dashboard(server: Flask):
     dash_app.layout = dmc.MantineProvider(
         html.Div(
             [
-                DeferScript(src="../static/assets/js/arcgis-defer.js"),
+                DeferScript(src="../static/assets/js/main-defer.js"),
                 html.Div(id="deckgl-container"),
                 sidebar2(dash_app),
                 # Additional components
