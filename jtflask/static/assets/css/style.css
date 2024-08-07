@@ -83,7 +83,13 @@ calcite-button {
     border-right: 5px;
 }
 
-
+.esri-sketch {
+    display: contents !important;
+    align-self: center !important;
+}
+.esri-sketch__panel{
+    justify-content: center !important;
+}
 
 .esri-attribution__sources {
     display: none;

@@ -73,7 +73,7 @@ let basemapToggle = new vendors.BasemapToggle({
     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
 });
 
-view.ui.move([ "zoom", "compass",  "navigation-toggle"  ], "bottom-right");
+view.ui.move(["compass", "zoom", "navigation-toggle"  ], "bottom-right");
 view.ui.add(locateWidget, "bottom-right");
 view.ui.add( basemapToggle, "bottom-right");
 // view.ui.add(sketch, "bottom-right");
