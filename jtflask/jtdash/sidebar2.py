@@ -2,19 +2,18 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from .charts import create_charts
+from .arcgisJS_tools import get_arcgis_sketch_card
 
 def get_icon(icon, icon_id=None):
-    if icon_id is None:
-        return DashIconify(icon=icon)
-    else:
-        return DashIconify(icon=icon, id=icon_id)
+    return DashIconify(icon=icon, id=icon_id) if icon_id else DashIconify(icon=icon)
 
-def sidebar2(app):
+def get_sidebar_components(app):
     charts = create_charts(app)
+    arcgis_tools = get_arcgis_sketch_card()
 
     sidebar_brand = html.Div(
         [
-            DashIconify(icon="solar:box-minimalistic-bold", id="sidebar-brand-logo"),
+            get_icon("solar:box-minimalistic-bold", "sidebar-brand-logo"),
             html.P(
                 children=[
                     html.Span('Jax', style={"font-weight": "bolder"}),
@@ -30,32 +29,33 @@ def sidebar2(app):
     sidebar_main = html.Div(
         [
             dmc.NavLink(
-                id="sidebar-home",
-                leftSection=get_icon(icon="fluent:data-pie-20-regular"),
+                id="open-charts-drawer-link",
+                leftSection=get_icon("fluent:data-pie-20-regular"),
                 className="sidebar-icon",
             ),
             dmc.NavLink(
-                leftSection=get_icon(icon="solar:routing-2-linear"),
+                id="open-arcgis-drawer-link",
+                leftSection=get_icon("solar:routing-2-linear"),
                 className="sidebar-icon",
             ),
             dmc.NavLink(
-                leftSection=get_icon(icon="ph:buildings"),
+                leftSection=get_icon("ph:buildings"),
                 className="sidebar-icon",
             ),
             dmc.NavLink(
-                leftSection=get_icon(icon="solar:clipboard-text-linear"),
+                leftSection=get_icon("solar:clipboard-text-linear"),
                 className="sidebar-icon",
             ),
             dmc.NavLink(
-                leftSection=get_icon(icon="solar:layers-minimalistic-linear"),
+                leftSection=get_icon("solar:layers-minimalistic-linear"),
                 className="sidebar-icon",
             ),
             dmc.NavLink(
-                leftSection=get_icon(icon="la:list-ul"),
+                leftSection=get_icon("la:list-ul"),
                 className="sidebar-icon",
             ),
             dmc.NavLink(
-                leftSection=get_icon(icon="hugeicons:maps-square-01"),
+                leftSection=get_icon("hugeicons:maps-square-01"),
                 className="sidebar-icon",
             ),
         ],
@@ -64,7 +64,7 @@ def sidebar2(app):
     )
 
     collapse_button = dmc.Button(
-        DashIconify(icon="heroicons:chevron-double-left-16-solid", id="collapse-icon"),
+        get_icon("heroicons:chevron-double-left-16-solid", "collapse-icon"),
         id="collapse-button",
         variant="default",
         fullWidth=False,
@@ -86,8 +86,18 @@ def sidebar2(app):
         id="chart_scrollable_div"
     )
 
+    scrollable_div_tools = html.Div(
+        children=arcgis_tools,
+        id="arcgistools_scrollable_div"
+    )
+
+    return sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div, scrollable_div_tools
+
+def sidebar2(app):
+    sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div, scrollable_div_tools = get_sidebar_components(app)
+
     scrollable_div_drawer = dmc.Drawer(
-        children=scrollable_div,
+        children=scrollable_div_tools,
         id="chart_scrollable_drawer",
         padding="2",
         opened=True,
@@ -110,7 +120,8 @@ def sidebar2(app):
                 [sidebar_brand, sidebar_main_container, collapse_button_container],
                 id="sidebar-col1"
             ),
-            scrollable_div_drawer
+            scrollable_div_drawer,
+            dcc.Store(id='drawer-content-store', data='charts')
         ],
         id="drawer-body-grid",
     )

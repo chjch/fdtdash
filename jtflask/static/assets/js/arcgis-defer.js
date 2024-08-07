@@ -5,132 +5,13 @@
 
 // const Map = require("./vendors.min.js").Map;
 
+// import {SolidEdges3D} from "../../src";
+
 const BLKGRP = 'https://taurus.at.geoplan.ufl.edu/arcgis/rest/services/fgdl/USCB/Mapserver/10/' +
     'query?where=COUNTY=31&outFields=TOTALPOP,GEOID20&f=geojson';
 
-// const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/ArcGIS/rest/services/" +
-//     "PLW_Jacksonville_BLD_2018/SceneServer/layers/0";
 
 const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer/layers/0";
-
-//
-// const layer = new vendors.DeckLayer({
-//     'deck.layers': [
-//         new vendors.GeoJsonLayer({
-//             id: "block-group-layer",
-//             data: BLKGRP,
-//             opacity: 0.2,
-//             stroked: true,
-//             filled: true,
-//             extruded: true,
-//             wireframe: false,
-//             fp64: true,
-//             getElevation: f => Math.sqrt(f.properties.TOTALPOP) * 100,
-//             getFillColor: f => [255, 255, 255, 255], // colorScale(f.properties.TOTALPOP),
-//             getLineColor: f => [0, 0, 0],
-//             getLineWidth: 2,
-//             pickable: true,
-//             // onDataLoad: () => {
-//             //     deckgl.setProps({
-//             //         viewState: newViewState
-//             //     });
-//             // }
-//             onClick: ({layer, object}) => {
-//                 const {viewport} = layer.context;
-//                 const [xmin, ymin, xmax, ymax] = turf.bbox(object);
-//                 const {longitude, latitude, zoom} = viewport.fitBounds(
-//                     [[xmin, ymin], [xmax, ymax]],
-//                     {
-//                         width: 400,
-//                         height: 400
-//                     }
-//                 );
-//                 deckgl.setProps({
-//                     viewState: {
-//                         longitude,
-//                         latitude,
-//                         zoom: zoom-1,
-//                         pitch: 45,
-//                         transitionInterpolator: new deck.FlyToInterpolator(),
-//                         transitionDuration: "auto"
-//                     }
-//                 });
-//                 // console.log('Clicked:', object);
-//                 // document.getElementById("GEOID20").attributes[1].value = object.properties.GEOID20;
-//                 // console.log(document.getElementById("deckgl-container"));
-//                 document.getElementById("deckgl-container").setAttribute("data-geoid20", object.properties.GEOID20);
-//                 // document.getElementById("means-to-work-title").innerHTML = object.properties.GEOID20;
-//                 // console.log(document.getElementById("GEOID20").attributes[4].value);
-//             }
-//         })
-//     ]
-// });
-
-// const AIR_PORTS =
-//     'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson';
-//
-// const layer = new vendors.DeckLayer({
-//     effect: 'bloom(1.5, 0.5px, 0.1)',
-//     'deck.getTooltip': info => info.object && info.object.properties.name,
-//     'deck.layers': [
-//         new vendors.GeoJsonLayer({
-//             id: 'airports',
-//             data: AIR_PORTS,
-//             // Styles
-//             filled: true,
-//             pointRadiusMinPixels: 2,
-//             pointRadiusScale: 2000,
-//             getPointRadius: f => 11 - f.properties.scalerank,
-//             getFillColor: [200, 0, 80, 180],
-//             // Interactive props
-//             pickable: true,
-//             autoHighlight: true,
-//             onClick: info =>
-//                 info.object &&
-//                 // eslint-disable-next-line
-//                 alert(`${info.object.properties.name} (${info.object.properties.abbrev})`)
-//         }),
-//         new vendors.ArcLayer({
-//             id: 'arcs',
-//             data: AIR_PORTS,
-//             dataTransform: d => d.features.filter(f => f.properties.scalerank < 4),
-//             // Styles
-//             getSourcePosition: f => [-0.4531566, 51.4709959], // London
-//             getTargetPosition: f => f.geometry.coordinates,
-//             getSourceColor: [0, 128, 200],
-//             getTargetColor: [200, 0, 80],
-//             getWidth: 1
-//         })
-//     ]
-// });
-
-// vendors.loadArcGISModules(['esri/Map', 'esri/views/MapView'], {version: '4.21'})
-//     .then(({DeckLayer, modules}) => {
-//         const [Map, MapView] = modules;
-//
-//         const layer = new DeckLayer({
-//             'deck.layers': [
-//                 new vendors.ScatterplotLayer({
-//                     data: [
-//                         {position: [0.119, 52.205]}
-//                     ],
-//                     getPosition: d => d.position,
-//                     getColor: [255, 0, 0],
-//                     radiusMinPixels: 20
-//                 })
-//             ]
-//         });
-//
-//         const view = new MapView({
-//             container: "deckgl-container",
-//             map: new Map({
-//                 basemap: "dark-gray-vector",
-//                 layers: [layer]
-//             }),
-//             center: [0.119, 52.205],
-//             zoom: 5
-//         });
-//     });
 
 function getSymbol(color) {
     return {
@@ -166,28 +47,6 @@ var renderer = {
     defaultSymbol: getSymbol([255, 255, 200, 0.5]),
     defaultLabel: "Other",
     field: "TOTALPOP",
-    // uniqueValueInfos: [
-    //     {
-    //         value: "Residential",
-    //         symbol: getSymbol("#A7C636"),
-    //         label: "Residential"
-    //     },
-    //     {
-    //         value: "Commercial",
-    //         symbol: getSymbol("#FC921F"),
-    //         label: "Commercial"
-    //     },
-    //     {
-    //         value: "Hotel/Motel",
-    //         symbol: getSymbol("#ED5151"),
-    //         label: "Hotel/Motel"
-    //     },
-    //     {
-    //         value: "Apartment Rentals",
-    //         symbol: getSymbol("#149ECE"),
-    //         label: "Apartment Rentals"
-    //     }
-    // ],
     visualVariables: [
         {
             type: "size",
@@ -251,52 +110,124 @@ let sceneLayer = new vendors.SceneLayer({
 
 });
 
-const map = new vendors.Map({
-    basemap: "satellite",
-    layers: [
-        // buildingsLayer,
-        sceneLayer
-    ],
-    ground: "world-elevation"
-});
+// /**********************************************
+//  * Graphics layer to sketch on
+//  *********************************************/
+// // The layer where the graphics are sketched
+// const sketchLayer = new vendors.GraphicsLayer({
+//   elevationInfo: {
+//     mode: "absolute-height"
+//   },
+//   title: "Sketched geometries"
+// });
+//
+// const map = new vendors.Map({
+//     basemap: "satellite",
+//     layers: [
+//         sketchLayer,
+//         sceneLayer
+//     ],
+//     ground: "world-elevation"
+// });
+//
+
 
 const view = new vendors.SceneView({
     container: "deckgl-container", // Reference to the scene div created in step 5
     map: map, // Reference to the map object created before the scene
     camera: { // Sets the initial camera position
-        // position: {
-        //     spatialReference: {
-        //         latestWkid: 3857,
-        //         wkid: 102100
-        //     },
-        //     x: -11262192.883555487,
-        //     y: 2315246.351026253,
-        //     z: 18161244.728082635
-        // },
-        // heading: 0,
-        // tilt: 0.49
         position: [-81.66916428, 30.29352027, 2569],
         heading: 13.89,
         tilt: 51
     }
 });
 
-// let zoom = new vendors.Zoom({
-//   view: view
-// });
-
 let basemapToggle = new vendors.BasemapToggle({
   view: view,  // The view that provides access to the map's "streets-vector" basemap
   nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
 });
-//
-// let compass = new vendors.Compass({
-//   view: view
+
+ /**********************************************
+ * Symbologies
+ *********************************************/
+// Polygon symbol used for sketching the extruded building footprints
+// const buildingSymbology = new vendors.PolygonSymbol3D({
+//   symbolLayers: [
+//     new ExtrudeSymbol3DLayer({
+//       size: 3.5, // extrude by 3.5m meters
+//       material: {
+//         color: [255, 255, 255, 0.8]
+//       },
+//       edges: new SolidEdges3D({
+//         size: 1,
+//         color: [82, 82, 122, 1]
+//       })
+//     })
+//   ]
 // });
 
-// let navigationToggle = new vendors.NavigationToggle({
-//   view: view
-// });
+ const sketchViewModel = new vendors.SketchViewModel({
+          layer: sketchLayer,
+          view: view,
+              polygonSymbol: {
+                type: "simple-fill",
+                style: "cross",
+                color: "#EFC8B1",
+                outline: {
+                  width: 3,
+                  style: "solid",
+                  color: "#514644"
+                }
+              },
+          snappingOptions: {
+            enabled: true,
+            featureSources: [
+              {
+                layer: sketchLayer
+              }
+            ]
+          },
+          // Show absolute direction value in tooltips
+          valueOptions: {
+            directionMode: "absolute"
+          },
+          tooltipOptions: {
+            enabled: true
+          },
+          labelOptions: {
+            enabled: true
+          },
+          defaultUpdateOptions: {
+            tool: "reshape",
+            reshapeOptions: {
+              edgeOperation: "offset"
+            }
+          }
+        });
+
+    const sketch = new vendors.Sketch({
+      layer: sketchLayer,
+      view: view,
+        viewModel: sketchViewModel,
+      // graphic will be selected as soon as it is created
+      creationMode: "update"
+    });
+
+    view.ui.add(sketch, "bottom-right");
+        // // Create the Sketch widget and add it to the "sketchWidget" container inside the "sketchPanel" <div>
+        // const sketch = new vendors.Sketch({
+        //   view,
+        //   viewModel: sketchViewModel,
+        //   // Remove some buttons from the widget
+        //   visibleElements: {
+        //     createTools: {
+        //       rectangle: false,
+        //       circle: false
+        //     }
+        //   },
+        //   container: "sketchWidget"
+        // });
+
 
 let locateWidget = new vendors.Locate({
   view: view,   // Attaches the Locate button to the view
@@ -306,40 +237,8 @@ let locateWidget = new vendors.Locate({
   })
 });
 
-// add home button - zoom back to JaxTwin extent
-// add full screen button
-//     minimize sidebar
-
-
-
-view.ui.move([ "zoom", "compass",  "navigation-toggle"  ], "top-right")
+ // Add the container for the widget and custom buttons to the view
+// view.ui.add("sketchWidget", "top-right");
+view.ui.add(locateWidget, "bottom-right")
+view.ui.move([ "zoom",  "navigation-toggle", "compass", ], "bottom-right")
 view.ui.add([  basemapToggle, "attribution" ], "bottom-right")
-view.ui.add(locateWidget, "top-right")
-
-
-// const renderer = new vendors.DeckRenderer(view, {
-//     layers: [
-//         new vendors.ScatterplotLayer({
-//             data: [
-//                 {position: [0.119, 52.205]}
-//             ],
-//             getPosition: d => d.position,
-//             getColor: [255, 0, 0],
-//             radiusMinPixels: 20
-//         })
-//     ]
-// });
-//
-// vendors.externalRenderers.add(view, renderer);
-
-// const view = new vendors.MapView({
-//     container: "deckgl-container", // Reference to the scene div created in step 5
-//     map: map, // Reference to the map object created before the scene
-//     center: [0.119167, 52.205276],
-//     zoom: 5,
-// });
-
-// var link = document.createElement('link');
-// link.rel = 'stylesheet';
-// link.href = 'https://js.arcgis.com/4.29/esri/themes/light/main.css';
-// document.head.appendChild(link);

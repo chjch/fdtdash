@@ -11,6 +11,10 @@ from .layout import html_layout
 from .linecharts import means_to_work
 # from .sidebar import sidebar, collapse_button
 from .sidebar2 import sidebar2
+from .statsHoverCards import stats_hover_card
+from .charts import create_charts
+from .arcgisJS_tools import get_arcgis_sketch_card
+from .sidebar2 import sidebar2, get_sidebar_components
 
 external_scripts = [
     {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
@@ -49,19 +53,22 @@ def init_dashboard(server: Flask):
     dash_app.layout = dmc.MantineProvider(
         html.Div(
             [
-                DeferScript(src="../static/assets/js/arcgis-defer.js"),
+                # DeferScript(src="../static/assets/js/arcgis-defer.js"),
+                DeferScript(src="../static/assets/js/main-defer.js"),
                 html.Div(id="deckgl-container"),
                 sidebar2(dash_app),
-                # Additional components
+                stats_hover_card
             ]
         )
     )
-
+    sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div, scrollable_div_tools = get_sidebar_components(dash_app)
     @dash_app.callback(
         [
             Output("chart_scrollable_drawer", "opened"),
             Output("drawer", "size"),
-            Output("collapse-icon", "icon")
+            Output("collapse-icon", "icon"),
+
+
         ],
         Input("collapse-button", "n_clicks"),
         State("chart_scrollable_drawer", "opened"),
@@ -71,5 +78,47 @@ def init_dashboard(server: Flask):
         new_size = "auto" if is_open else "md"
         new_icon = "heroicons:chevron-double-right-16-solid" if is_open else "heroicons:chevron-double-left-16-solid"
         return not is_open, new_size, new_icon
+
+    @dash_app.callback(Output("yearSelectValue", "children"),
+                       Input("yearSelect", "value"))
+    def select_value(value):
+        return value
+
+    @dash_app.callback(Output("stormSelectValue", "children"),
+                       Input("stormSelect", "value"))
+    def select_value(value):
+        return value
+
+    return dash_app.server
+
+    @dash_app.callback(
+        Output("chart_scrollable_drawer", "children"),
+        Output("chart_scrollable_drawer", "opened"),
+        Output('drawer-content-store', 'data'),
+        Input("open-charts-drawer-link", "n_clicks"),
+        Input("open-arcgis-drawer-link", "n_clicks"),
+        State('drawer-content-store', 'data'),
+        prevent_initial_call=True
+    )
+    def toggle_drawer_content(open_charts_clicks, open_arcgis_clicks, current_content):
+        ctx = dash.callback_context
+
+        if not ctx.triggered:
+            raise PreventUpdate
+
+        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+        if triggered_id == "open-charts-drawer-link":
+            if current_content == 'charts':
+                return html.Div(), False, ''
+            else:
+                return scrollable_div, True, 'charts'
+        elif triggered_id == "open-arcgis-drawer-link":
+            if current_content == 'arcgis':
+                return html.Div(), False, ''
+            else:
+                return scrollable_div_tools, True, 'arcgis'
+        else:
+            raise PreventUpdate
 
     return dash_app.server

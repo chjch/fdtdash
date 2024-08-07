@@ -23,6 +23,51 @@ def create_charts(app):
     charts = [
         dmc.Card(
             children=[
+                dmc.Text("Hazard", size="lg", className="chartLabel"),
+                dmc.Select(
+                    comboboxProps={"position": "bottom"},
+                    placeholder="Year",
+                    id="yearSelect",
+                    value="2040",
+                    data=[
+                        {"value": "2040", "label": "Year"},
+                        {"value": "2060", "label": "Year"},
+                        {"value": "2080", "label": "Year"},
+                        {"value": "2100", "label": "Year"},
+                    ],
+                    w=100,
+                    mb=10,
+
+                ),
+                dmc.Text(id="yearSelectValue", size="lg", className="yearSelectText"),
+                dmc.Select(
+                    comboboxProps={"position": "bottom"},
+                    placeholder="Storm",
+                    id="stormSelect",
+                    value="Category-1 Hurricane",
+                    data=[
+                        {"value": "Category-1 Hurricane", "label": "Storm"},
+                        {"value": "Category-2 Hurricane", "label": "Storm"},
+                        {"value": "Category-3 Hurricane", "label": "Storm"},
+                        {"value": "Category-4 Hurricane", "label": "Storm"},
+                    ],
+                    w=100,
+                    mb=10,
+
+                ),
+                dmc.Text(id="stormSelectValue", size="lg", className="stormSelectText"),
+
+            ],
+            withBorder=True,
+            shadow="sm",
+            radius="md",
+            style={"margin": "10px"},
+            id="Scenario_card",
+            className="cardChart"
+        ),
+        dmc.Card(
+            children=[
+                dmc.Text("Area Chart", size="lg", className="chartLabel"),
                 dmc.AreaChart(
                     h=200,
                     dataKey="date",
@@ -49,6 +94,7 @@ def create_charts(app):
         ),
         dmc.Card(
             children=[
+                dmc.Text("Bar Chart", size="lg", className="chartLabel"),
                 dmc.BarChart(
                     h=200,
                     dataKey="month",
@@ -71,6 +117,7 @@ def create_charts(app):
         ),
         dmc.Card(
             children=[
+                dmc.Text("Donut Chart", size="lg", className="chartLabel"),
                 dmc.DonutChart(
                     data=data2,
                     withLabels=True,
@@ -87,6 +134,7 @@ def create_charts(app):
         ),
         dmc.Card(
             children=[
+                dmc.Text("Line Chart", size="lg", className="chartLabel"),
                 dmc.LineChart(
                     h=200,
                     dataKey="date",
@@ -112,6 +160,7 @@ def create_charts(app):
         ),
         dmc.Card(
             children=[
+                dmc.Text("Pie Chart", size="lg", className="chartLabel"),
                 dmc.PieChart(
                     data=data2,
                     withLabelsLine=True,

@@ -71,7 +71,7 @@ margin: 0 0 0.5rem
 }
 
 #collapse-button-container {
-    height: 12px;
+    height: 35px;
     width: 100%;
     background-color: white;
     display: flex;
@@ -110,6 +110,8 @@ margin: 0 0 0.5rem
     color: #FFFFFF;
     border-radius: 5px;
 }
+
+
 
 #sidebar-brand-logo {
     padding: 0;
@@ -156,6 +158,10 @@ margin: 0 0 0.5rem
 
 .cardChart{
     width: 350px;
+}
+.chartLabel{
+    font-weight: 600;
+    padding-bottom: 20px;
 }
 
 #area_chart {

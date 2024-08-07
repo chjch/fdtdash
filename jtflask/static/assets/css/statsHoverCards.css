@@ -1,0 +1,80 @@
+:root {
+    --main-color: #5932EA;
+    --main-color-trans:rgb(89 50 234 /30%);
+    --main-color-trans-2:rgb(89 50 234 /50%);
+    --main-color-trans-3:rgb(89 50 234 /70%);
+    --main-color-trans-4:rgb(89 50 234 /90%);
+    --statcard-gradient-1-color-trans:rgba(215,214,213,100%);
+    --statcard-gradient-2-color-trans:rgba(205, 204,203,100%);
+    --statcard-gradient-3-color-trans:rgba(197,196,195,100%);
+    /*color:*/
+
+
+}
+
+
+.statsCard{
+    margin-bottom: 20px;
+    background-color: rgb(200 200 200 / 100%);
+    background-image: linear-gradient(to bottom right, var( --statcard-gradient-1-color-trans), var( --statcard-gradient-1-color-trans),var( --statcard-gradient-1-color-trans),var( --statcard-gradient-1-color-trans),var(--main-color-trans),var(--main-color-trans));
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius:15px;
+    backdrop-filter:blur(5px);
+    border-style: hidden;
+    /*opacity:0.2;*/
+
+}
+
+.cardLabel{
+color:  var(--main-color) !important;
+    font-weight: 500;
+    font-size: small;
+
+}
+
+.cardValue{
+    font-weight: 700;
+    font-size: larger;
+
+}
+
+.cardIcon{
+    color:  var(--main-color) !important;
+    width: 20px !important;
+}
+#cardIconContainer{
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 50% !important;
+    background-color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#yearSelect{
+    color: var(--main-color);
+    font-weight: 500;
+    font-size: medium;
+
+}
+#stormSelect{
+    color: var(--main-color);
+    font-weight: 500;
+    font-size: medium;
+
+}
+
+
+#yearSelectValue{
+    font-weight: 700;
+    font-size: xx-large;
+    align-self: center;
+}
+
+#stormSelectValue{
+    font-weight: 600;
+    font-size: x-large;
+    align-self: center;
+}
+
