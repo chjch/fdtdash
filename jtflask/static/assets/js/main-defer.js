@@ -68,6 +68,43 @@ const locateWidget = new vendors.Locate({
 const sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
 JTSketchWidget.setupSketchEventListeners(sketch, tileLayer);
 
+sketch.on("create", function(event) {
+    if (event.state === "complete") {
+        const geometry = event.graphic.geometry;
+        queryBuildings(geometry);
+    }
+});
+
+function queryBuildings(geometry) {
+    var query = sceneLayer.createQuery();
+    query.geometry = geometry;
+    query.spatialRelationship = "intersects";
+    query.returnGeometry = true;
+    query.outFields = ["*"];
+
+    sceneLayer.queryFeatures(query).then(function(results) {
+        const buildings = results.features.map(feature => feature.attributes);
+        sendSelectionToDash(buildings);
+    });
+}
+
+function sendSelectionToDash(buildings) {
+    fetch('/jtdash/selection', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ buildings: buildings }),
+    }).then(response => response.json())
+      .then(data => {
+          console.log('Success:', data);
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+}
+
+
 let basemapToggle = new vendors.BasemapToggle({
     view: view,  // The view that provides access to the map's "streets-vector" basemap
     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap

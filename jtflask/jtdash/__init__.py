@@ -3,14 +3,12 @@ import dash
 import pathlib
 from dash import Dash, html, dcc, callback, Input, Output, State
 from dash.exceptions import PreventUpdate
-from flask import Flask
+from flask import Flask, request, jsonify
 from dash_extensions import DeferScript, EventListener
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from .layout import html_layout
 from .linecharts import means_to_work
-# from .sidebar import sidebar, collapse_button
-from .sidebar2 import sidebar2
 from .statsHoverCards import stats_hover_card
 from .charts import create_charts
 from .arcgisJS_tools import get_arcgis_sketch_card
@@ -53,11 +51,12 @@ def init_dashboard(server: Flask):
     dash_app.layout = dmc.MantineProvider(
         html.Div(
             [
-                # DeferScript(src="../static/assets/js/arcgis-defer.js"),
                 DeferScript(src="../static/assets/js/main-defer.js"),
                 html.Div(id="deckgl-container"),
                 sidebar2(dash_app),
-                stats_hover_card
+                stats_hover_card,
+                dcc.Interval(id='interval-component', interval=1000, n_intervals=0),
+                dcc.Graph(id='var-chart-id')
             ]
         )
     )
@@ -122,3 +121,27 @@ def init_dashboard(server: Flask):
             raise PreventUpdate
 
     return dash_app.server
+
+    # selected buildings post
+    selected_buildings = []
+
+    @dash_app.sever.route('/jtdash/selection', methods=['POST'])
+    def selection():
+        global selected_buildings
+        selected_buildings = request.json['buildings']
+        return jsonify({"status": "success"})
+
+    @dash_app.callback(
+        Output('your-chart-id', 'figure'),
+        [Input('interval-component', 'n_intervals')]
+    )
+    def update_chart(n_intervals):
+        global selected_buildings
+        if not selected_buildings:
+            raise PreventUpdate
+
+        # Process selected_buildings and update your chart
+        # ...
+        updated_figure = None
+
+        return updated_figure  # Return the updated figure for the chart

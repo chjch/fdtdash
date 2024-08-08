@@ -10,8 +10,8 @@ def create_hover_card(icon, text1, text2, card_id):
                     dmc.Group(
                         children=[
                             html.Div(
-                            DashIconify(icon=icon, width=10, className="cardIcon", id="cardIconId"),
-                                id="cardIconContainer",
+                            DashIconify(icon=icon, width=10, className="cardIcon"),
+                                className="cardIconContainer",
 
                             ),
                             dmc.Stack(

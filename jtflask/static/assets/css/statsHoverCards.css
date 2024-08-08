@@ -42,7 +42,7 @@ color:  var(--main-color) !important;
     color:  var(--main-color) !important;
     width: 20px !important;
 }
-#cardIconContainer{
+.cardIconContainer{
     width: 45px !important;
     height: 45px !important;
     border-radius: 50% !important;
