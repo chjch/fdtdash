@@ -100,6 +100,7 @@ function sendSelectionToDash(buildings) {
           console.log('Success:', data);
       })
       .catch((error) => {
+          console.log(data)
           console.error('Error:', error);
       });
 }

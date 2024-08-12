@@ -6,7 +6,6 @@ from dash.exceptions import PreventUpdate
 from flask import Flask, request, jsonify
 from dash_extensions import DeferScript, EventListener
 import dash_mantine_components as dmc
-from dash_iconify import DashIconify
 from .layout import html_layout
 from .linecharts import means_to_work
 from .statsHoverCards import stats_hover_card
@@ -54,13 +53,16 @@ def init_dashboard(server: Flask):
                 DeferScript(src="../static/assets/js/main-defer.js"),
                 html.Div(id="deckgl-container"),
                 sidebar2(dash_app),
-                stats_hover_card,
-                dcc.Interval(id='interval-component', interval=1000, n_intervals=0),
-                dcc.Graph(id='var-chart-id')
+                stats_hover_card
+                # use dcc store for buildings selection json
+                # dcc.Store()
             ]
         )
     )
+    # get sidebar components
     sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div, scrollable_div_tools = get_sidebar_components(dash_app)
+
+    # Collapse Chart Callback
     @dash_app.callback(
         [
             Output("chart_scrollable_drawer", "opened"),
@@ -78,6 +80,7 @@ def init_dashboard(server: Flask):
         new_icon = "heroicons:chevron-double-right-16-solid" if is_open else "heroicons:chevron-double-left-16-solid"
         return not is_open, new_size, new_icon
 
+    # Scenario Chart callback
     @dash_app.callback(Output("yearSelectValue", "children"),
                        Input("yearSelect", "value"))
     def select_value(value):
@@ -90,49 +93,51 @@ def init_dashboard(server: Flask):
 
     return dash_app.server
 
-    @dash_app.callback(
-        Output("chart_scrollable_drawer", "children"),
-        Output("chart_scrollable_drawer", "opened"),
-        Output('drawer-content-store', 'data'),
-        Input("open-charts-drawer-link", "n_clicks"),
-        Input("open-arcgis-drawer-link", "n_clicks"),
-        State('drawer-content-store', 'data'),
-        prevent_initial_call=True
-    )
-    def toggle_drawer_content(open_charts_clicks, open_arcgis_clicks, current_content):
-        ctx = dash.callback_context
+    # toggle drawer content, ----not working----
+    # @dash_app.callback(
+    #     Output("chart_scrollable_drawer", "children"),
+    #     Output("chart_scrollable_drawer", "opened"),
+    #     Output('drawer-content-store', 'data'),
+    #     Input("open-charts-drawer-link", "n_clicks"),
+    #     Input("open-arcgis-drawer-link", "n_clicks"),
+    #     State('drawer-content-store', 'data'),
+    #     prevent_initial_call=True
+    # )
+    # def toggle_drawer_content(open_charts_clicks, open_arcgis_clicks, current_content):
+    #     ctx = dash.callback_context
+    #
+    #     if not ctx.triggered:
+    #         raise PreventUpdate
+    #
+    #     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    #
+    #     if triggered_id == "open-charts-drawer-link":
+    #         if current_content == 'charts':
+    #             return html.Div(), False, ''
+    #         else:
+    #             return scrollable_div, True, 'charts'
+    #     elif triggered_id == "open-arcgis-drawer-link":
+    #         if current_content == 'arcgis':
+    #             return html.Div(), False, ''
+    #         else:
+    #             return scrollable_div_tools, True, 'arcgis'
+    #     else:
+    #         raise PreventUpdate
+    #
+    # return dash_app.server
 
-        if not ctx.triggered:
-            raise PreventUpdate
 
-        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-
-        if triggered_id == "open-charts-drawer-link":
-            if current_content == 'charts':
-                return html.Div(), False, ''
-            else:
-                return scrollable_div, True, 'charts'
-        elif triggered_id == "open-arcgis-drawer-link":
-            if current_content == 'arcgis':
-                return html.Div(), False, ''
-            else:
-                return scrollable_div_tools, True, 'arcgis'
-        else:
-            raise PreventUpdate
-
-    return dash_app.server
-
-    # selected buildings post
+    # selected buildings Callback
     selected_buildings = []
 
-    @dash_app.sever.route('/jtdash/selection', methods=['POST'])
+    @dash_app.sever .route('/jtdash/selection', methods=['POST'])
     def selection():
         global selected_buildings
         selected_buildings = request.json['buildings']
         return jsonify({"status": "success"})
 
     @dash_app.callback(
-        Output('your-chart-id', 'figure'),
+        Output('chart-id', 'figure'),
         [Input('interval-component', 'n_intervals')]
     )
     def update_chart(n_intervals):
@@ -140,8 +145,8 @@ def init_dashboard(server: Flask):
         if not selected_buildings:
             raise PreventUpdate
 
-        # Process selected_buildings and update your chart
+        # Process selected_buildings and update the chart
         # ...
         updated_figure = None
 
-        return updated_figure  # Return the updated figure for the chart
+        return updated_figure
