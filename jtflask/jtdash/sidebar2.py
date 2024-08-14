@@ -81,7 +81,7 @@ def get_sidebar_components(app):
         id="sidebar-main-container"
     )
 
-    scrollable_div = html.Div(
+    scrollable_div_charts = html.Div(
         children=charts,
         id="chart_scrollable_div"
     )
@@ -91,10 +91,10 @@ def get_sidebar_components(app):
         id="arcgistools_scrollable_div"
     )
 
-    return sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div, scrollable_div_tools
+    return sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div_charts, scrollable_div_tools
 
 def sidebar2(app):
-    sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div, scrollable_div_tools = get_sidebar_components(app)
+    sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div_charts, scrollable_div_tools = get_sidebar_components(app)
 
     scrollable_div_drawer = dmc.Drawer(
         children=scrollable_div_tools,
@@ -121,7 +121,8 @@ def sidebar2(app):
                 id="sidebar-col1"
             ),
             scrollable_div_drawer,
-            dcc.Store(id='drawer-content-store', data='charts')
+            # dcc.Store(id='drawer-content-store', data='charts')
+            dcc.Store(id='drawer-content-store', data={'charts': 'charts', 'tools': 'tools'})
         ],
         id="drawer-body-grid",
     )

@@ -215,3 +215,36 @@ view.when(() => {
         "uiCornerBottomRight"
     );
 });
+
+// /test navlinks
+document.addEventListener('click', function(event) {
+    if (event.target.id === 'open-charts-drawer-link') {
+        console.log('Charts NavLink clicked');
+    } else if (event.target.id === 'open-arcgis-drawer-link') {
+        console.log('ArcGIS Tools NavLink clicked');
+    //     move sketch widget?
+    }
+});
+
+// reinitilize ro move sketch widget
+
+function reinitializeSketchTool(sketch){
+    // move sketch or reload sketch
+
+
+}
+document.addEventListener("DOMContentLoaded", function() {
+    // Listen for the reinit event
+    if (document.getElementById('reinit-tools')) {
+        setTimeout(function() {
+
+            reinitializeSketchTool(sketch);
+        }, 5);
+    }
+
+    // if (document.getElementById('reinit-charts')) {
+    //     setTimeout(function() {
+    //         initializeCharts();
+    //     }, 10);
+    // }
+});

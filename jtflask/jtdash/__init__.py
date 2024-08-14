@@ -1,7 +1,7 @@
 """modified from the original app.py"""
 import dash
 import pathlib
-from dash import Dash, html, dcc, callback, Input, Output, State
+from dash import Dash, html, dcc, callback, Input, Output, State, no_update
 from dash.exceptions import PreventUpdate
 from flask import Flask, request, jsonify
 from dash_extensions import DeferScript, EventListener
@@ -9,7 +9,7 @@ import dash_mantine_components as dmc
 from .layout import html_layout
 from .linecharts import means_to_work
 from .statsHoverCards import stats_hover_card
-from .charts import create_charts
+# from .charts import create_charts
 from .arcgisJS_tools import get_arcgis_sketch_card
 from .sidebar2 import sidebar2, get_sidebar_components
 
@@ -60,7 +60,7 @@ def init_dashboard(server: Flask):
         )
     )
     # get sidebar components
-    sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div, scrollable_div_tools = get_sidebar_components(dash_app)
+    sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div_charts, scrollable_div_tools = get_sidebar_components(dash_app)
 
     # Collapse Chart Callback
     @dash_app.callback(
@@ -91,62 +91,88 @@ def init_dashboard(server: Flask):
     def select_value(value):
         return value
 
-    return dash_app.server
-
     # toggle drawer content, ----not working----
+
+    @dash_app.callback(
+        Output("chart_scrollable_drawer", "children"),
+        Output("drawer-content-store", "data"),
+        [Input("open-charts-drawer-link", "n_clicks"),
+         Input("open-arcgis-drawer-link", "n_clicks")],
+        [State('drawer-content-store', 'data')]
+    )
+    def update_drawer_content(charts_click, tools_click, current_content):
+        ctx = dash.callback_context
+
+        print(f"Triggered: {ctx.triggered}")
+        print(f"Charts Clicked: {charts_click}, Tools Clicked: {tools_click}")
+        print(f"Current Content: {current_content}")
+
+        if not ctx.triggered:
+            return no_update, no_update
+
+        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+        if trigger_id == "open-charts-drawer-link" and current_content != 'charts':
+            print("Switching to Charts Content")
+            return scrollable_div_charts, 'charts'
+        elif trigger_id == "open-arcgis-drawer-link" and current_content != 'tools':
+            print("Switching to Tools Content")
+            return scrollable_div_tools, 'tools'
+
+        return no_update, no_update
+
     # @dash_app.callback(
     #     Output("chart_scrollable_drawer", "children"),
-    #     Output("chart_scrollable_drawer", "opened"),
-    #     Output('drawer-content-store', 'data'),
-    #     Input("open-charts-drawer-link", "n_clicks"),
-    #     Input("open-arcgis-drawer-link", "n_clicks"),
-    #     State('drawer-content-store', 'data'),
-    #     prevent_initial_call=True
+    #     [Input("open-charts-drawer-link", "n_clicks"),
+    #      Input("open-arcgis-drawer-link", "n_clicks")],
+    #     [State('drawer-content-store', 'data')]
     # )
-    # def toggle_drawer_content(open_charts_clicks, open_arcgis_clicks, current_content):
+    # def update_drawer_content(charts_click, tools_click, current_content):
     #     ctx = dash.callback_context
     #
+    #     print(f"Triggered: {ctx.triggered}")
+    #     print(f"Charts Clicked: {charts_click}, Tools Clicked: {tools_click}")
+    #     print(f"Current Content: {current_content}")
+    #
     #     if not ctx.triggered:
-    #         raise PreventUpdate
+    #         print("No input triggered the callback.")
+    #         return no_update
     #
-    #     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    #     trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    #     print(f"Triggered by: {trigger_id}")
     #
-    #     if triggered_id == "open-charts-drawer-link":
-    #         if current_content == 'charts':
-    #             return html.Div(), False, ''
-    #         else:
-    #             return scrollable_div, True, 'charts'
-    #     elif triggered_id == "open-arcgis-drawer-link":
-    #         if current_content == 'arcgis':
-    #             return html.Div(), False, ''
-    #         else:
-    #             return scrollable_div_tools, True, 'arcgis'
-    #     else:
-    #         raise PreventUpdate
+    #     if trigger_id == "open-charts-drawer-link" and current_content != 'charts':
+    #         print("Switching to Charts Content")
+    #         return [html.Div(id="chart_scrollable_div")], 'charts'
+    #     elif trigger_id == "open-arcgis-drawer-link" and current_content != 'tools':
+    #         print("Switching to Tools Content")
+    #         return [html.Div(id="chart_scrollable_div")], 'tools'
     #
-    # return dash_app.server
+    #     return no_update
 
 
     # selected buildings Callback
     selected_buildings = []
 
-    @dash_app.sever .route('/jtdash/selection', methods=['POST'])
-    def selection():
-        global selected_buildings
-        selected_buildings = request.json['buildings']
-        return jsonify({"status": "success"})
+    # @dash_app.sever.route('/jtdash/selection', methods=['POST'])
+    # def selection():
+    #     global selected_buildings
+    #     selected_buildings = request.json['buildings']
+    #     return jsonify({"status": "success"})
+    #
+    # @dash_app.callback(
+    #     Output('chart-id', 'figure'),
+    #     [Input('interval-component', 'n_intervals')]
+    # )
+    # def update_chart(n_intervals):
+    #     global selected_buildings
+    #     if not selected_buildings:
+    #         raise PreventUpdate
+    #
+    #     # Process selected_buildings and update the chart
+    #     # ...
+    #     updated_figure = None
+    #
+    #     return updated_figure
 
-    @dash_app.callback(
-        Output('chart-id', 'figure'),
-        [Input('interval-component', 'n_intervals')]
-    )
-    def update_chart(n_intervals):
-        global selected_buildings
-        if not selected_buildings:
-            raise PreventUpdate
-
-        # Process selected_buildings and update the chart
-        # ...
-        updated_figure = None
-
-        return updated_figure
+    return dash_app.server
