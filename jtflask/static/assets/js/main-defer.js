@@ -65,15 +65,8 @@ const locateWidget = new vendors.Locate({
     }),
 });
 
-const sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
-JTSketchWidget.setupSketchEventListeners(sketch, tileLayer);
 
-sketch.on("create", function(event) {
-    if (event.state === "complete") {
-        const geometry = event.graphic.geometry;
-        queryBuildings(geometry);
-    }
-});
+
 
 function queryBuildings(geometry) {
     var query = sceneLayer.createQuery();
@@ -114,7 +107,7 @@ let basemapToggle = new vendors.BasemapToggle({
 view.ui.move(["compass", "zoom", "navigation-toggle"  ], "bottom-right");
 view.ui.add(locateWidget, "bottom-right");
 view.ui.add( basemapToggle, "bottom-right");
-// view.ui.add(sketch, "bottom-right");
+// view.ui.move(sketch, "arcgis-sketch-container");
 
 
 map.add(sceneLayer);
@@ -217,34 +210,37 @@ view.when(() => {
 });
 
 // /test navlinks
+
+function initializeArcGISTool(){
+    // move sketch or reload sketch
+    console.log('initializeSketchTool statement')
+    let sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
+    JTSketchWidget.setupSketchEventListeners(sketch, tileLayer);
+    sketch.on("create", function(event) {
+        if (event.state === "complete") {
+            const geometry = event.graphic.geometry;
+            queryBuildings(geometry);
+        }
+    });
+
+}
 document.addEventListener('click', function(event) {
     if (event.target.id === 'open-charts-drawer-link') {
         console.log('Charts NavLink clicked');
     } else if (event.target.id === 'open-arcgis-drawer-link') {
         console.log('ArcGIS Tools NavLink clicked');
-    //     move sketch widget?
+        initializeArcGISTool()
     }
 });
 
-// reinitilize ro move sketch widget
 
-function reinitializeSketchTool(sketch){
-    // move sketch or reload sketch
+// document.addEventListener("DOMContentLoaded", function() {
+//     // Initialize your ArcGIS tool here
+//     initializeArcGISTool();
+//
+//     // Once initialized, dispatch a custom event
+//     const event = new CustomEvent('arcgis-tool-initialized');
+//     document.dispatchEvent(event);
+// });
 
 
-}
-document.addEventListener("DOMContentLoaded", function() {
-    // Listen for the reinit event
-    if (document.getElementById('reinit-tools')) {
-        setTimeout(function() {
-
-            reinitializeSketchTool(sketch);
-        }, 5);
-    }
-
-    // if (document.getElementById('reinit-charts')) {
-    //     setTimeout(function() {
-    //         initializeCharts();
-    //     }, 10);
-    // }
-});

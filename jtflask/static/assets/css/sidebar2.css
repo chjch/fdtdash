@@ -188,3 +188,7 @@ margin: 0 0 0.5rem
     width: 500px;
     height: 100vh;
 }
+
+#open-arcgis{
+    cursor: pointer;
+}
