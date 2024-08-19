@@ -7,7 +7,8 @@ def get_arcgis_sketch_card():
     arcgis_sketch_card = dmc.Card(
         children=[
             dmc.Text("ArcGIS Sketch Tool", size="lg", className="chartLabel"),
-            html.Div(id="arcgis-sketch-container", style={"height": "100px"})
+            html.Div(id="arcgis-sketch-container",
+                     style={"height": "100px"})
         ],
         withBorder=True,
         shadow="sm",

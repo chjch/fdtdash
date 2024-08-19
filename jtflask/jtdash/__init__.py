@@ -8,16 +8,17 @@ from dash_extensions import DeferScript, EventListener
 import dash_mantine_components as dmc
 from .layout import html_layout
 from .linecharts import means_to_work
-from .statsHoverCards import stats_hover_card
+from .statshovercards import stats_hover_card
 # from .charts import create_charts
-from .arcgisJS_tools import get_arcgis_sketch_card
-from .sidebar2 import sidebar2, get_sidebar_components
+from .arcgis_JS_tools import get_arcgis_sketch_card
+from .sidebar import sidebar, get_sidebar_components
 
 global_sidebar_brand = None
 global_sidebar_main_container = None
 global_collapse_button_container = None
 global_scrollable_div_charts = None
 global_scrollable_div_tools = None
+global_scrollable_div_hidden = None
 
 external_scripts = [
     {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
@@ -31,7 +32,8 @@ external_stylesheets = [
         "rel": "stylesheet",
     },
     {"src": "https://unpkg.com/@mantine/charts@7/styles.css"},
-    {"src":  "https://unpkg.com/@mantine/dates@7/styles.css"}
+    {"src":  "https://unpkg.com/@mantine/dates@7/styles.css"},
+    {"src": "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"}
 ]
 
 
@@ -59,7 +61,7 @@ def init_dashboard(server: Flask):
 
     event = {"event": "click", "props": ["srcElement.parentElement.dataset.geoid20"]}
 
-    # Initialize the sidebar components once and store them in global variables
+    # Initialize sidebar components and store as globals
     (global_sidebar_brand, global_sidebar_main_container,
      global_collapse_button_container, global_scrollable_div_charts,
      global_scrollable_div_tools) = get_sidebar_components()
@@ -69,69 +71,49 @@ def init_dashboard(server: Flask):
             [
                 DeferScript(src="../static/assets/js/main-defer.js"),
                 html.Div(id="deckgl-container"),
-                sidebar2(dash_app, global_sidebar_brand, global_sidebar_main_container,
-                         global_collapse_button_container, global_scrollable_div_charts,
-                         global_scrollable_div_tools),
                 EventListener(
                     id="arcgis-event-listener",
-                    events=[{"event": "arcgis-tool-initialized"}],
-                    logging=True  # Optional: Enable logging for debugging
-                ),
-                dcc.Store(id='arcgis-tool-state', data={}),
+                    events=[{"event": "restore-sketch-tool"},
+                            {"event": "hide-sketch-tool"}]),
+                dcc.Store(id="arcgis-tool-state"),
+                sidebar(dash_app, global_sidebar_brand, global_sidebar_main_container,
+                        global_collapse_button_container, global_scrollable_div_charts,
+                        global_scrollable_div_tools),
+
                 stats_hover_card
-                # use dcc store for buildings selection json
-                # dcc.Store()
             ]
         )
     )
 
-    # get sidebar components
-    # sidebar_brand, sidebar_main_container, collapse_button_container, scrollable_div_charts, scrollable_div_tools = get_sidebar_components(dash_app)
-
-    # save tool state
     @dash_app.callback(
-        Output('arcgis-tool-state', 'data'),
-        Input('arcgis-event-listener', 'event')
-    )
-    def save_arcgis_tool_state(event):
-        # Logic to extract the state of the ArcGIS tool and store it
-        tool_state = {"initialized": True}  # Example state, modify as per your tool's state
-        return tool_state
-
-    # toggle navlinks charts with state
-    @dash_app.callback(
-        Output("chart_scrollable_drawer", "children"),
-        Output("drawer-content-store", "data"),
+        [Output("chart_scrollable_div", "className"),
+         Output("arcgistools_scrollable_div", "className"),
+         Output("chart_scrollable_div", "style"),
+         Output("arcgistools_scrollable_div", "style"),
+         Output("drawer-content-store", "data")],
         [Input("open-charts-drawer-link", "n_clicks"),
-         Input("open-arcgis-drawer-link", "n_clicks"),
-         ],
-        [State('drawer-content-store', 'data'),
-         State('arcgis-tool-state', 'data')],
-        prevent_initial_call = True
+         Input("open-arcgis-drawer-link", "n_clicks")],
+        [State('drawer-content-store', 'data')],
+        prevent_initial_call=True
     )
-    def update_drawer_content(charts_click, tools_click, current_content, arcgis_tool_state):
+    def update_drawer_content(charts_click, tools_click, current_content):
         ctx = dash.callback_context
 
         if not ctx.triggered:
-            return no_update, no_update
+            return no_update, no_update, no_update, no_update, no_update
 
         trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
         if trigger_id == "open-charts-drawer-link" and current_content != 'charts':
-            return global_scrollable_div_charts, 'charts'
-        elif trigger_id == "open-arcgis-drawer-link" and current_content != 'tools':
-            # If ArcGIS tool was initialized before, reinitialize it
-            # if arcgis_tool_state.get('initialized'):
-            #     reinitialize_arcgis_tool_js = "initializeArcGISTool();"  # Custom JS logic to reinitialize
-            #     return [
-            #         global_scrollable_div_tools,
-            #         # dcc.Interval(id='reinit-sketch', interval=1, n_intervals=0),
-            #         dcc.Markdown(f'<script>{reinitialize_arcgis_tool_js}</script>', dangerously_allow_html=True)
-            #     ], 'tools'
-            return global_scrollable_div_tools, 'tools'
-        return no_update, no_update
+            return "slide-in", "slide-out", {"display": "block"}, {"display": "none"}, "charts"
 
-    # Collapse Chart Callback
+        elif trigger_id == "open-arcgis-drawer-link" and current_content != 'tools':
+            return "slide-out", "slide-in", {"display": "none"}, {"display": "block"}, "tools"
+
+        return no_update, no_update, no_update, no_update, no_update
+
+
+    # Collapse Sidebar Callback
     @dash_app.callback(
         [
             Output("chart_scrollable_drawer", "opened"),
@@ -160,29 +142,5 @@ def init_dashboard(server: Flask):
     def select_value(value):
         return value
 
-
-    # selected buildings Callback
-    selected_buildings = []
-
-    # @dash_app.sever.route('/jtdash/selection', methods=['POST'])
-    # def selection():
-    #     global selected_buildings
-    #     selected_buildings = request.json['buildings']
-    #     return jsonify({"status": "success"})
-    #
-    # @dash_app.callback(
-    #     Output('chart-id', 'figure'),
-    #     [Input('interval-component', 'n_intervals')]
-    # )
-    # def update_chart(n_intervals):
-    #     global selected_buildings
-    #     if not selected_buildings:
-    #         raise PreventUpdate
-    #
-    #     # Process selected_buildings and update the chart
-    #     # ...
-    #     updated_figure = None
-    #
-    #     return updated_figure
 
     return dash_app.server

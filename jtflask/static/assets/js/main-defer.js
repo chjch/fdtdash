@@ -1,10 +1,4 @@
 /*global vendors*/
-// noinspection JSCheckFunctionSignatures
-
-
-// const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
-//     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
-
 const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
     "PLW__JTAoi_Jax__WebLayer_AGOL/SceneServer"
 
@@ -25,6 +19,7 @@ const view = new vendors.SceneView({
         tilt: 51
     }
 });
+
 
 let sceneLayer = new vendors.SceneLayer({
     url: BLDG_JAX_DT,
@@ -80,6 +75,25 @@ function queryBuildings(geometry) {
         sendSelectionToDash(buildings);
     });
 }
+let arcgisToolInstance = null
+
+function initializeArcGISTool(){
+    // move sketch or reload sketch
+    console.log('initializeSketchTool statement')
+    const sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
+    JTSketchWidget.setupSketchEventListeners(sketch, tileLayer);
+    sketch.on("create", function(event) {
+        if (event.state === "complete") {
+            const geometry = event.graphic.geometry;
+            queryBuildings(geometry);
+        }
+    });
+
+    const event = new CustomEvent('arcgis-tool-initialized');
+    document.dispatchEvent(event);
+}
+
+arcgisToolInstance = initializeArcGISTool()
 
 function sendSelectionToDash(buildings) {
     fetch('/jtdash/selection', {
@@ -93,7 +107,6 @@ function sendSelectionToDash(buildings) {
           console.log('Success:', data);
       })
       .catch((error) => {
-          console.log(data)
           console.error('Error:', error);
       });
 }
@@ -209,38 +222,6 @@ view.when(() => {
     );
 });
 
-// /test navlinks
 
-function initializeArcGISTool(){
-    // move sketch or reload sketch
-    console.log('initializeSketchTool statement')
-    let sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
-    JTSketchWidget.setupSketchEventListeners(sketch, tileLayer);
-    sketch.on("create", function(event) {
-        if (event.state === "complete") {
-            const geometry = event.graphic.geometry;
-            queryBuildings(geometry);
-        }
-    });
-
-}
-document.addEventListener('click', function(event) {
-    if (event.target.id === 'open-charts-drawer-link') {
-        console.log('Charts NavLink clicked');
-    } else if (event.target.id === 'open-arcgis-drawer-link') {
-        console.log('ArcGIS Tools NavLink clicked');
-        initializeArcGISTool()
-    }
-});
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     // Initialize your ArcGIS tool here
-//     initializeArcGISTool();
-//
-//     // Once initialized, dispatch a custom event
-//     const event = new CustomEvent('arcgis-tool-initialized');
-//     document.dispatchEvent(event);
-// });
 
 
