@@ -79,7 +79,6 @@ def init_dashboard(server: Flask):
                 sidebar(dash_app, global_sidebar_brand, global_sidebar_main_container,
                         global_collapse_button_container, global_scrollable_div_charts,
                         global_scrollable_div_tools),
-
                 stats_hover_card
             ]
         )
