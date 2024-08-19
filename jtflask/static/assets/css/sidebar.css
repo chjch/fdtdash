@@ -1,18 +1,23 @@
 /* Custom slide animations */
 .slide-in {
+    /*animation-timing-function: linear;*/
     animation: slideIn 0.5s forwards;
 }
 
 .slide-out {
+    /*animation-timing-function: linear;*/
     animation: slideOut 0.5s forwards;
 }
 
+
 @keyframes slideIn {
     from {
+        animation-timing-function: ease;
         transform: translateY(100%);
         opacity: 0;
     }
     to {
+        animation-timing-function: ease;
         transform: translateY(0);
         opacity: 1;
     }
@@ -20,14 +25,54 @@
 
 @keyframes slideOut {
     from {
+        animation-timing-function: ease;
         transform: translateY(0);
         opacity: 1;
     }
     to {
+        animation-timing-function: ease;
         transform: translateY(-100%);
         opacity: 0;
     }
 }
+
+.drawer-slide-in {
+    animation: slideRight 0.5s forwards;
+}
+
+.drawer-slide-out {
+    animation: slideLeft 0.5s forwards;
+}
+
+.slide-left{
+    /*animation-timing-function: linear;*/
+    animation: slideLeft 0.5s forwards;
+}
+
+.slide-right {
+    /*animation-timing-function: linear;*/
+    animation: slideRight 0.5 forwards;
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+
 
 /*  End Custom slide animations */
 
@@ -89,14 +134,23 @@
 }
 
 #drawer {
-    overflow: hidden;
-    width: auto;
 
 }
+
 
 .mantine-Drawer-content {
     background: rgb(144 155 161 / 5%);
+    overflow: hidden;
+    overflow-y: scroll;
+    width: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
+
+.mantine-Drawer-content ::-webkit-scrollbar {
+    display: none;
+}
+
 
 .mantine-Drawer-inner {
     /*width: fit-content;*/
@@ -168,6 +222,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    z-index: 10001;
 }
 
 .sidebar-item {
@@ -214,6 +269,11 @@
 
 #pie_chart {
     height: 200px;
+}
+
+.srollable-div {
+    overflow-y: hidden;
+    /*height: 100%;*/
 }
 
 #scrollable-div-hidden {

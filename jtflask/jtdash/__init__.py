@@ -79,7 +79,6 @@ def init_dashboard(server: Flask):
                 sidebar(dash_app, global_sidebar_brand, global_sidebar_main_container,
                         global_collapse_button_container, global_scrollable_div_charts,
                         global_scrollable_div_tools),
-
                 stats_hover_card
             ]
         )
@@ -103,6 +102,13 @@ def init_dashboard(server: Flask):
             return no_update, no_update, no_update, no_update, no_update
 
         trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+        # List of sidebar icon NavLinks that should trigger the callback
+        valid_navlinks = ["open-charts-drawer-link", "open-arcgis-drawer-link"]
+
+        # Only execute if the trigger is a sidebar icon NavLink
+        if trigger_id not in valid_navlinks:
+            return no_update, no_update, no_update, no_update, no_update
 
         if trigger_id == "open-charts-drawer-link" and current_content != 'charts':
             return "slide-in", "slide-out", {"display": "block"}, {"display": "none"}, "charts"

@@ -67,6 +67,8 @@ def get_sidebar_components():
         ],
         className="sidebar-main sidebar-item",
         id="sidebar-main",
+        style={"z": "20px"}
+
     )
 
     collapse_button = dmc.Button(
@@ -95,7 +97,7 @@ def get_sidebar_components():
     scrollable_div_tools = html.Div(
         children=arcgis_tools,
         id="arcgistools_scrollable_div",
-        className="scrollable-div"
+        className="scrollable-div hidden"
     )
 
     return sidebar_brand, sidebar_main, collapse_button_container, scrollable_div_charts, scrollable_div_tools
@@ -106,6 +108,7 @@ def sidebar(dash_app, sidebar_brand, sidebar_main, collapse_button_container, sc
         children=[scrollable_div_charts,
                   scrollable_div_tools],
         id="chart_scrollable_drawer",
+        className="",
         padding="2",
         opened=True,
         keepMounted=True,
@@ -118,7 +121,7 @@ def sidebar(dash_app, sidebar_brand, sidebar_main, collapse_button_container, sc
             "duration": 500,
             "timingFunction": "ease",
         },
-        zIndex=9999,
+        zIndex=10000,
     )
 
     drawer_content = html.Div(
@@ -146,7 +149,7 @@ def sidebar(dash_app, sidebar_brand, sidebar_main, collapse_button_container, sc
         transitionProps={
             "transition": "slide-left",
             "duration": 500,
-            "timingFunction": "ease",
+            "timingFunction": "linear",
         },
         zIndex=10000,
     )

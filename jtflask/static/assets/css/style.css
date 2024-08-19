@@ -14,6 +14,10 @@ body,
     width: 100vw;
 }
 
+.hidden {
+    display: none;
+}
+
 .esri-ui .esri-component {
     /*border-radius: 5px !important;*/
 }
