@@ -1,106 +1,152 @@
-import dash
-from dash import html
+from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
-
-
+from .charts import create_charts
+from .arcgis_JS_tools import get_arcgis_sketch_card
 
 def get_icon(icon, icon_id=None):
-    if icon_id is None:
-        return DashIconify(icon=icon)
-    else:
-        return DashIconify(icon=icon, id=icon_id)
+    return DashIconify(icon=icon, id=icon_id) if icon_id else DashIconify(icon=icon)
 
-sidebar_brand = html.Div(
-    [
-        DashIconify(icon="fluent:city-16-filled", id="sidebar-brand-logo"),
-        html.P(
-            children=[
-                html.Span('Jax', style={"font-family": "IBM Plex Sans Condensed", "font-style": "italic"}),
-                html.Span('Twin', style={"font-family": "IBM Plex Sans Condensed", "font-weight": "500"}),
-            ],
-            style={"margin": "0 0 0.5rem"}
-        )
-    ],
-    className="sidebar-brand",
-    id="sidebar-brand"
-)
+def get_sidebar_components():
+    charts = create_charts()
+    arcgis_tools = get_arcgis_sketch_card()
 
-sidebar_main = html.Div(
-    [
-        dmc.NavLink(
-            id="sidebar-home",
-            icon=get_icon(icon="fluent:data-pie-20-regular"),
-            className="sidebar-icon",
-        ),
-        dmc.NavLink(
-            icon=get_icon(icon="tabler:gauge"),
-            className="sidebar-icon",
-        ),
-        dmc.NavLink(
-            icon=get_icon(icon="solar:layers-minimalistic-linear"),
-            className="sidebar-icon",
-        ),
-        dmc.NavLink(
-            icon=get_icon(icon="f7:list-bullet"),
-            className="sidebar-icon",
-        ),
-        dmc.NavLink(
-            icon=get_icon(icon="mage:message-info-round"),
-            className="sidebar-icon",
-        ),
-    ],
-    className="sidebar-main",
-    id="sidebar-main"
-)
+    sidebar_brand = html.Div(
+        [
+            get_icon("solar:box-minimalistic-bold", "sidebar-brand-logo"),
+            html.P(
+                children=[
+                    html.Span('Jax', style={"font-weight": "bolder"}),
+                    html.Span('Twin', style={"font-weight": "400"}),
+                ],
+                id="sidebar-brand-logo-text"
+            )
+        ],
+        className="sidebar-brand sidebar-item",
+        id="sidebar-brand"
+    )
 
-collapse_button = dmc.Button(
-    DashIconify(icon="fluent:chevron-left-24-filled", id="collapse-icon", color="black"),
-    id="collapse-button",
-    variant="light",
-    color="gray",
-    compact=True,
-    fullWidth=True,
-    style={"margin": "auto", "display": "block"},
+    sidebar_main = html.Div(
+        [
+            dmc.NavLink(
+                id="open-charts-drawer-link",
+                leftSection=get_icon("fluent:data-pie-20-regular", "open-charts"),
+                className="sidebar-icon",
+            ),
+            dmc.NavLink(
+                id="open-arcgis-drawer-link",
+                leftSection=get_icon("solar:routing-2-linear", "open-arcgis"),
+                className="sidebar-icon",
 
-)
+            ),
+            dmc.NavLink(
+                id="buildings-link",
+                leftSection=get_icon("ph:buildings"),
+                className="sidebar-icon",
+            ),
+            dmc.NavLink(
+                id="clipboard-link",
+                leftSection=get_icon("solar:clipboard-text-linear"),
+                className="sidebar-icon",
+            ),
+            dmc.NavLink(
+                id="layers-link",
+                leftSection=get_icon("solar:layers-minimalistic-linear"),
+                className="sidebar-icon",
+            ),
+            dmc.NavLink(
+                id="list-link",
+                leftSection=get_icon("la:list-ul"),
+                className="sidebar-icon",
+            ),
+            dmc.NavLink(
+                id="maps-link",
+                leftSection=get_icon("hugeicons:maps-square-01"),
+                className="sidebar-icon",
+            ),
+        ],
+        className="sidebar-main sidebar-item",
+        id="sidebar-main",
+    )
 
-collapse_button_container = html.Div(
-    collapse_button,
-    id="collapse-button-container",
-)
+    collapse_button = dmc.Button(
+        get_icon("heroicons:chevron-double-left-16-solid", "collapse-icon"),
+        id="collapse-button",
+        variant="default",
+        fullWidth=False,
+    )
 
-svgblur = html.Img(src=dash.get_asset_url('svg/sidebar.svg'),
-                   id="svgblur")
+    collapse_button_container = html.Div(
+        collapse_button,
+        id="collapse-button-container",
+        className="sidebar-item"
+    )
+    scrollable_div_hidden = html.Div(
+        id="scrollable-div-hidden",
+        className="scrollable-div"
+    )
 
-drawer_content = dmc.SimpleGrid(
-    cols=2,
-    children=[
-        html.Div(
-            [sidebar_brand, sidebar_main
-             ],
-            style={"height": "100%"},
-            id="sidebar-col1"
-        ),
-        collapse_button_container
+    scrollable_div_charts = html.Div(
+        children=charts,
+        id="chart_scrollable_div",
+        className="scrollable-div"
+    )
+
+    scrollable_div_tools = html.Div(
+        children=arcgis_tools,
+        id="arcgistools_scrollable_div",
+        className="scrollable-div"
+    )
+
+    return sidebar_brand, sidebar_main, collapse_button_container, scrollable_div_charts, scrollable_div_tools
 
 
-    ],
-    id="drawer-body",
-    style={"height": "100%"}
-)
+def sidebar(dash_app, sidebar_brand, sidebar_main, collapse_button_container, scrollable_div_charts, scrollable_div_tools):
+    scrollable_div_drawer = dmc.Drawer(
+        children=[scrollable_div_charts,
+                  scrollable_div_tools],
+        id="chart_scrollable_drawer",
+        padding="2",
+        opened=True,
+        keepMounted=True,
+        closeOnClickOutside=False,
+        withinPortal=False,
+        withOverlay=False,
+        withCloseButton=False,
+        transitionProps={
+            "transition": "slide-right",
+            "duration": 500,
+            "timingFunction": "ease",
+        },
+        zIndex=9999,
+    )
 
-def sidebar():
+    drawer_content = html.Div(
+        [
+            html.Div(
+                [sidebar_brand, sidebar_main, collapse_button_container],
+                id="sidebar-col1"
+            ),
+            scrollable_div_drawer,
+            dcc.Store(id='drawer-content-store', data={'charts': 'charts', 'tools': 'tools'})
+        ],
+        id="drawer-body-grid",
+    )
+
     return dmc.Drawer(
         children=[drawer_content],
         id="drawer",
         padding=0,
-        opened=True,  # Start open
-        size="80px",  # Initial size
+        opened=True,
+        withinPortal=False,
         position="left",
-        closeOnClickOutside=False,  # Do not take focus or close on outside click
-        withOverlay=False,  # Disable overlay to prevent taking focus
+        closeOnClickOutside=False,
+        withOverlay=False,
         withCloseButton=False,
-        transition="slide-left",
-        transitionDuration=1000
+        transitionProps={
+            "transition": "slide-left",
+            "duration": 500,
+            "timingFunction": "ease",
+        },
+        zIndex=10000,
     )

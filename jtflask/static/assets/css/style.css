@@ -17,7 +17,8 @@ body,
 .esri-ui .esri-component {
     /*border-radius: 5px !important;*/
 }
-.esri-ui-corner .esri-component{
+
+.esri-ui-corner .esri-component {
     border-radius: 15px !important;
 }
 
@@ -29,8 +30,9 @@ body,
     align-items: flex-end; /* Align widgets to the right */
     padding-bottom: 20px; /* Optional: Add padding to the bottom */
 }
+
 .esri-compass {
-	/*border-radius: 50% !important;*/
+    /*border-radius: 50% !important;*/
 }
 
 #uiCornerBottomRight > * {
@@ -46,25 +48,26 @@ body,
 /*    border-start-start-radius: 5px    ;*/
 /*}*/
 
- /*.esri-widget, .esri-widget--button {*/
- /*       border-radius: 50px;*/
- /*}*/
+/*.esri-widget, .esri-widget--button {*/
+/*       border-radius: 50px;*/
+/*}*/
 
 .esri-ui-bottom-right {
     flex-flow: column !important;
 
 }
-.esri-ui-bottom-right .esri-component{
+
+.esri-ui-bottom-right .esri-component {
     margin-bottom: 10px !important;
 }
 
 calcite-icon {
-    --calcite-ui-icon-color:  var(--main-color) !important;
+    --calcite-ui-icon-color: var(--main-color) !important;
     /*color: #5932EA;*/
 }
 
 calcite-button {
-    --calcite-ui-icon-color:  var(--main-color) !important;
+    --calcite-ui-icon-color: var(--main-color) !important;
     /*color: #5932EA;*/
 }
 
@@ -74,8 +77,7 @@ calcite-button {
 /*}*/
 
 
-
-.button-padding--shrunk .icon-end-empty{
+.button-padding--shrunk .icon-end-empty {
     border-right: 5px;
 }
 
@@ -83,7 +85,8 @@ calcite-button {
     display: contents !important;
     align-self: center !important;
 }
-.esri-sketch__panel{
+
+.esri-sketch__panel {
     justify-content: center !important;
 }
 
@@ -100,122 +103,42 @@ calcite-button {
 
 #customLocateButton,
 #customLocateButton calcite-button {
-    border-radius: 50%; !important;
-    --calcite-color-brand-hover: transparent; !important;
+    border-radius: 50%;
+!important;
+    --calcite-color-brand-hover: transparent;
+!important;
     --calcite-ui-icon-color: var(--main-color) !important;
 }
 
 #customZoomButton,
 #customZoomButton calcite-button[title="Zoom out"] {
-    border-bottom-left-radius: 10px; !important;
-    border-bottom-right-radius: 10px; !important;
-    --calcite-color-brand-hover: transparent; !important;
+    border-bottom-left-radius: 10px;
+!important;
+    border-bottom-right-radius: 10px;
+!important;
+    --calcite-color-brand-hover: transparent;
+!important;
     --calcite-ui-icon-color: var(--main-color) !important;
     border-color: var(--main-color) !important;
 }
+
 #customZoomButton,
 #customZoomButton calcite-button[title="Zoom in"] {
-    border-top-left-radius: 10px; !important;
-    border-top-right-radius: 10px; !important;
+    border-top-left-radius: 10px;
+!important;
+    border-top-right-radius: 10px;
+!important;
     --calcite-ui-icon-color: var(--main-color) !important;
 }
 
-/*.sidebar {*/
-/*    width: 80px;*/
-/*    height: 100vh;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    background-color: #f4f4f4; !* Choose a background color that fits your app's theme *!*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: space-between;*/
-/*    box-shadow: 2px 0 5px rgba(0,0,0,0.1); !* Optional: adds shadow to the sidebar *!*/
-/*}*/
-
-/*.sidebar-brand {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    !*margin: 20px 0 0;*!*/
-/*    margin: 0 auto;*/
-/*    text-align: center;*/
-/*}*/
-
-/*.sidebar-main {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    flex-grow: 1;*/
-/*    justify-content: center;*/
-/*}*/
-
-/*#drawer-body {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    height: 100%;*/
-/*    width: 100%;*/
-/*    !*overflow: hidden;*!*/
-
-/*}*/
-
-/*#drawer {*/
-/*    border-radius: 5px;*/
-/*    background-color: chartreuse;*/
-/*    !*overflow: hidden;*!*/
-
-/*}*/
-
-/*#collapse-button-container {*/
-/*    height: 100%;*/
-/*    width: 15px;*/
-/*    background-color: lightgray;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    border-radius: 5px;*/
-/*}*/
-
-/*#collapse-button {*/
-/*    height: 100%;*/
-/*    width: 15px;*/
-/*    !*background-color: green;*!*/
-/*    cursor: pointer;*/
-/*    padding-left: 0px;*/
-/*    padding-right: 0px;*/
-/*}*/
-
-/*.sidebar-icon {*/
-/*    !*padding: 0;*!*/
-/*    margin: 20px 0px 20px 0px;*/
-/*}*/
-
-/*#sidebar-brand-logo {*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*    width: 32px;*/
-/*    height: 32px;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    color: var(--main-color);*/
-/*}*/
-/*#sidebar-col1 {*/
-/*    height: auto !important;*/
-/*    width: auto;*/
-/*    padding-left: 25px;*/
-/*}*/
-
-.mantine-w78bjd{
+.mantine-w78bjd {
     border-radius: 0px;
 }
 
 .mantine-1t8pnl2 {
     border-radius: 0px;
 }
+
 .mantine-NavLink-body {
     display: none;
 }
