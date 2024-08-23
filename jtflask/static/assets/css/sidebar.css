@@ -128,11 +128,14 @@
 
 #drawer {
     width: fit-content(100%);
-    height: -webkit-fill-available;
+    height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    height: -moz-available;          /* WebKit-based browsers will ignore this. */
+    height: fill-available;
     position: absolute;
     left: 0px;
     top: 0px;
     z-index: 10000;
+    height: 100%;
 }
 
 
