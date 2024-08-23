@@ -12,8 +12,14 @@
 
 }
 
+#stats-hover-card-affix {
+    position: absolute;
+    top: 0;
+    right: 250px;
+}
 
 .statsCard{
+    box-sizing: content-box;
     margin-bottom: 20px;
     background-color: rgb(200 200 200 / 100%);
     background-image: linear-gradient(to bottom right, var( --statcard-gradient-1-color-trans), var( --statcard-gradient-1-color-trans),var( --statcard-gradient-1-color-trans),var( --statcard-gradient-1-color-trans),var(--main-color-trans),var(--main-color-trans));

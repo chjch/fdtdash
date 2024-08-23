@@ -38,9 +38,13 @@ let sceneLayer = new vendors.SceneLayer({
         }
     },
 });
-const tileLayer = new vendors.ImageryTileLayer({url: demImageServer});
+const tileLayer = new vendors.ImageryTileLayer({
+    url: demImageServer
+});
 const graphicsLayer = new vendors.GraphicsLayer({
-    elevationInfo: {mode: "relative-to-ground"}
+    elevationInfo: {
+        mode: "relative-to-ground"
+    }
 });
 
 // Create the Locate widget
@@ -60,9 +64,6 @@ const locateWidget = new vendors.Locate({
     }),
 });
 
-
-
-
 function queryBuildings(geometry) {
     var query = sceneLayer.createQuery();
     query.geometry = geometry;
@@ -77,7 +78,7 @@ function queryBuildings(geometry) {
 }
 let arcgisToolInstance = null
 
-function initializeArcGISTool(){
+function initializeArcGISTool() {
     // move sketch or reload sketch
     console.log('initializeSketchTool statement')
     const sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
@@ -97,29 +98,31 @@ arcgisToolInstance = initializeArcGISTool()
 
 function sendSelectionToDash(buildings) {
     fetch('/jtdash/selection', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ buildings: buildings }),
-    }).then(response => response.json())
-      .then(data => {
-          console.log('Success:', data);
-      })
-      .catch((error) => {
-          console.error('Error:', error);
-      });
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                buildings: buildings
+            }),
+        }).then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
 
 
 let basemapToggle = new vendors.BasemapToggle({
-    view: view,  // The view that provides access to the map's "streets-vector" basemap
-    nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+    view: view, // The view that provides access to the map's "streets-vector" basemap
+    nextBasemap: "hybrid" // Allows for toggling to the "hybrid" basemap
 });
 
-view.ui.move(["compass", "zoom", "navigation-toggle"  ], "bottom-right");
+view.ui.move(["compass", "zoom", "navigation-toggle"], "bottom-right");
 view.ui.add(locateWidget, "bottom-right");
-view.ui.add( basemapToggle, "bottom-right");
+view.ui.add(basemapToggle, "bottom-right");
 // view.ui.move(sketch, "arcgis-sketch-container");
 
 
@@ -221,7 +224,3 @@ view.when(() => {
         "uiCornerBottomRight"
     );
 });
-
-
-
-

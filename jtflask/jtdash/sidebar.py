@@ -146,10 +146,10 @@ def sidebar(dash_app, sidebar_brand, sidebar_main, collapse_button_container, sc
         closeOnClickOutside=False,
         withOverlay=False,
         withCloseButton=False,
-        transitionProps={
-            "transition": "slide-left",
-            "duration": 500,
-            "timingFunction": "linear",
-        },
+        # transitionProps={
+        #     "transition": "slide-left",
+        #     "duration": 500,
+        #     "timingFunction": "linear",
+        # },
         zIndex=10000,
     )

@@ -2,45 +2,47 @@
 @import url("https://js.arcgis.com/4.29/esri/themes/light/main.css");
 
 :root {
-    --main-color: #5932EA;
+	--main-color: #5932EA;
 }
 
 html,
 body,
 #deckgl-container {
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    width: 100vw;
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 .esri-ui .esri-component {
-    /*border-radius: 5px !important;*/
+	/*border-radius: 5px !important;*/
 }
 
 .esri-ui-corner .esri-component {
-    border-radius: 15px !important;
+	border-radius: 15px !important;
 }
 
 #uiCornerBottomRight {
-    display: flex;
-!important;
-    flex-direction: column;
-!important;
-    align-items: flex-end; /* Align widgets to the right */
-    padding-bottom: 20px; /* Optional: Add padding to the bottom */
+	display: flex;
+	 !important;
+	flex-direction: column;
+	 !important;
+	align-items: flex-end;
+	/* Align widgets to the right */
+	padding-bottom: 20px;
 }
 
 .esri-compass {
-    /*border-radius: 50% !important;*/
+	/*border-radius: 50% !important;*/
 }
 
-#uiCornerBottomRight > * {
-    margin-bottom: 10px; /* Add margin between elements */
+#uiCornerBottomRight>* {
+	margin-bottom: 10px;
+	/* Add margin between elements */
 }
 
 /*.esri-compass {*/
@@ -57,22 +59,22 @@ body,
 /*}*/
 
 .esri-ui-bottom-right {
-    flex-flow: column !important;
+	flex-flow: column !important;
 
 }
 
 .esri-ui-bottom-right .esri-component {
-    margin-bottom: 10px !important;
+	margin-bottom: 10px !important;
 }
 
 calcite-icon {
-    --calcite-ui-icon-color: var(--main-color) !important;
-    /*color: #5932EA;*/
+	--calcite-ui-icon-color: var(--main-color) !important;
+	/*color: #5932EA;*/
 }
 
 calcite-button {
-    --calcite-ui-icon-color: var(--main-color) !important;
-    /*color: #5932EA;*/
+	--calcite-ui-icon-color: var(--main-color) !important;
+	/*color: #5932EA;*/
 }
 
 
@@ -82,80 +84,81 @@ calcite-button {
 
 
 .button-padding--shrunk .icon-end-empty {
-    border-right: 5px;
+	border-right: 5px;
 }
 
 .esri-sketch {
-    display: contents !important;
-    align-self: center !important;
+	display: contents !important;
+	align-self: center !important;
 }
 
 .esri-sketch__panel {
-    justify-content: center !important;
+	justify-content: center !important;
 }
 
 .esri-attribution__sources {
-    display: none;
+	display: none;
 }
 
 .esri-attribution__powered-by {
-    position: absolute;
-    width: 10vw;
-    right: 0;
-    background: rgba(255, 255, 255, 0.4);
+	position: absolute;
+	width: 10vw;
+	right: 0;
+	background: rgba(255, 255, 255, 0.4);
 }
 
 #customLocateButton,
 #customLocateButton calcite-button {
-    border-radius: 50%;
-!important;
-    --calcite-color-brand-hover: transparent;
-!important;
-    --calcite-ui-icon-color: var(--main-color) !important;
+	border-radius: 50%;
+	 !important;
+	--calcite-color-brand-hover: transparent;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
 }
 
 #customZoomButton,
 #customZoomButton calcite-button[title="Zoom out"] {
-    border-bottom-left-radius: 10px;
-!important;
-    border-bottom-right-radius: 10px;
-!important;
-    --calcite-color-brand-hover: transparent;
-!important;
-    --calcite-ui-icon-color: var(--main-color) !important;
-    border-color: var(--main-color) !important;
+	border-bottom-left-radius: 10px;
+	 !important;
+	border-bottom-right-radius: 10px;
+	 !important;
+	--calcite-color-brand-hover: transparent;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
+	border-color: var(--main-color) !important;
 }
 
 #customZoomButton,
 #customZoomButton calcite-button[title="Zoom in"] {
-    border-top-left-radius: 10px;
-!important;
-    border-top-right-radius: 10px;
-!important;
-    --calcite-ui-icon-color: var(--main-color) !important;
+	border-top-left-radius: 10px;
+	 !important;
+	border-top-right-radius: 10px;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
 }
 
 .mantine-w78bjd {
-    border-radius: 0px;
+	border-radius: 0px;
 }
 
 .mantine-1t8pnl2 {
-    border-radius: 0px;
+	border-radius: 0px;
 }
 
 .mantine-NavLink-body {
-    display: none;
+	display: none;
 }
 
 .mantine-NavLink-icon {
-    margin: 0;
-    display: flex;
+	margin: 0;
+	display: flex;
 }
 
 .iconify {
-    width: 24px;
-    height: 24px;
-    transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for size changes */
+	width: 24px;
+	height: 24px;
+	transition: width 0.3s ease, height 0.3s ease;
+	/* Smooth transition for size changes */
 }
 
 /*.esri-ui-bottom-right {*/
@@ -166,8 +169,10 @@ calcite-button {
 
 /* Adjust icon sizes on larger screens */
 @media (min-width: 1600px) {
-    .iconify {
-        width: 32px; /* Larger size for large screens */
-        height: 32px; /* Keep width and height the same for consistency */
-    }
+	.iconify {
+		width: 32px;
+		/* Larger size for large screens */
+		height: 32px;
+		/* Keep width and height the same for consistency */
+	}
 }

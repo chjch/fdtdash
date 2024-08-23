@@ -72,7 +72,28 @@ const JTSketchWidget = (() => {
     const handleSketchComplete = (graphic, tileLayer) => {
         let centroid = graphic.geometry.centroid;
         tileLayer.identify(centroid).then(results => {
-            let pixelValue = results.value[0];
+        let pixelValue = results.value[0];
+
+
+       // // Extract multidimensionalInfo safely, with a default empty object
+       //  let multidimensionalInfo = results.multidimensionalInfo || {
+       //      dimensions: []  // Default empty dimensions array if multidimensionalInfo is null or undefined
+       //  };
+       //
+       //  console.log("multidimensionalInfo:", multidimensionalInfo);
+       //
+       //  // Store multidimensionalInfo in the graphic's attributes
+       //  graphic.attributes = {
+       //      ...graphic.attributes,
+       //      multidimensionalInfo: multidimensionalInfo.dimensions.length > 0 ? multidimensionalInfo : {
+       //          dimensions: [
+       //              { time: "2024-08-07T16:00:00Z", depth: 100, value: 45 },
+       //              { time: "2024-08-07T17:00:00Z", depth: 150, value: 50 }
+       //          ]
+       //      }
+       //  };
+
+
             graphic.symbol = new vendors.PolygonSymbol3D({
                 symbolLayers: [
                     new vendors.ExtrudeSymbol3DLayer({
@@ -89,7 +110,7 @@ const JTSketchWidget = (() => {
             });
         });
     };
-
+``
     // Function to set up event listeners for the Sketch widget
     const setupSketchEventListeners = (sketch, tileLayer) => {
         sketch.on("create", event => {

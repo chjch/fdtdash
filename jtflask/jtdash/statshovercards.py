@@ -52,7 +52,8 @@ hover_cards = html.Div(
 # Affix
 stats_hover_card = dmc.Affix(
     children=hover_cards,
-    position={"top": 0, "right": 225},
-    zIndex=1000
+    position={"top": 0, "right": 250},
+    zIndex=1000,
+    id="stats-hover-card-affix"
 )
 
