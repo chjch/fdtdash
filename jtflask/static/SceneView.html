@@ -451,7 +451,7 @@
               const timeSlider = new TimeSlider({
                   mode: "instant",
                   view: view,
-                  playRate: 2500,
+                  playRate: 1500,
                   timeVisible: true,
                   fullTimeExtent: {
                       start: new Date(dates[0]), // Oct 22, 2015 8 pm
@@ -461,7 +461,7 @@
                       dates: dates
                   }
               });
-              view.ui.add(timeSlider, "bottom-left");
+              view.ui.add(timeSlider, "bottom-right");
               timeSlider.watch("timeExtent", function(newTimeExtent) {
                   // console.log(newTimeExtent.start);
                   // console.log(newTimeExtent.end.getTime());
@@ -484,6 +484,9 @@
           margin: 0;
           height: 100%;
           width: 100%;
+      }
+      #sketchWidget {
+          display: none; !important;
       }
   </style>
 </head>
