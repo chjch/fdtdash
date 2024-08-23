@@ -16,7 +16,7 @@ html_layout = '''
         <div class='splash'>
             <div class='logo'>
                 <h1 class='animate__animated animate__fadeInDown'>Jax</h1>
-                <h1 class='animate__animated animate__fadeInUp'>Twin</h1>
+                <h1 class='animate__animated animate__fadeInUp animate__delay-1s'>Twin</h1>
             </div>
         </div>
         <footer>
