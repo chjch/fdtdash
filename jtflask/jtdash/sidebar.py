@@ -136,20 +136,8 @@ def sidebar(dash_app, sidebar_brand, sidebar_main, collapse_button_container, sc
         id="drawer-body-grid",
     )
 
-    return dmc.Drawer(
+    return html.Div(
         children=[drawer_content],
         id="drawer",
-        padding=0,
-        opened=True,
-        withinPortal=False,
-        position="left",
-        closeOnClickOutside=False,
-        withOverlay=False,
-        withCloseButton=False,
-        # transitionProps={
-        #     "transition": "slide-left",
-        #     "duration": 500,
-        #     "timingFunction": "linear",
-        # },
-        zIndex=10000,
     )
+

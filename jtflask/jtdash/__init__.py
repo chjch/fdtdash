@@ -123,7 +123,6 @@ def init_dashboard(server: Flask):
     @dash_app.callback(
         [
             Output("chart_scrollable_drawer", "opened"),
-            Output("drawer", "size"),
             Output("collapse-icon", "icon"),
 
 
@@ -133,9 +132,8 @@ def init_dashboard(server: Flask):
         prevent_initial_call=True,
     )
     def toggle_drawer_and_size(n_clicks, is_open):
-        new_size = "auto" if is_open else "md"
         new_icon = "heroicons:chevron-double-right-16-solid" if is_open else "heroicons:chevron-double-left-16-solid"
-        return not is_open, new_size, new_icon
+        return not is_open, new_icon
 
     # Scenario Chart callback
     @dash_app.callback(Output("yearSelectValue", "children"),
