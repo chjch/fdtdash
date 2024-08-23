@@ -1,11 +1,22 @@
 export const hideSplashScreen = () => {
   const [jaxLogoH1, twinLogoH1] = document.querySelectorAll(".logo h1");
+  const logoImage = document.querySelector(".logo-image")
+  const splashDiv = document.querySelector(".splash");
+
   jaxLogoH1.classList.add("animate__fadeOutUp");
   twinLogoH1.classList.replace('animate__delay-1s', 'animate__fadeOutDown')
-  twinLogoH1.classList.add("animate__fadeOutDown");
-  setTimeout(() => {
-    const splashDiv = document.querySelector(".splash");
-    splashDiv.classList.add("animate__animated", "animate__fadeOut");
-    splashDiv.setAttribute('hidden', 'true')
-  }, 2000);
+
+  twinLogoH1.addEventListener('animationend', () => {
+    logoImage.removeAttribute('hidden')
+    // logoImage.classList.add('animate__animated', 'animate__fadeIn')
+  });
+
+  logoImage.addEventListener('animationend', () => {
+    logoImage.classList.add('animate__fadeOut')
+    splashDiv.classList.add("animate__animated", "animate__fadeOutUp");
+    setTimeout(()=>{
+      splashDiv.setAttribute('hidden', 'true')
+    }, 2000)
+
+  });
 }
