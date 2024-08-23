@@ -34,7 +34,6 @@ body,
     display: flex;
     flex-direction: row;
     color: white;
-    gap: 10px;
 }
 
 
