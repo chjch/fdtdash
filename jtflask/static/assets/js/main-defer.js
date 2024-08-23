@@ -1,6 +1,8 @@
 /*global vendors*/
 // noinspection JSCheckFunctionSignatures
 
+const { utils } = vendors;
+
 // const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
 //     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
 
@@ -92,14 +94,8 @@ const setElementId = (element, id) => {
 };
 
 view.when(() => {
-  const [jaxLogoH1, twinLogoH1] = document.querySelectorAll(".logo h1");
-  jaxLogoH1.classList.add("animate__animated", "animate__fadeOutUp");
-  twinLogoH1.classList.add("animate__animated", "animate__fadeOutDown");
-  setTimeout(() => {
-    const splashDiv = document.querySelector(".splash");
-    splashDiv.classList.add("animate__animated", "animate__fadeOut");
-  }, 1000);
-
+  utils.hideSplashScreen();
+  
   view.map.basemap.referenceLayers.forEach((layer) => {
     if (layer.title === "Buildings") {
       layer.visible = false;
