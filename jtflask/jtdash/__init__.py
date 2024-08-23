@@ -24,7 +24,7 @@ external_stylesheets = [
         "rel": "stylesheet",
     },
     {"src": "https://unpkg.com/@mantine/charts@7/styles.css"},
-    {"src":  "https://unpkg.com/@mantine/dates@7/styles.css"}
+    {"src":  "https://unpkg.com/@mantine/dates@7/styles.css"},
 ]
 
 

@@ -14,6 +14,30 @@ body,
     width: 100vw;
 }
 
+.splash {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    z-index: 1000000;
+}
+
+.splash[hidden="true"] {
+    display: none;
+}
+  
+.logo {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    gap: 10px;
+}
+
+
 /*.esri-ui .esri-component {*/
 /*    border-radius: 5px !important;*/
 /*}*/

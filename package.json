@@ -18,8 +18,8 @@
     "@arcgis/core": "~4.29.0"
   },
   "devDependencies": {
-    "css-loader": "^6.10.0",
     "babel-loader": "^8.2.2",
+    "css-loader": "^6.10.0",
     "mini-css-extract-plugin": "^2.8.1",
     "source-map-loader": "^5.0.0",
     "terser-webpack-plugin": "^5.3.10",
