@@ -120,10 +120,9 @@ let basemapToggle = new vendors.BasemapToggle({
     nextBasemap: "hybrid" // Allows for toggling to the "hybrid" basemap
 });
 
-view.ui.move(["compass", "zoom", "navigation-toggle"], "bottom-right");
 view.ui.add(locateWidget, "bottom-right");
+view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
 view.ui.add(basemapToggle, "bottom-right");
-// view.ui.move(sketch, "arcgis-sketch-container");
 
 
 map.add(sceneLayer);
@@ -222,5 +221,9 @@ view.when(() => {
     setElementId(
         document.querySelector('.esri-ui-bottom-right.esri-ui-corner'),
         "uiCornerBottomRight"
+    );
+    setElementId(
+        document.querySelector('.esri-component.esri-navigation-toggle.esri-widget'),
+        "customNavigationToggle"
     );
 });

@@ -1,0 +1,59 @@
+#yearSelectValue {
+	font-weight: 700;
+	font-size: xx-large;
+	align-self: center;
+    font-family: 'Inter', sans-serif;
+}
+
+
+#stormSelectValue {
+    font-weight: 500;
+    font-size: large;
+    align-self: center;
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+#stormSelect {
+	color: var(--main-color);
+	font-weight: 500;
+	font-size: medium;
+
+}
+
+#yearSelect {
+	color: var(--main-color);
+	font-weight: 500;
+	font-size: medium;
+
+}
+
+
+.cardChart {
+    width: 95%;
+}
+
+.chartLabel {
+    font-weight: 600;
+    padding-bottom: 20px;
+}
+
+#area_chart {
+
+}
+
+#donut_chart {
+    height: 200px;
+}
+
+#barchart_bar {
+
+}
+
+#line_chart {
+
+}
+
+#pie_chart {
+    height: 200px;
+}

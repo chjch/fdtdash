@@ -30,39 +30,46 @@ def get_sidebar_components():
         [
             dmc.NavLink(
                 id="open-charts-drawer-link",
-                leftSection=get_icon("fluent:data-pie-20-regular", "open-charts"),
+                # leftSection=get_icon("fluent:data-pie-20-regular", "open-charts"),
+                leftSection=DashIconify(icon="fluent:data-pie-20-regular", width="24px"),
                 className="sidebar-icon",
+                **{"data-position": "center"},
             ),
             dmc.NavLink(
                 id="open-arcgis-drawer-link",
                 leftSection=get_icon("solar:routing-2-linear", "open-arcgis"),
                 className="sidebar-icon",
-
+                **{"data-position": "center"}
             ),
             dmc.NavLink(
                 id="buildings-link",
                 leftSection=get_icon("ph:buildings"),
                 className="sidebar-icon",
+                **{"data-position": "center"}
             ),
             dmc.NavLink(
                 id="clipboard-link",
                 leftSection=get_icon("solar:clipboard-text-linear"),
                 className="sidebar-icon",
+                **{"data-position": "center"}
             ),
             dmc.NavLink(
                 id="layers-link",
                 leftSection=get_icon("solar:layers-minimalistic-linear"),
                 className="sidebar-icon",
+                **{"data-position": "center"}
             ),
             dmc.NavLink(
                 id="list-link",
                 leftSection=get_icon("la:list-ul"),
                 className="sidebar-icon",
+                **{"data-position": "center"}
             ),
             dmc.NavLink(
                 id="maps-link",
                 leftSection=get_icon("hugeicons:maps-square-01"),
                 className="sidebar-icon",
+                **{"data-position": "center"}
             ),
         ],
         className="sidebar-main sidebar-item",
@@ -83,6 +90,7 @@ def get_sidebar_components():
         id="collapse-button-container",
         className="sidebar-item"
     )
+
     scrollable_div_hidden = html.Div(
         id="scrollable-div-hidden",
         className="scrollable-div"

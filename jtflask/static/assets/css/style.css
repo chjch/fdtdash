@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @import url("https://js.arcgis.com/4.29/esri/themes/light/main.css");
+
 
 :root {
 	--main-color: #5932EA;
@@ -137,6 +144,26 @@ calcite-button {
 	--calcite-ui-icon-color: var(--main-color) !important;
 }
 
+#customNavigationToggle,
+#customNavigationToggle calcite-button[title="Toggle to pan or rotate in 3D"] {
+	border-top-left-radius: 10px;
+	 !important;
+	border-top-right-radius: 10px;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
+}
+#customNavigationToggle,
+#customNavigationToggle calcite-button[tabIndex="-1"] {
+border-bottom-left-radius: 10px;
+	 !important;
+	border-bottom-right-radius: 10px;
+	 !important;
+	--calcite-color-brand-hover: transparent;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
+	border-color: var(--main-color) !important;
+}
+
 .mantine-w78bjd {
 	border-radius: 0px;
 }
@@ -156,9 +183,8 @@ calcite-button {
 
 .iconify {
 	width: 24px;
-	height: 24px;
-	transition: width 0.3s ease, height 0.3s ease;
-	/* Smooth transition for size changes */
+	height: 32px;
+	transition: width 0.3s ease, height 0.3s ease; /* Smooth transition for size changes */
 }
 
 /*.esri-ui-bottom-right {*/
@@ -170,9 +196,9 @@ calcite-button {
 /* Adjust icon sizes on larger screens */
 @media (min-width: 1600px) {
 	.iconify {
-		width: 32px;
+		width: 24px;
 		/* Larger size for large screens */
-		height: 32px;
+		height: 34px;
 		/* Keep width and height the same for consistency */
 	}
 }

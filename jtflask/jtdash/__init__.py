@@ -9,8 +9,6 @@ import dash_mantine_components as dmc
 from .layout import html_layout
 from .linecharts import means_to_work
 from .statshovercards import stats_hover_card
-# from .charts import create_charts
-from .arcgis_JS_tools import get_arcgis_sketch_card
 from .sidebar import sidebar, get_sidebar_components
 
 global_sidebar_brand = None

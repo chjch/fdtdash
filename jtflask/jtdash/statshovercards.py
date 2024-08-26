@@ -24,6 +24,7 @@ def create_hover_card(icon, text1, text2, card_id):
                             )
                         ],
                         align="center",
+                        id="hover-card-group"
 
                     )
                 ],
@@ -31,7 +32,6 @@ def create_hover_card(icon, text1, text2, card_id):
                 padding="md",
                 radius="md",
                 withBorder=True,
-                style={"width": "200px"},
                 className="statsCard",
                 id=card_id,
 
