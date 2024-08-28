@@ -1,6 +1,7 @@
 /*global vendors*/
 // noinspection JSCheckFunctionSignatures
 
+JTSplashPage.hideSplashScreen();
 
 // const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
 //     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
