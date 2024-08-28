@@ -438,9 +438,9 @@
               });
           });
 
-          view.whenLayerView(floodLayer).then(() => {
+          view.whenLayerView(floodLayer).then((floodLayerView) => {
               const epochDates =
-                  floodLayer.serviceRasterInfo.multidimensionalInfo.variables[0].dimensions[0]
+                  floodLayerView.serviceRasterInfo.multidimensionalInfo.variables[0].dimensions[0]
                       .values;
               console.log(epochDates);
               const dates = epochDates.map((item) => new Date(item));
