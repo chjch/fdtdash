@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const config = {
     entry: {
         index: [
-            path.join(__dirname, '/jtflask/static/src/index.css'),
+            // path.join(__dirname, '/jtflask/static/src/index.css'),
             path.join(__dirname, '/jtflask/static/src/index.js')  // webpack: only the last one of the array can be exposed
         ]
     },
