@@ -1,17 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @import url("https://js.arcgis.com/4.29/esri/themes/light/main.css");
 
+
 :root {
-    --main-color: #5932EA;
+	--main-color: #5932EA;
 }
 
 html,
 body,
 #deckgl-container {
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    width: 100vw;
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
 }
 
 .splash {
@@ -93,6 +100,15 @@ body,
 /*    border-end-start-radius: 0px;*/
 /*}*/
 
+.esri-ui-bottom-right {
+	flex-flow: column !important;
+
+}
+
+.esri-ui-bottom-right .esri-component {
+	margin-bottom: 10px !important;
+}
+
 calcite-icon {
     --calcite-ui-icon-color:  var(--main-color) !important;
     /*color: #5932EA;*/
@@ -106,6 +122,20 @@ calcite-button {
 /*.button-padding--shrunk .icon-end-empty{*/
 /*    border-right: 5px;*/
 /*}*/
+
+
+.button-padding--shrunk .icon-end-empty {
+	border-right: 5px;
+}
+
+.esri-sketch {
+	display: contents !important;
+	align-self: center !important;
+}
+
+.esri-sketch__panel {
+	justify-content: center !important;
+}
 
 .esri-attribution__sources {
     display: none;
@@ -135,99 +165,32 @@ calcite-button {
 }
 #customZoomButton,
 #customZoomButton calcite-button[title="Zoom in"] {
-    border-top-left-radius: 10px; !important;
-    border-top-right-radius: 10px; !important;
-    --calcite-ui-icon-color: var(--main-color) !important;
+	border-top-left-radius: 10px;
+	 !important;
+	border-top-right-radius: 10px;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
 }
 
-/*.sidebar {*/
-/*    width: 80px;*/
-/*    height: 100vh;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    background-color: #f4f4f4; !* Choose a background color that fits your app's theme *!*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: space-between;*/
-/*    box-shadow: 2px 0 5px rgba(0,0,0,0.1); !* Optional: adds shadow to the sidebar *!*/
-/*}*/
-
-/*.sidebar-brand {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    !*margin: 20px 0 0;*!*/
-/*    margin: 0 auto;*/
-/*    text-align: center;*/
-/*}*/
-
-/*.sidebar-main {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    flex-grow: 1;*/
-/*    justify-content: center;*/
-/*}*/
-
-/*#drawer-body {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    height: 100%;*/
-/*    width: 100%;*/
-/*    !*overflow: hidden;*!*/
-
-/*}*/
-
-/*#drawer {*/
-/*    border-radius: 5px;*/
-/*    background-color: chartreuse;*/
-/*    !*overflow: hidden;*!*/
-
-/*}*/
-
-/*#collapse-button-container {*/
-/*    height: 100%;*/
-/*    width: 15px;*/
-/*    background-color: lightgray;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    border-radius: 5px;*/
-/*}*/
-
-/*#collapse-button {*/
-/*    height: 100%;*/
-/*    width: 15px;*/
-/*    !*background-color: green;*!*/
-/*    cursor: pointer;*/
-/*    padding-left: 0px;*/
-/*    padding-right: 0px;*/
-/*}*/
-
-/*.sidebar-icon {*/
-/*    !*padding: 0;*!*/
-/*    margin: 20px 0px 20px 0px;*/
-/*}*/
-
-/*#sidebar-brand-logo {*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*    width: 32px;*/
-/*    height: 32px;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    color: var(--main-color);*/
-/*}*/
-/*#sidebar-col1 {*/
-/*    height: auto !important;*/
-/*    width: auto;*/
-/*    padding-left: 25px;*/
-/*}*/
+#customNavigationToggle,
+#customNavigationToggle calcite-button[title="Toggle to pan or rotate in 3D"] {
+	border-top-left-radius: 10px;
+	 !important;
+	border-top-right-radius: 10px;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
+}
+#customNavigationToggle,
+#customNavigationToggle calcite-button[tabIndex="-1"] {
+border-bottom-left-radius: 10px;
+	 !important;
+	border-bottom-right-radius: 10px;
+	 !important;
+	--calcite-color-brand-hover: transparent;
+	 !important;
+	--calcite-ui-icon-color: var(--main-color) !important;
+	border-color: var(--main-color) !important;
+}
 
 .mantine-w78bjd{
     border-radius: 0px;
@@ -259,8 +222,10 @@ calcite-button {
 
 /* Adjust icon sizes on larger screens */
 @media (min-width: 1600px) {
-    .iconify {
-        width: 32px; /* Larger size for large screens */
-        height: 32px; /* Keep width and height the same for consistency */
-    }
+	.iconify {
+		width: 24px;
+		/* Larger size for large screens */
+		height: 34px;
+		/* Keep width and height the same for consistency */
+	}
 }
