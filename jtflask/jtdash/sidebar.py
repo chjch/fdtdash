@@ -122,7 +122,6 @@ def get_sidebar_components():
 
 
 def sidebar(
-    dash_app,
     sidebar_brand,
     sidebar_main,
     collapse_button_container,
