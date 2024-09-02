@@ -1,3 +1,44 @@
+from dash import html, dcc
+import dash_mantine_components as dmc
+from dash_extensions import DeferScript, EventListener
+
+from .sidebar import sidebar, get_sidebar_components
+from .statshovercards import stats_hover_card
+
+# Initialize sidebar components and store as globals
+(
+    global_sidebar_brand,
+    global_sidebar_main_container,
+    global_collapse_button_container,
+    global_scrollable_div_charts,
+    global_scrollable_div_tools,
+) = get_sidebar_components()
+
+layout = dmc.MantineProvider(
+    html.Div(
+        [
+            DeferScript(src="../static/assets/js/main-defer.js"),
+            html.Div(id="deckgl-container"),
+            EventListener(
+                id="arcgis-event-listener",
+                events=[
+                    {"event": "restore-sketch-tool"},
+                    {"event": "hide-sketch-tool"},
+                ],
+            ),
+            dcc.Store(id="arcgis-tool-state"),
+            sidebar(
+                global_sidebar_brand,
+                global_sidebar_main_container,
+                global_collapse_button_container,
+                global_scrollable_div_charts,
+                global_scrollable_div_tools,
+            ),
+            stats_hover_card,
+        ]
+    )
+)
+
 html_layout = '''
 <!DOCTYPE html>
 <html>
