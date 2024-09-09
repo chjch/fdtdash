@@ -2,7 +2,7 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from .charts import create_charts
-from .arcgis_JS_tools import get_arcgis_sketch_card
+from .arcgis_JS_tools import get_arcgis_sketch_card, get_arcgis_basemapG_card
 
 
 def get_icon(icon, icon_id=None):
@@ -15,8 +15,8 @@ def get_icon(icon, icon_id=None):
 
 def get_sidebar_components():
     charts = create_charts()
-    arcgis_tools = get_arcgis_sketch_card()
-
+    arcgis_sketch_tool = get_arcgis_sketch_card()
+    arcgis_basemapG_tool = get_arcgis_basemapG_card()
     sidebar_brand = html.Div(
         [
             get_icon("solar:box-minimalistic-bold", "sidebar-brand-logo"),
@@ -107,9 +107,11 @@ def get_sidebar_components():
     )
 
     scrollable_div_tools = html.Div(
-        children=arcgis_tools,
+        children=[arcgis_sketch_tool,
+                  arcgis_basemapG_tool],
         id="arcgistools_scrollable_div",
-        className="scrollable-div hidden",
+        # className="scrollable-div initilized-hidden",
+        className="scrollable-div",
     )
 
     return (

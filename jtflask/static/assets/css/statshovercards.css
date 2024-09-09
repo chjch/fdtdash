@@ -32,7 +32,7 @@
 
 }
 
-#hover-card-group {
+.hover-card-group {
 	display: flex;
 	flex-wrap: nowrap;
 	flex-direction: row;

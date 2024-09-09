@@ -19,3 +19,21 @@ def get_arcgis_sketch_card():
     )
 
     return arcgis_sketch_card
+
+def get_arcgis_basemapG_card():
+    # ArcGIS Sketch Tool Card
+    arcgis_basemapG_card = dmc.Card(
+        children=[
+            dmc.Text("BaseMap Gallery", size="lg", className="chartLabel"),
+            html.Div(id="arcgis-basemap-gallery-container",
+                     style={"height": "100px"})
+        ],
+        withBorder=True,
+        shadow="sm",
+        radius="md",
+        style={"margin": "10px"},
+        id="arcgis_basemapG_card",
+        className="cardChart"
+    )
+
+    return arcgis_basemapG_card

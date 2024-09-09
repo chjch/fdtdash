@@ -31,7 +31,7 @@ export { default as Locate } from "@arcgis/core/widgets/Locate";
 export { default as BasemapToggle } from "@arcgis/core/widgets/BasemapToggle";
 export { default as Compass } from "@arcgis/core/widgets/Compass";
 export { default as NavigationToggle } from "@arcgis/core/widgets/NavigationToggle";
-
+export { default as BasemapGallery } from "@arcgis/core/widgets/BasemapGallery";
 
 // export { default as MapView } from "@arcgis/core/views/MapView";
 // export * as externalRenderers from '@arcgis/core/views/3d/externalRenderers';

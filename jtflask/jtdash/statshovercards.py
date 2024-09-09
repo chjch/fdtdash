@@ -24,7 +24,7 @@ def create_hover_card(icon, text1, text2, card_id):
                             )
                         ],
                         align="center",
-                        id="hover-card-group"
+                        className="hover-card-group"
 
                     )
                 ],

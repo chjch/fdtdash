@@ -126,6 +126,15 @@ let basemapToggle = new vendors.BasemapToggle({
     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
 });
 
+view.ui.add(basemapGallery, {
+  position: "top-right"
+});
+
+let basemapGallery = new vendors.BasemapGallery({
+  view: view,
+    container: "arcgis-basemap-gallery"
+});
+
 view.ui.add(locateWidget, "bottom-right");
 view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
 view.ui.add(basemapToggle, "bottom-right");
