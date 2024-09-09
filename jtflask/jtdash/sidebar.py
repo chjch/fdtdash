@@ -74,7 +74,7 @@ def get_sidebar_components():
                 **{"data-position": "center"},
             ),
             dmc.NavLink(
-                id="maps-link",
+                id="open-basemaps-link",
                 leftSection=get_icon("hugeicons:maps-square-01"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
@@ -107,11 +107,16 @@ def get_sidebar_components():
     )
 
     scrollable_div_tools = html.Div(
-        children=[arcgis_sketch_tool,
-                  arcgis_basemapG_tool],
+        children=arcgis_sketch_tool,
         id="arcgistools_scrollable_div",
-        # className="scrollable-div initilized-hidden",
-        className="scrollable-div",
+        className="scrollable-div initilized-hidden",
+        # className="scrollable-div",
+    )
+    scrollable_div_basemapG = html.Div(
+        children=arcgis_basemapG_tool,
+        id="scrollable_div_basemapG",
+        className="scrollable-div initilized-hidden",
+        # className="scrollable-div",
     )
 
     return (
@@ -120,7 +125,9 @@ def get_sidebar_components():
         collapse_button_container,
         scrollable_div_charts,
         scrollable_div_tools,
+        scrollable_div_basemapG
     )
+
 
 
 def sidebar(
@@ -129,9 +136,10 @@ def sidebar(
     collapse_button_container,
     scrollable_div_charts,
     scrollable_div_tools,
+    scrollable_div_basemapG
 ):
     scrollable_div_drawer = dmc.Drawer(
-        children=[scrollable_div_charts, scrollable_div_tools],
+        children=[scrollable_div_charts, scrollable_div_tools, scrollable_div_basemapG],
         id="chart_scrollable_drawer",
         className="",
         padding="2",
@@ -158,7 +166,7 @@ def sidebar(
             scrollable_div_drawer,
             dcc.Store(
                 id="drawer-content-store",
-                data={"charts": "charts", "tools": "tools"},
+                data={"charts": "charts", "tools": "tools", "basemaps": "basemaps"},
             ),
         ],
         id="drawer-body-grid",

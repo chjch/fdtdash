@@ -14,8 +14,8 @@ def get_arcgis_sketch_card():
         shadow="sm",
         radius="md",
         style={"margin": "10px"},
-        id="arcgis_sketch_card",
-        className="cardChart"
+        # id="arcgis_sketch_card",
+        className="cardChart arcgis_sketch_card"
     )
 
     return arcgis_sketch_card
@@ -26,14 +26,14 @@ def get_arcgis_basemapG_card():
         children=[
             dmc.Text("BaseMap Gallery", size="lg", className="chartLabel"),
             html.Div(id="arcgis-basemap-gallery-container",
-                     style={"height": "100px"})
+                     style={"height": "100%"})
         ],
         withBorder=True,
         shadow="sm",
         radius="md",
         style={"margin": "10px"},
-        id="arcgis_basemapG_card",
-        className="cardChart"
+        # id="arcgis_basemapG_card",
+        className="cardChart arcgis_basemapG_card"
     )
 
     return arcgis_basemapG_card

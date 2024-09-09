@@ -121,23 +121,23 @@ function sendSelectionToDash(buildings) {
 }
 
 
-let basemapToggle = new vendors.BasemapToggle({
-    view: view,  // The view that provides access to the map's "streets-vector" basemap
-    nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-});
+// let basemapToggle = new vendors.BasemapToggle({
+//     view: view,  // The view that provides access to the map's "streets-vector" basemap
+//     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+// });
 
-view.ui.add(basemapGallery, {
-  position: "top-right"
-});
+
 
 let basemapGallery = new vendors.BasemapGallery({
-  view: view,
-    container: "arcgis-basemap-gallery"
+    view: view,
+    container: "arcgis-basemap-gallery-container"
 });
+
+// view.ui.add(basemapGallery);
 
 view.ui.add(locateWidget, "bottom-right");
 view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
-view.ui.add(basemapToggle, "bottom-right");
+// view.ui.add(basemapToggle, "bottom-right");
 
 
 map.add(sceneLayer);

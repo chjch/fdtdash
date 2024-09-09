@@ -33,6 +33,10 @@
     width: 95%;
 }
 
+.arcgis_basemapG_card {
+    height: 95vh;
+}
+
 .chartLabel {
     font-weight: 600;
     padding-bottom: 20px;
