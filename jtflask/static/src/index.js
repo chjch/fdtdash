@@ -32,10 +32,11 @@ export { default as BasemapToggle } from "@arcgis/core/widgets/BasemapToggle";
 export { default as Compass } from "@arcgis/core/widgets/Compass";
 export { default as NavigationToggle } from "@arcgis/core/widgets/NavigationToggle";
 
+// utils
+export * as promiseUtils from "@arcgis/core/core/promiseUtils";
 
 // export { default as MapView } from "@arcgis/core/views/MapView";
 // export * as externalRenderers from '@arcgis/core/views/3d/externalRenderers';
-// export { externalRenderers };
 
 // export { DeckLayer, loadArcGISModules } from "@deck.gl/arcgis";
 // export { DeckRenderer } from "@deck.gl/arcgis";
