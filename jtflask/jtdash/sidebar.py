@@ -2,7 +2,7 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from .charts import create_charts
-from .arcgis_JS_tools import get_arcgis_sketch_card
+from .widgets import get_arcgis_sketch_card
 
 
 def get_icon(icon, icon_id=None):
