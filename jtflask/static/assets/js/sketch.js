@@ -1,4 +1,4 @@
-
+/*global vendors*/
 const JTSketchWidget = (() => {
     "use strict";
 
@@ -112,3 +112,74 @@ const JTSketchWidget = (() => {
         setupSketchEventListeners: setupSketchEventListeners
     };
 })();
+
+const JTSelectionSketch = (() => {
+    "use strict";
+    // Define symbol for the filter polygons
+    const sketchSymbol = {
+        type: "simple-fill", // autocasts as new SimpleFillSymbol()
+        color: [255, 140, 0, 0.3],
+        style: "solid",
+        outline: {
+            // autocasts as new SimpleLineSymbol()
+            color: [255, 140, 0, 1],
+            width: 2
+        }
+    };
+
+    const initWidget = (sceneLayerView, container) => {
+        const sketchLayer = new vendors.GraphicsLayer({
+            title: "Selection Layer",
+            elevationInfo: {
+                mode: "on-the-ground"
+            }
+        });
+        sceneLayerView.view.map.add(sketchLayer);
+        // Create SketchViewModel
+        const sketchViewModel = new vendors.SketchViewModel({
+            layer: sketchLayer,
+            view: sceneLayerView.view,
+            polygonSymbol: sketchSymbol,
+            defaultCreateOptions: {
+                hasZ: false  // default value
+            },
+            updateOnGraphicClick: true, // Enable updating existing graphics
+            defaultUpdateOptions: {
+                enableZ: false,  // default value
+                tool: "reshape",
+                reshapeOptions: {
+                    edgeOperation: "offset"
+                }
+            }
+        });
+        const selectionSketchWidget = new vendors.Sketch({
+            layer: sketchLayer,
+            view: sceneLayerView.view,
+            container: container,
+            availableCreateTools: ["polygon", "rectangle", "circle"],
+            viewModel: sketchViewModel,
+        });
+
+        selectionSketchWidget.on("create", event => {
+            if (event.state === "start") {
+                // Clear all existing graphics when a new creation begins
+                sketchLayer.removeAll();
+            }
+            if (event.state === "complete") {
+                let sketchGeometry = event.graphic.geometry;
+                JTHighlight.highlightBuildings(sketchGeometry, sceneLayerView);
+            }
+        });
+        // Listen to sketch widget's update event to update the filter
+        selectionSketchWidget.on("update", event => {
+            if (event.state === "complete" && event.graphics.length > 0) {
+                JTHighlight.highlightBuildings(event.graphics[0].geometry, sceneLayerView);
+            }
+        });
+        return selectionSketchWidget;
+    };
+
+    return {
+        initWidget: initWidget
+    };
+})();  // IIFE
