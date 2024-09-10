@@ -164,6 +164,7 @@ const JTSelectionSketch = (() => {
             if (event.state === "start") {
                 // Clear all existing graphics when a new creation begins
                 sketchLayer.removeAll();
+                JTHighlight.clearHighlighting();
             }
             if (event.state === "complete") {
                 let sketchGeometry = event.graphic.geometry;
@@ -172,6 +173,9 @@ const JTSelectionSketch = (() => {
         });
         // Listen to sketch widget's update event to update the filter
         selectionSketchWidget.on("update", event => {
+            if (event.state === "start") {
+                JTHighlight.clearHighlighting();
+            }
             if (event.state === "complete" && event.graphics.length > 0) {
                 JTHighlight.highlightBuildings(event.graphics[0].geometry, sceneLayerView);
             }
