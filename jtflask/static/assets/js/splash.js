@@ -1,7 +1,7 @@
 const JTSplashPage = (() => {
     "use strict";
 
-    const hideSplashScreen = () => {
+    const hideSplash = () => {
         const [jaxLogoH1, twinLogoH1] = document.querySelectorAll(".logo h1");
         const logoImage = document.querySelector(".logo-image")
         const splashDiv = document.querySelector(".splash");
@@ -24,6 +24,6 @@ const JTSplashPage = (() => {
     };
     // Return the public API
     return {
-        hideSplashScreen: hideSplashScreen
+        hideSplash: hideSplash
     };
 })();
