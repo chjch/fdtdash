@@ -34,7 +34,7 @@ layout = dmc.MantineProvider(
                 global_scrollable_div_charts,
                 global_scrollable_div_tools,
             ),
-            stats_hover_card,
+            # stats_hover_card,
         ]
     )
 )
