@@ -18,7 +18,7 @@ layout = dmc.MantineProvider(
     html.Div(
         [
             DeferScript(src="../static/assets/js/main-defer.js"),
-            html.Div(id="deckgl-container"),
+            html.Div(id="digital-twin-container"),
             EventListener(
                 id="arcgis-event-listener",
                 events=[
@@ -52,6 +52,11 @@ html_layout = '''
             href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
     </head>
+    <style>
+        ._dash-loading {
+            display: none; !important;
+        }
+    </style>
     <body>
         <div class='splash'>
             <div class='logo'>
