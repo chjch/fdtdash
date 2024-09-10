@@ -1,7 +1,7 @@
 /*global vendors*/
 // noinspection JSCheckFunctionSignatures
 
-JTSplashPage.hideSplashScreen();
+JTSplashPage.hideSplash();
 
 // const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
 //     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
@@ -18,7 +18,7 @@ const map = new vendors.Map({
 });
 
 const view = new vendors.SceneView({
-    container: "deckgl-container", // Reference to the scene div created in step 5
+    container: "digital-twin-container", // main div element for digital twin
     map: map, // Reference to the map object created before the scene
     camera: {
         position: [-81.66916428, 30.29352027, 2569],
@@ -44,6 +44,7 @@ let sceneLayer = new vendors.SceneLayer({
         }
     },
 });
+
 const tileLayer = new vendors.ImageryTileLayer({
     url: demImageServer
 });
@@ -71,7 +72,7 @@ const locateWidget = new vendors.Locate({
 });
 
 function queryBuildings(geometry) {
-    var query = sceneLayer.createQuery();
+    let query = sceneLayer.createQuery();
     query.geometry = geometry;
     query.spatialRelationship = "intersects";
     query.returnGeometry = true;
@@ -120,7 +121,6 @@ function sendSelectionToDash(buildings) {
         });
 }
 
-
 let basemapToggle = new vendors.BasemapToggle({
     view: view,  // The view that provides access to the map's "streets-vector" basemap
     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
@@ -147,7 +147,7 @@ view.when(() => {
             layer.visible = false
         }
     });
-    var query = sceneLayer.createQuery();
+    let query = sceneLayer.createQuery();
     query.returnGeometry = true;
     query.outFields = ["*"];
 
@@ -232,4 +232,9 @@ view.when(() => {
         document.querySelector('.esri-component.esri-navigation-toggle.esri-widget'),
         "customNavigationToggle"
     );
+});
+
+view.whenLayerView(sceneLayer).then((layerView) => {
+    const selectionSketch = JTSelectionSketch.initWidget(layerView, "selection-widget-container");
+    view.ui.add(selectionSketch, "top-right");
 });
