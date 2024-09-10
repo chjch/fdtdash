@@ -37,6 +37,7 @@ def init_dashboard(server: Flask):
             pathlib.Path(__file__).parent.parent / "static/assets"
         ),
         assets_ignore=".*defer.js$",
+        title="JaxTwin: An Urban Digital Twin for Jacksonville",
     )
     dashboard.index_string = html_layout
     dashboard.layout = layout
