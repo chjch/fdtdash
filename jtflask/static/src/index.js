@@ -33,6 +33,9 @@ export { default as Compass } from "@arcgis/core/widgets/Compass";
 export { default as NavigationToggle } from "@arcgis/core/widgets/NavigationToggle";
 export { default as BasemapGallery } from "@arcgis/core/widgets/BasemapGallery";
 
+// utils
+export * as promiseUtils from "@arcgis/core/core/promiseUtils";
+
 // export { default as MapView } from "@arcgis/core/views/MapView";
 // export * as externalRenderers from '@arcgis/core/views/3d/externalRenderers';
 // export { externalRenderers };

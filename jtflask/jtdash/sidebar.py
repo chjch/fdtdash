@@ -5,6 +5,7 @@ from .charts import create_charts
 from .arcgis_JS_tools import (get_arcgis_sketch_card,
                               get_arcgis_basemap_g_card,
                               get_arcgis_building_stats_card)
+from .widgets import get_arcgis_sketch_card
 
 
 def get_icon(icon, icon_id=None):
@@ -54,7 +55,7 @@ def get_sidebar_components():
                 **{"data-position": "center"},
             ),
             dmc.NavLink(
-                id="open-buildings-link",
+                id="buildings-link",
                 leftSection=get_icon("ph:buildings"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
@@ -78,7 +79,7 @@ def get_sidebar_components():
                 **{"data-position": "center"},
             ),
             dmc.NavLink(
-                id="open-basemaps-link",
+                id="maps-link",
                 leftSection=get_icon("hugeicons:maps-square-01"),
                 className="sidebar-icon",
                 **{"data-position": "center"},

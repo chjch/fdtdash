@@ -1,7 +1,7 @@
 /*global vendors*/
 // noinspection JSCheckFunctionSignatures
 
-JTSplashPage.hideSplashScreen();
+JTSplashPage.hideSplash();
 
 // const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
 //     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
@@ -18,7 +18,7 @@ const map = new vendors.Map({
 });
 
 const view = new vendors.SceneView({
-    container: "deckgl-container", // Reference to the scene div created in step 5
+    container: "digital-twin-container", // main div element for digital twin
     map: map, // Reference to the map object created before the scene
     camera: {
         position: [-81.66916428, 30.29352027, 2569],
@@ -44,6 +44,7 @@ let sceneLayer = new vendors.SceneLayer({
         }
     },
 });
+
 const tileLayer = new vendors.ImageryTileLayer({
     url: demImageServer
 });
@@ -71,7 +72,7 @@ const locateWidget = new vendors.Locate({
 });
 
 function queryBuildings(geometry) {
-    var query = sceneLayer.createQuery();
+    let query = sceneLayer.createQuery();
     query.geometry = geometry;
     query.spatialRelationship = "intersects";
     query.returnGeometry = true;
@@ -125,7 +126,6 @@ let basemapGallery = new vendors.BasemapGallery({
     view: view,
     container: "arcgis-basemap-gallery-container"
 });
-
 
 view.ui.add(locateWidget, "bottom-right");
 view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
@@ -212,10 +212,74 @@ view.when(() => {
             layer.visible = false
         }
     });
-    var query = sceneLayer.createQuery();
+    let query = sceneLayer.createQuery();
     query.returnGeometry = true;
     query.outFields = ["*"];
 
+    // sceneLayer.queryFeatures(query).then(function(results) {
+    //     let colorData = {};
+    //     let identifyPromises = [];
+    //
+    //     results.features.forEach(feature => {
+    //         let centroid = feature.geometry.centroid;
+    //         let objectId = feature.attributes.OBJECTID_1;
+    //         let identifyPromise = tileLayer.identify(centroid).then(function(results) {
+    //             // feature.attributes.NPARNO = results.value[0];
+    //             // let edits = {
+    //             //     updateFeatures: [feature]
+    //             // };
+    //             colorData[objectId] = results.value[0];
+    //             // console.log(feature.attributes.NPARNO);
+    //             // console.log(feature.attributes.OBJECTID_1);
+    //             // featureLayer.applyEdits(edits);
+    //         });
+    //         identifyPromises.push(identifyPromise);
+    //     });
+    //
+    //     // Wait for all identify promises to complete
+    //     Promise.all(identifyPromises).then(() => {
+    //         let colorDataJson = JSON.stringify(colorData);
+    //
+    //         let arcadeExpression = `
+    //             var colorData = Dictionary(${colorDataJson});
+    //             // var colorData2 = Dictionary(extraInfo);
+    //             return colorData[Text($feature.OBJECTID_1)];
+    //             // if(HasValue(colorData2, ["251"])){
+    //             //     // if() evaluates to true, thus executing the return
+    //             //     return colorData2["1"];
+    //             // }
+    //         `;
+    //
+    //         // console.log(arcadeExpression);
+    //
+    //         sceneLayer.renderer = new vendors.SimpleRenderer({
+    //             symbol: {
+    //                 type: "mesh-3d", // autocasts as new MeshSymbol3D()
+    //                 symbolLayers: [{
+    //                     type: "fill", // autocasts as new FillSymbol3DLayer()
+    //                     material: {
+    //                         color: [255, 255, 0, 0.8],
+    //                         colorMixMode: "replace"
+    //                     },
+    //                     edges: null
+    //                 }]
+    //             },
+    //             visualVariables: [{
+    //                 type: "color",
+    //                 valueExpression: arcadeExpression,
+    //                 stops: [
+    //                     { value: -10, color: [0, 255, 0, 0.4] },
+    //                     { value: 1, color: [0, 255, 0, 0.4] },
+    //                     { value: 2, color: [255, 255, 0, 0.4] },
+    //                     { value: 3, color: [255, 165, 0, 0.4] },
+    //                     { value: 4, color: [255, 69, 0, 0.4] },
+    //                     { value: 5, color: [255, 0, 0, 0.4] },
+    //                     { value: 100, color: [255, 0, 0, 0.4] }
+    //                 ]
+    //             }]
+    //         }); // Set the renderer on the layer
+    //     });
+    // });
 
     setElementId(
         document.querySelector('.esri-locate.esri-widget.esri-component'),
@@ -233,4 +297,9 @@ view.when(() => {
         document.querySelector('.esri-component.esri-navigation-toggle.esri-widget'),
         "customNavigationToggle"
     );
+});
+
+view.whenLayerView(sceneLayer).then((layerView) => {
+    const selectionSketch = JTSelectionSketch.initWidget(layerView, "selection-widget-container");
+    view.ui.add(selectionSketch, "top-right");
 });

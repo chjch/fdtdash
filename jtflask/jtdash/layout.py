@@ -20,7 +20,7 @@ layout = dmc.MantineProvider(
     html.Div(
         [
             DeferScript(src="../static/assets/js/main-defer.js"),
-            html.Div(id="deckgl-container"),
+            html.Div(id="digital-twin-container"),
             EventListener(
                 id="arcgis-event-listener",
                 events=[
@@ -39,7 +39,7 @@ layout = dmc.MantineProvider(
                 global_scrollable_div_building_stats,
 
             ),
-            stats_hover_card,
+            # stats_hover_card,
         ]
     )
 )
@@ -57,6 +57,11 @@ html_layout = '''
             href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
     </head>
+    <style>
+        ._dash-loading {
+            display: none; !important;
+        }
+    </style>
     <body>
         <div class='splash'>
             <div class='logo'>
