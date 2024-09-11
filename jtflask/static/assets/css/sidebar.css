@@ -138,7 +138,8 @@
 
 
 .mantine-Drawer-content {
-    max-width: 375px;
+    /*max-width: 375px;*/
+    max-width: 45vh;
     background: rgb(229 229 229);
     overflow: hidden;
     overflow-y: scroll;

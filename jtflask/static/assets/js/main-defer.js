@@ -121,28 +121,84 @@ function sendSelectionToDash(buildings) {
 }
 
 
-// let basemapToggle = new vendors.BasemapToggle({
-//     view: view,  // The view that provides access to the map's "streets-vector" basemap
-//     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-// });
-
-
-
 let basemapGallery = new vendors.BasemapGallery({
     view: view,
     container: "arcgis-basemap-gallery-container"
 });
 
-// view.ui.add(basemapGallery);
 
 view.ui.add(locateWidget, "bottom-right");
 view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
-// view.ui.add(basemapToggle, "bottom-right");
-
 
 map.add(sceneLayer);
-// map.add(tileLayer);
 map.add(graphicsLayer);
+
+
+const categories = {
+    DORUC: {
+        field: "DORUC",
+        colorStops: [
+            { value: 0, color: [255, 255, 255, 0.4] },
+            { value: 1, color: [255, 204, 51, 0.7] }, // Yellow for residential
+            { value: 2, color: [255, 87, 51, 0.7] },  // Red for commercial
+            { value: 3, color: [153, 102, 204, 0.7] } // Purple for industrial
+        ]
+    },
+    EFFYRBLT: {
+        field: "EFFYRBLT",
+        colorStops: [
+            { value: 1950, color: [153, 204, 255, 0.7] }, // Light blue
+            { value: 1975, color: [51, 153, 255, 0.7] },  // Blue
+            { value: 2000, color: [0, 102, 255, 0.7] }    // Dark blue
+        ]
+    },
+    TOTLVGAREA: {
+        field: "TOTLVGAREA",
+        colorStops: [
+            { value: 1000, color: [204, 255, 204, 0.7] }, // Light green
+            { value: 2000, color: [102, 255, 102, 0.7] }, // Green
+            { value: 3000, color: [0, 153, 0, 0.7] }      // Dark green
+        ]
+    },
+    JV: {
+        field: "JV",
+        colorStops: [
+            { value: 100000, color: [255, 255, 153, 0.7] }, // Light yellow
+            { value: 500000, color: [255, 204, 0, 0.7] },  // Orange
+            { value: 1000000, color: [255, 153, 0, 0.7] }  // Dark orange
+        ]
+    }
+};
+
+// Function to recolor the buildings based on selected category
+function recolorBuildings(category) {
+    const selectedCategory = categories[category];
+    let renderer = {
+        type: "simple",
+        symbol: {
+            type: "mesh-3d",
+            symbolLayers: [{
+                type: "fill",
+                material: { color: [255, 255, 255, 0.7], colorMixMode: "replace" },
+                edges: null
+            }]
+        },
+        visualVariables: [{
+            type: "color",
+            field: selectedCategory.field,
+            stops: selectedCategory.colorStops
+        }]
+    };
+
+    sceneLayer.renderer = renderer; // Apply renderer to the sceneLayer
+}
+
+// Create buttons to control recoloring
+document.getElementById("doruc-button").addEventListener("click", () => recolorBuildings("DORUC"));
+document.getElementById("effyrblt-button").addEventListener("click", () => recolorBuildings("EFFYRBLT"));
+document.getElementById("totlvgarea-button").addEventListener("click", () => recolorBuildings("TOTLVGAREA"));
+document.getElementById("justvalue-button").addEventListener("click", () => recolorBuildings("JV"));
+
 
 const setElementId = (element, id) => {
     if (element) {
@@ -160,70 +216,6 @@ view.when(() => {
     query.returnGeometry = true;
     query.outFields = ["*"];
 
-    // sceneLayer.queryFeatures(query).then(function(results) {
-    //     let colorData = {};
-    //     let identifyPromises = [];
-    //
-    //     results.features.forEach(feature => {
-    //         let centroid = feature.geometry.centroid;
-    //         let objectId = feature.attributes.OBJECTID_1;
-    //         let identifyPromise = tileLayer.identify(centroid).then(function(results) {
-    //             // feature.attributes.NPARNO = results.value[0];
-    //             // let edits = {
-    //             //     updateFeatures: [feature]
-    //             // };
-    //             colorData[objectId] = results.value[0];
-    //             // console.log(feature.attributes.NPARNO);
-    //             // console.log(feature.attributes.OBJECTID_1);
-    //             // featureLayer.applyEdits(edits);
-    //         });
-    //         identifyPromises.push(identifyPromise);
-    //     });
-    //
-    //     // Wait for all identify promises to complete
-    //     Promise.all(identifyPromises).then(() => {
-    //         let colorDataJson = JSON.stringify(colorData);
-    //
-    //         let arcadeExpression = `
-    //             var colorData = Dictionary(${colorDataJson});
-    //             // var colorData2 = Dictionary(extraInfo);
-    //             return colorData[Text($feature.OBJECTID_1)];
-    //             // if(HasValue(colorData2, ["251"])){
-    //             //     // if() evaluates to true, thus executing the return
-    //             //     return colorData2["1"];
-    //             // }
-    //         `;
-    //
-    //         // console.log(arcadeExpression);
-    //
-    //         sceneLayer.renderer = new vendors.SimpleRenderer({
-    //             symbol: {
-    //                 type: "mesh-3d", // autocasts as new MeshSymbol3D()
-    //                 symbolLayers: [{
-    //                     type: "fill", // autocasts as new FillSymbol3DLayer()
-    //                     material: {
-    //                         color: [255, 255, 0, 0.8],
-    //                         colorMixMode: "replace"
-    //                     },
-    //                     edges: null
-    //                 }]
-    //             },
-    //             visualVariables: [{
-    //                 type: "color",
-    //                 valueExpression: arcadeExpression,
-    //                 stops: [
-    //                     { value: -10, color: [0, 255, 0, 0.4] },
-    //                     { value: 1, color: [0, 255, 0, 0.4] },
-    //                     { value: 2, color: [255, 255, 0, 0.4] },
-    //                     { value: 3, color: [255, 165, 0, 0.4] },
-    //                     { value: 4, color: [255, 69, 0, 0.4] },
-    //                     { value: 5, color: [255, 0, 0, 0.4] },
-    //                     { value: 100, color: [255, 0, 0, 0.4] }
-    //                 ]
-    //             }]
-    //         }); // Set the renderer on the layer
-    //     });
-    // });
 
     setElementId(
         document.querySelector('.esri-locate.esri-widget.esri-component'),

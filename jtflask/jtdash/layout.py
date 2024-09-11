@@ -13,6 +13,7 @@ from .statshovercards import stats_hover_card
     global_scrollable_div_charts,
     global_scrollable_div_tools,
     global_scrollable_div_basemapG,
+    global_scrollable_div_building_stats,
 ) = get_sidebar_components()
 
 layout = dmc.MantineProvider(
@@ -34,7 +35,9 @@ layout = dmc.MantineProvider(
                 global_collapse_button_container,
                 global_scrollable_div_charts,
                 global_scrollable_div_tools,
-                global_scrollable_div_basemapG
+                global_scrollable_div_basemapG,
+                global_scrollable_div_building_stats,
+
             ),
             stats_hover_card,
         ]

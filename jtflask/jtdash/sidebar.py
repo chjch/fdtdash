@@ -2,7 +2,9 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from .charts import create_charts
-from .arcgis_JS_tools import get_arcgis_sketch_card, get_arcgis_basemapG_card
+from .arcgis_JS_tools import (get_arcgis_sketch_card,
+                              get_arcgis_basemap_g_card,
+                              get_arcgis_building_stats_card)
 
 
 def get_icon(icon, icon_id=None):
@@ -16,7 +18,9 @@ def get_icon(icon, icon_id=None):
 def get_sidebar_components():
     charts = create_charts()
     arcgis_sketch_tool = get_arcgis_sketch_card()
-    arcgis_basemapG_tool = get_arcgis_basemapG_card()
+    arcgis_basemap_g_tool = get_arcgis_basemap_g_card()
+    arcgis_bulding_stats_tool = get_arcgis_building_stats_card()
+
     sidebar_brand = html.Div(
         [
             get_icon("solar:box-minimalistic-bold", "sidebar-brand-logo"),
@@ -50,7 +54,7 @@ def get_sidebar_components():
                 **{"data-position": "center"},
             ),
             dmc.NavLink(
-                id="buildings-link",
+                id="open-buildings-link",
                 leftSection=get_icon("ph:buildings"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
@@ -110,13 +114,17 @@ def get_sidebar_components():
         children=arcgis_sketch_tool,
         id="arcgistools_scrollable_div",
         className="scrollable-div initilized-hidden",
-        # className="scrollable-div",
     )
-    scrollable_div_basemapG = html.Div(
-        children=arcgis_basemapG_tool,
-        id="scrollable_div_basemapG",
+    scrollable_div_basemapGallery = html.Div(
+        children=arcgis_basemap_g_tool,
+        id="scrollable_div_basemapGallery",
         className="scrollable-div initilized-hidden",
-        # className="scrollable-div",
+    )
+
+    scrollable_div_building_stats = html.Div(
+        children=arcgis_bulding_stats_tool,
+        id="scrollable_div_bulding_stats",
+        className="scrollable-div initilized-hidden",
     )
 
     return (
@@ -125,9 +133,9 @@ def get_sidebar_components():
         collapse_button_container,
         scrollable_div_charts,
         scrollable_div_tools,
-        scrollable_div_basemapG
+        scrollable_div_basemapGallery,
+        scrollable_div_building_stats
     )
-
 
 
 def sidebar(
@@ -136,10 +144,11 @@ def sidebar(
     collapse_button_container,
     scrollable_div_charts,
     scrollable_div_tools,
-    scrollable_div_basemapG
+    scrollable_div_basemapGallery,
+    scrollable_div_building_stats
 ):
     scrollable_div_drawer = dmc.Drawer(
-        children=[scrollable_div_charts, scrollable_div_tools, scrollable_div_basemapG],
+        children=[scrollable_div_charts, scrollable_div_tools, scrollable_div_basemapGallery, scrollable_div_building_stats],
         id="chart_scrollable_drawer",
         className="",
         padding="2",
@@ -166,7 +175,7 @@ def sidebar(
             scrollable_div_drawer,
             dcc.Store(
                 id="drawer-content-store",
-                data={"charts": "charts", "tools": "tools", "basemaps": "basemaps"},
+                data={"charts": "charts", "tools": "tools", "basemaps": "basemaps", "buildings": "buildings"},
             ),
         ],
         id="drawer-body-grid",
