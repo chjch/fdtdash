@@ -50,13 +50,15 @@ def register_callbacks(dashboard):
             Input('list-toggle-button', 'n_clicks'),
             Input('maps-toggle-button', 'n_clicks')])
     def handle_sidebar_icon_click(*inputs):
-        button_id = ctx.triggered_id if not None else ''
+        # Get id of clicked button
+        clicked_button_id = ctx.triggered_id if not None else ''
         
-        def handle_button_click(button_class_name):
-            if button_class_name == button_id:
-                return f'{button_class_name} slide-in'
+        #Update class of clicked button to slide-in animation
+        def handle_button_click(button_id):
+            if button_id == clicked_button_id:
+                return f'{button_id} slide-in'
             else:
-                return 'hidden'
+                return f'{button_id} hidden'
 
         outputs = map(handle_button_click, 
                     ['charts-toggle-button',
@@ -68,7 +70,7 @@ def register_callbacks(dashboard):
                     'maps-toggle-button'])
         outputs = list(outputs)
 
-        charts_class_name = 'charts-toggle-button slide-in' if all(clicks == None for clicks in inputs) else outputs[0]
+        charts_class_name = 'charts-toggle-button slide-in' if all(n_clicks == None for n_clicks in inputs) else outputs[0]
 
         return {
             'charts_class_name': charts_class_name,
