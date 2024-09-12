@@ -29,6 +29,8 @@ export { default as SketchViewModel } from "@arcgis/core/widgets/Sketch/SketchVi
 export { default as Zoom } from "@arcgis/core/widgets/Zoom";
 export { default as Locate } from "@arcgis/core/widgets/Locate";
 export { default as BasemapToggle } from "@arcgis/core/widgets/BasemapToggle";
+export { default as BasemapGallery } from "@arcgis/core/widgets/BasemapGallery";
+
 export { default as Compass } from "@arcgis/core/widgets/Compass";
 export { default as NavigationToggle } from "@arcgis/core/widgets/NavigationToggle";
 

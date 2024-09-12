@@ -97,7 +97,9 @@
 }
 
 .sidebar-main {
-
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #sidebar-main-container {
@@ -190,8 +192,13 @@
 }
 
 .sidebar-icon {
-    margin: 20px -15px 20px 0px;
+    background: transparent;
+    color: black;
     filter: drop-shadow(1px 3px 2px gray);
+}
+
+.sidebar-icon .mantine-Button-section {
+    margin: 0;
 }
 
 /* hover state */

@@ -70,6 +70,7 @@ const locateWidget = new vendors.Locate({
         }
     }),
 });
+view.ui.add(locateWidget, "bottom-right");
 
 function queryBuildings(geometry) {
     let query = sceneLayer.createQuery();
@@ -125,10 +126,22 @@ let basemapToggle = new vendors.BasemapToggle({
     view: view,  // The view that provides access to the map's "streets-vector" basemap
     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
 });
-
-view.ui.add(locateWidget, "bottom-right");
-view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
 view.ui.add(basemapToggle, "bottom-right");
+
+//Create basemap gallery container and render the basemap gallery in the container
+const baseMapGalleryContainer =  document.querySelector('#basemap-gallery-container')
+const basemapGallery = new vendors.BasemapGallery({
+    view: view,
+    container: baseMapGalleryContainer
+});
+view.ui.add(basemapGallery);
+
+// Move basemap gallery from the esri manual container into the dmc drawer
+const mantineDrawerBody =  document.querySelector('.mantine-Drawer-body')
+mantineDrawerBody.appendChild(baseMapGalleryContainer)
+
+
+view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
 
 
 map.add(sceneLayer);

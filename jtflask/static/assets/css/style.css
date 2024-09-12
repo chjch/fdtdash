@@ -229,3 +229,7 @@ border-bottom-left-radius: 10px;
 		/* Keep width and height the same for consistency */
 	}
 }
+
+.hidden {
+    display: none;
+}

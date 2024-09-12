@@ -34,47 +34,46 @@ def get_sidebar_components():
 
     sidebar_main = html.Div(
         [
-            dmc.NavLink(
-                id="open-charts-drawer-link",
-                # leftSection=get_icon("fluent:data-pie-20-regular", "open-charts"),
+            dmc.Button(
+                id="charts-toggle-button",
                 leftSection=DashIconify(
                     icon="fluent:data-pie-20-regular", width="24px"
                 ),
                 className="sidebar-icon",
                 **{"data-position": "center"},
             ),
-            dmc.NavLink(
-                id="open-arcgis-drawer-link",
+            dmc.Button(
+                id="arcgis-tools-toggle-button",
                 leftSection=get_icon("solar:routing-2-linear", "open-arcgis"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
             ),
-            dmc.NavLink(
-                id="buildings-link",
+            dmc.Button(
+                id="buildings-toggle-button",
                 leftSection=get_icon("ph:buildings"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
             ),
-            dmc.NavLink(
-                id="clipboard-link",
+            dmc.Button(
+                id="clipboard-toggle-button",
                 leftSection=get_icon("solar:clipboard-text-linear"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
             ),
-            dmc.NavLink(
-                id="layers-link",
+            dmc.Button(
+                id="layers-toggle-button",
                 leftSection=get_icon("solar:layers-minimalistic-linear"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
             ),
-            dmc.NavLink(
-                id="list-link",
+            dmc.Button(
+                id="list-toggle-button",
                 leftSection=get_icon("la:list-ul"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
             ),
-            dmc.NavLink(
-                id="maps-link",
+            dmc.Button(
+                id="maps-toggle-button",
                 leftSection=get_icon("hugeicons:maps-square-01"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
@@ -111,6 +110,12 @@ def get_sidebar_components():
         id="arcgistools_scrollable_div",
         className="scrollable-div hidden",
     )
+    
+    # Container to hold basemap gallery
+    basemap_gallery_container =  html.Div(
+        id="basemap-gallery-container",
+        className="scrollable-div hidden",
+    )
 
     return (
         sidebar_brand,
@@ -118,6 +123,7 @@ def get_sidebar_components():
         collapse_button_container,
         scrollable_div_charts,
         scrollable_div_tools,
+        basemap_gallery_container
     )
 
 
@@ -127,9 +133,14 @@ def sidebar(
     collapse_button_container,
     scrollable_div_charts,
     scrollable_div_tools,
+    basemap_gallery_container
 ):
     scrollable_div_drawer = dmc.Drawer(
-        children=[scrollable_div_charts, scrollable_div_tools],
+        children=[
+            scrollable_div_charts,
+            scrollable_div_tools,
+            basemap_gallery_container
+        ],
         id="chart_scrollable_drawer",
         className="",
         padding="2",
