@@ -33,6 +33,8 @@ export { default as BasemapGallery } from "@arcgis/core/widgets/BasemapGallery";
 
 export { default as Compass } from "@arcgis/core/widgets/Compass";
 export { default as NavigationToggle } from "@arcgis/core/widgets/NavigationToggle";
+export { default as Fullscreen } from "@arcgis/core/widgets/Fullscreen";
+
 
 // utils
 export * as promiseUtils from "@arcgis/core/core/promiseUtils";

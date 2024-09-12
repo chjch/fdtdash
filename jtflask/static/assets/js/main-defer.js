@@ -54,24 +54,6 @@ const graphicsLayer = new vendors.GraphicsLayer({
     }
 });
 
-// Create the Locate widget
-const locateWidget = new vendors.Locate({
-    view: view,
-    graphic: new vendors.Graphic({
-        symbol: {
-            outline: {
-                color: "white",
-                width: 1 // points
-            },
-            color: "blue",
-            size: "12px", // pixel
-            style: "circle",
-            type: "simple-marker",
-        }
-    }),
-});
-view.ui.add(locateWidget, "bottom-right");
-
 function queryBuildings(geometry) {
     let query = sceneLayer.createQuery();
     query.geometry = geometry;
@@ -122,13 +104,35 @@ function sendSelectionToDash(buildings) {
         });
 }
 
+view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
+
+// Create the Locate widget
+const locateWidget = new vendors.Locate({
+    view: view,
+    graphic: new vendors.Graphic({
+        symbol: {
+            outline: {
+                color: "white",
+                width: 1 // points
+            },
+            color: "blue",
+            size: "12px", // pixel
+            style: "circle",
+            type: "simple-marker",
+        }
+    }),
+});
+view.ui.add(locateWidget, "bottom-right");
+
+//Add basemap toggle widget
 let basemapToggle = new vendors.BasemapToggle({
     view: view,  // The view that provides access to the map's "streets-vector" basemap
     nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
 });
 view.ui.add(basemapToggle, "bottom-right");
 
-//Create basemap gallery container and render the basemap gallery in the container
+// Basemap gallery container is created in dash
+// We render the basemap gallery into the container we created instead of the esri manual container.
 const baseMapGalleryContainer =  document.querySelector('#basemap-gallery-container')
 const basemapGallery = new vendors.BasemapGallery({
     view: view,
@@ -141,7 +145,12 @@ const mantineDrawerBody =  document.querySelector('.mantine-Drawer-body')
 mantineDrawerBody.appendChild(baseMapGalleryContainer)
 
 
-view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
+//Add Fullscreen widget
+const fullscreenWidget = new vendors.Fullscreen({
+    view: view
+  });
+
+view.ui.add(fullscreenWidget, "top-right");
 
 
 map.add(sceneLayer);
