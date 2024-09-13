@@ -153,14 +153,6 @@ document
   .appendChild(baseMapGalleryContainer);
 
 
-
-//Add Fullscreen widget
-const fullscreenWidget = new vendors.Fullscreen({
-  view: view,
-});
-
-view.ui.add(fullscreenWidget, "top-right");
-
 //Move zoom, navigation, and compass to the bottom
 view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
 
