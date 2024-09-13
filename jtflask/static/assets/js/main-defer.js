@@ -131,6 +131,16 @@ const locateWidget = new vendors.Locate({
 });
 view.ui.add(locateWidget, "bottom-right");
 
+//Move zoom, navigation, and compass to the bottom right
+view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
+
+//Add Fullscreen widget
+const fullscreenWidget = new vendors.Fullscreen({
+    view: view
+  });
+
+view.ui.add(fullscreenWidget, "bottom-right");
+
 //Add basemap toggle widget
 let basemapToggle = new vendors.BasemapToggle({
   view: view, // The view that provides access to the map's "streets-vector" basemap
@@ -153,8 +163,7 @@ document
   .appendChild(baseMapGalleryContainer);
 
 
-//Move zoom, navigation, and compass to the bottom
-view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
+
 
 map.add(sceneLayer);
 // map.add(tileLayer);
