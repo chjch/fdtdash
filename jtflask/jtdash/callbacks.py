@@ -39,7 +39,7 @@ def register_callbacks(dashboard):
         output={
             'charts_class_name': Output('chart_scrollable_div', 'className'),
             'tools_className':  Output('arcgistools_scrollable_div', 'className'),
-            'basemap_gallery_className': Output('basemap-gallery-container', 'className'),
+            'basemap_gallery_className': Output('drawer-basemap-gallery', 'className'),
             },     
         inputs=[
             Input('charts-toggle-button', 'n_clicks'),
@@ -48,7 +48,7 @@ def register_callbacks(dashboard):
             Input('clipboard-toggle-button', 'n_clicks'),
             Input('layers-toggle-button', 'n_clicks'),
             Input('list-toggle-button', 'n_clicks'),
-            Input('maps-toggle-button', 'n_clicks')])
+            Input('basemaps-gallery-toggle-button', 'n_clicks')])
     def handle_sidebar_icon_click(*inputs):
         # Get id of clicked button
         clicked_button_id = ctx.triggered_id if not None else ''
@@ -67,7 +67,7 @@ def register_callbacks(dashboard):
                     'clipboard-toggle-button',
                     'layers-toggle-button',
                     'list-toggle-button',
-                    'maps-toggle-button'])
+                    'basemaps-gallery-toggle-button'])
         outputs = list(outputs)
 
         charts_class_name = 'charts-toggle-button slide-in' if all(n_clicks == None for n_clicks in inputs) else outputs[0]

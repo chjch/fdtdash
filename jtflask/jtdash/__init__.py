@@ -4,7 +4,6 @@ import dash
 
 from .layout import layout, html_layout
 from .callbacks import register_callbacks
-from .sidebar import sidebar, get_sidebar_components
 from .linecharts import means_to_work
 from .statshovercards import stats_hover_card
 

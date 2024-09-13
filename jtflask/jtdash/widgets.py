@@ -1,6 +1,5 @@
 import dash_mantine_components as dmc
-from dash import html, dcc
-
+from dash import html
 
 def get_arcgis_sketch_card():
     # ArcGIS Sketch Tool Card

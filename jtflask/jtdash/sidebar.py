@@ -1,22 +1,13 @@
 from dash import html, dcc
 import dash_mantine_components as dmc
-from dash_iconify import DashIconify
+from .basemap_gallery import get_basemap_gallery
 from .charts import create_charts
 from .widgets import get_arcgis_sketch_card
+from. utils import get_icon
 
 
-def get_icon(icon, icon_id=None):
-    return (
-        DashIconify(icon=icon, id=icon_id)
-        if icon_id
-        else DashIconify(icon=icon)
-    )
 
-
-def get_sidebar_components():
-    charts = create_charts()
-    arcgis_tools = get_arcgis_sketch_card()
-
+def get_sidebar_left_column():
     sidebar_brand = html.Div(
         [
             get_icon("solar:box-minimalistic-bold", "sidebar-brand-logo"),
@@ -33,12 +24,13 @@ def get_sidebar_components():
     )
 
     sidebar_main = html.Div(
-        [
+        className="sidebar-main sidebar-item",
+        id="sidebar-main",
+        style={"z": "20px"},
+        children=[
             dmc.Button(
                 id="charts-toggle-button",
-                leftSection=DashIconify(
-                    icon="fluent:data-pie-20-regular", width="24px"
-                ),
+                leftSection=get_icon("fluent:data-pie-20-regular"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
             ),
@@ -73,15 +65,12 @@ def get_sidebar_components():
                 **{"data-position": "center"},
             ),
             dmc.Button(
-                id="maps-toggle-button",
-                leftSection=get_icon("hugeicons:maps-square-01"),
+                id="basemaps-gallery-toggle-button",
                 className="sidebar-icon",
                 **{"data-position": "center"},
+                children=[html.Img(src="/jtdash/assets/svg/basemap_icon.svg")],
             ),
         ],
-        className="sidebar-main sidebar-item",
-        id="sidebar-main",
-        style={"z": "20px"},
     )
 
     collapse_button = dmc.Button(
@@ -97,49 +86,28 @@ def get_sidebar_components():
         className="sidebar-item",
     )
 
-    scrollable_div_hidden = html.Div(
-        id="scrollable-div-hidden", className="scrollable-div"
+    return html.Div(
+        [sidebar_brand, sidebar_main, collapse_button_container],
+        id="sidebar-col1",
     )
 
-    scrollable_div_charts = html.Div(
-        children=charts, id="chart_scrollable_div", className="scrollable-div"
-    )
-
+def get_sidebar_drawer():
+    
+    arcgis_sketch_tool_card = get_arcgis_sketch_card()
+    charts = create_charts()
+    basemap_gallery = get_basemap_gallery()
+    
     scrollable_div_tools = html.Div(
-        children=arcgis_tools,
         id="arcgistools_scrollable_div",
         className="scrollable-div hidden",
+        children=[arcgis_sketch_tool_card],
     )
     
-    # Container to hold basemap gallery
-    basemap_gallery_container =  html.Div(
-        id="basemap-gallery-container",
-        className="scrollable-div hidden",
-    )
-
-    return (
-        sidebar_brand,
-        sidebar_main,
-        collapse_button_container,
-        scrollable_div_charts,
-        scrollable_div_tools,
-        basemap_gallery_container
-    )
-
-
-def sidebar(
-    sidebar_brand,
-    sidebar_main,
-    collapse_button_container,
-    scrollable_div_charts,
-    scrollable_div_tools,
-    basemap_gallery_container
-):
     scrollable_div_drawer = dmc.Drawer(
         children=[
-            scrollable_div_charts,
+            charts,
             scrollable_div_tools,
-            basemap_gallery_container
+            basemap_gallery,
         ],
         id="chart_scrollable_drawer",
         className="",
@@ -157,14 +125,17 @@ def sidebar(
         },
         zIndex=10000,
     )
+    
+    return scrollable_div_drawer
+
+def sidebar():
+    sidebar_left_column = get_sidebar_left_column()
+    sidebar_drawer = get_sidebar_drawer()
 
     drawer_content = html.Div(
         [
-            html.Div(
-                [sidebar_brand, sidebar_main, collapse_button_container],
-                id="sidebar-col1",
-            ),
-            scrollable_div_drawer,
+            sidebar_left_column,
+            sidebar_drawer,
             dcc.Store(
                 id="drawer-content-store",
                 data={"charts": "charts", "tools": "tools"},

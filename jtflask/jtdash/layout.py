@@ -2,18 +2,9 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_extensions import DeferScript, EventListener
 
-from .sidebar import sidebar, get_sidebar_components
+from .sidebar import sidebar
 from .statshovercards import stats_hover_card
 
-# Initialize sidebar components and store as globals
-(
-    global_sidebar_brand,
-    global_sidebar_main_container,
-    global_collapse_button_container,
-    global_scrollable_div_charts,
-    global_scrollable_div_tools,
-    global_basemap_gallery_container
-) = get_sidebar_components()
 
 layout = dmc.MantineProvider(
     html.Div(
@@ -28,14 +19,7 @@ layout = dmc.MantineProvider(
                 ],
             ),
             dcc.Store(id="arcgis-tool-state"),
-            sidebar(
-                global_sidebar_brand,
-                global_sidebar_main_container,
-                global_collapse_button_container,
-                global_scrollable_div_charts,
-                global_scrollable_div_tools,
-                global_basemap_gallery_container,
-            ),
+            sidebar(),
             # stats_hover_card,
         ]
     )
