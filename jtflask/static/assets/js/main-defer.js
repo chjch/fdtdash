@@ -136,8 +136,8 @@ view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
 
 //Add Fullscreen widget
 const fullscreenWidget = new vendors.Fullscreen({
-    view: view
-  });
+  view: view,
+});
 
 view.ui.add(fullscreenWidget, "bottom-right");
 
@@ -149,7 +149,9 @@ let basemapToggle = new vendors.BasemapToggle({
 view.ui.add(basemapToggle, "bottom-right");
 
 // We render the basemap gallery into the container we created for it
-const baseMapGalleryContainer = document.querySelector("#basemap-gallery-card-content");
+const baseMapGalleryContainer = document.querySelector(
+  "#basemap-gallery-card-content"
+);
 const basemapGallery = new vendors.BasemapGallery({
   view: view,
   container: baseMapGalleryContainer,
@@ -163,7 +165,32 @@ document
   .appendChild(baseMapGalleryContainer);
 
 
+const calciteIcon = document.createElement("calcite-icon");
+calciteIcon.setAttribute('icon', 'monitor')
+calciteIcon.setAttribute('scale', 's')
 
+const calciteButton = document.createElement("calcite-button");
+
+calciteButton.addEventListener('click', () => {
+  const drawerDiv = document.querySelector('#drawer')
+  const currentIcon = calciteIcon.getAttribute('icon')
+  if(currentIcon === 'monitor'){
+    calciteIcon.setAttribute('icon', 'full-screen-exit')
+    drawer.classList.add('hidden')
+  }
+  else {
+    calciteIcon.setAttribute('icon', 'monitor')
+    drawer.classList.remove('hidden')
+  }
+});
+calciteButton.appendChild(calciteIcon);
+
+const calciteDiv = document.createElement("div");
+calciteDiv.classList.add('esri-component', 'hide-interface', 'esri-widget')
+calciteDiv.appendChild(calciteButton)
+
+const bottomRightContainer = document.querySelector(".esri-ui-bottom-right");
+bottomRightContainer.prepend(calciteDiv);
 
 map.add(sceneLayer);
 // map.add(tileLayer);
