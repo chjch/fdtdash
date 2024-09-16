@@ -103,24 +103,147 @@ function initializeArcGISTool() {
 
 arcgisToolInstance = initializeArcGISTool()
 
-function sendSelectionToDash(buildings) {
-    fetch('/jtdash/selection', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                buildings: buildings
-            }),
-        }).then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+// ORIGINAL SENDSELECTIONTODASH FUNCTION
+// function sendSelectionToDash(buildings) {
+//     fetch('/jtdash/selection', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//                 buildings: buildings
+//             }),
+//         }).then(response => response.json())
+//         .then(data => {
+//             console.log('Success:', data);
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });
+// }
+
+// test: function to populate the dcc.Store with data from localStorage location @_@
+function populateStore() {
+    // Retrieve data from localStorage
+    const eff_yr_blt_chart = localStorage.getItem('eff-yr-blt-chart');
+    const tot_lvg_area_chart = localStorage.getItem('tot-lvg-area-chart');
+    const just_value_chart = localStorage.getItem('just-value-chart');
+    const doruc_chart = localStorage.getItem('doruc-chart');
+
+    // Update the dcc.Store component
+    const storeElement = document.querySelector('#chart-data-store');
+    const data = {
+        eff_yr_blt_chart: eff_yr_blt_chart ? JSON.parse(eff_yr_blt_chart) : [],
+        tot_lvg_area_chart: tot_lvg_area_chart ? JSON.parse(tot_lvg_area_chart) : [],
+        just_value_chart: just_value_chart ? JSON.parse(just_value_chart) : [],
+        doruc_chart: doruc_chart ? JSON.parse(doruc_chart) : []
+    };
+
+    // Trigger an event or store the data
+    if (storeElement) {
+        const event = new CustomEvent('updateChartData', { detail: data });
+        storeElement.dispatchEvent(event);
+    }
 }
 
+
+function sendSelectionToDash(buildings) {
+    // Prepare data for the POST request
+    const payload = {
+        buildings: buildings
+    };
+
+    // Send a POST request to the Flask backend
+    fetch('/jtdash/selection', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),  // Convert the JavaScript object to JSON
+    })
+    .then(response => response.json())  // Parse the JSON response
+    .then(data => {
+        console.log("Received response from Flask:", data);
+
+        const event = new CustomEvent("update-charts", {
+            detail: { chartData: data.selection }
+        });
+        document.getElementById('event-listener-container').dispatchEvent(event);
+        // window.dispatchEvent(event);  // Dispatch the event to trigger Dash callback
+    })
+    .catch(error => {
+        console.error("Error sending selection to Dash:", error);
+    });
+}
+
+// test: dummy update-charts event
+// window.addEventListener('update-charts', (e) => {
+//     console.log('Event received:', e);
+// });
+//
+
+// const event = new CustomEvent('update-charts', {
+//     detail: {
+//         chartData: {
+//             effyrblt_chart: [{ label: "Year Built", value: 2000 }],
+//             totlvgarea_chart: [{ label: "Living Area", value: 1500 }],
+//             jv_chart: [{ label: "Just Value", value: 300000 }],
+//             doruc_chart: [{ label: "DORUC", value: 100 }]
+//         }
+//     }
+// });
+// document.getElementById('event-listener-container').dispatchEvent(event);
+
+
+
+
+// test: event listener for the "Populate Charts" button
+// const populateChartsButton = document.getElementById('populate-charts');
+// if (populateChartsButton) {
+//     populateChartsButton.addEventListener('click', function() {
+//         const event2 = new CustomEvent('update-charts', {
+//             detail: {
+//                 chartData: {
+//                     effyrblt_chart: [{ label: "Year Built", value: 2000 }],
+//                     totlvgarea_chart: [{ label: "Living Area", value: 1500 }],
+//                     jv_chart: [{ label: "Just Value", value: 300000 }],
+//                     doruc_chart: [{ label: "DORUC", value: 100 }]
+//                 }
+//             }
+//         });
+//         document.getElementById('event-listener-container').dispatchEvent(event2);
+//     });
+// }
+
+// test: try to send data to dcc.Store from sendSelectionToDash function
+// function sendSelectionToDash(buildings) {
+//     fetch('/jtdash/selection', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//                 buildings: buildings
+//             }),
+//         }).then(response => response.json())
+//         .then(data => {
+//             console.log('Success:', data);
+//
+//             // Update the dcc.Store with the processed data from the backend
+//             const store = document.querySelector('#chart-data-store');
+//             store.dispatchEvent(new CustomEvent('store-update', { detail: data.selection }));
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//         });
+// }
+
+
+// document.addEventListener('store-update', function(event) {
+//     // Update the dcc.Store with new data
+//     let storeElement = document.getElementById("chart-data-store");
+//     storeElement.data = event.detail;
+// })
 
 let basemapGallery = new vendors.BasemapGallery({
     view: view,
@@ -301,5 +424,18 @@ view.when(() => {
 
 view.whenLayerView(sceneLayer).then((layerView) => {
     const selectionSketch = JTSelectionSketch.initWidget(layerView, "selection-widget-container");
-    view.ui.add(selectionSketch, "top-right");
+        selectionSketch.on("create", function(event) {
+        if (event.state === "complete") {
+            const geometry = event.graphic.geometry;
+            queryBuildings(geometry);
+        }
+    });
+
+    const store = document.querySelector('#chart-data-store');
+    if (store) {
+        console.log("Store found: ", store);
+    } else {
+        console.log("Store not found");
+    }
+    // view.ui.add(selectionSketch)
 });

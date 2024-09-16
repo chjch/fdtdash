@@ -1,43 +1,16 @@
 import dash_mantine_components as dmc
-from dash import html, dcc
+from dash import html
 import json
 import os
-
-# # Function to load data from JSON files in the assets folder APP  reference
-# def load_data_from_assets(file_path):
-#     with open(file_path, 'r') as file:
-#         return json.load(file)
-#
-# # Load data from JSON files
-# def get_data(app):
-#     assets_folder = app.config.assets_folder
-#     data = load_data_from_assets(os.path.join(assets_folder, 'data', 'data.json'))
-#     data2 = load_data_from_assets(os.path.join(assets_folder, 'data', 'data2.json'))
-#     data3 = load_data_from_assets(os.path.join(assets_folder, 'data', 'data3.json'))
-#     return data, data2, data3
-
 
 # Define the relative path to the assets folder
 ASSETS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'static', 'assets')
 
 # Function to load data from JSON files in the assets folder
-def load_data_from_assets(file_name):
-    file_path = os.path.join(ASSETS_FOLDER, 'data', file_name)
-    with open(file_path, 'r') as file:
-        return json.load(file)
-
-# Load data from JSON files
-def get_data():
-    data = load_data_from_assets('data.json')
-    data2 = load_data_from_assets('data2.json')
-    data3 = load_data_from_assets('data3.json')
-    return data, data2, data3
-
 
 # Function to create charts
 def create_charts():
-    # assets_folder = app.config.assets_folder
-    data, data2, data3 = get_data()
+
     charts = [
         dmc.Card(
             children=[
@@ -74,7 +47,6 @@ def create_charts():
 
                 ),
                 dmc.Text(id="stormSelectValue", size="lg", className="stormSelectText"),
-
             ],
             withBorder=True,
             shadow="sm",
@@ -85,115 +57,146 @@ def create_charts():
         ),
         dmc.Card(
             children=[
-                dmc.Text("Area Chart", size="lg", className="chartLabel"),
-                dmc.AreaChart(
-                    h=200,
-                    dataKey="date",
-                    data=data,
-                    series=[
-                        {"name": "Apples", "color": "indigo.6"},
-                        {"name": "Oranges", "color": "blue.6"},
-                        {"name": "Tomatoes", "color": "teal.6"}
-                    ],
-                    curveType="linear",
-                    tickLine="xy",
-                    withGradient=False,
-                    withXAxis=False,
-                    withDots=False,
-                    id="area_chart"
-                )
-            ],
-            withBorder=True,
-            shadow="sm",
-            radius="md",
-            style={"margin": "10px"},
-            id="Areachart_card",
-            className="cardChart"
-        ),
-        dmc.Card(
-            children=[
-                dmc.Text("Bar Chart", size="lg", className="chartLabel"),
-                dmc.BarChart(
-                    h=200,
-                    dataKey="month",
-                    data=data3,
-                    type="percent",
-                    series=[
-                        {"name": "Smartphones", "color": "violet.6"},
-                        {"name": "Laptops", "color": "blue.6"},
-                        {"name": "Tablets", "color": "teal.6"}
-                    ],
-                    id="barchart_bar"
-                )
-            ],
-            withBorder=True,
-            shadow="sm",
-            radius="md",
-            style={"margin": "10px"},
-            id="barchart_card",
-            className="cardChart"
-        ),
-        dmc.Card(
-            children=[
-                dmc.Text("Donut Chart", size="lg", className="chartLabel"),
-                dmc.DonutChart(
-                    data=data2,
-                    withLabels=True,
-                    withLabelsLine=True,
-                    id="donut_chart"
-                )
-            ],
-            withBorder=True,
-            shadow="sm",
-            radius="md",
-            style={"margin": "10px"},
-            id="donut_card",
-            className="cardChart"
-        ),
-        dmc.Card(
-            children=[
-                dmc.Text("Line Chart", size="lg", className="chartLabel"),
-                dmc.LineChart(
-                    h=200,
-                    dataKey="date",
-                    data=data,
-                    series=[
-                        {"name": "Apples", "color": "indigo.6"},
-                        {"name": "Oranges", "color": "blue.6"},
-                        {"name": "Tomatoes", "color": "teal.6"}
-                    ],
-                    curveType="linear",
-                    tickLine="xy",
-                    withXAxis=False,
-                    withDots=False,
-                    id="line_chart"
-                )
-            ],
-            withBorder=True,
-            shadow="sm",
-            radius="md",
-            style={"margin": "10px"},
-            id="line_card",
-            className="cardChart"
-        ),
-        dmc.Card(
-            children=[
-                dmc.Text("Pie Chart", size="lg", className="chartLabel"),
+                dmc.Text("Land Use (DORUC)", size="lg", className="chartLabel"),
                 dmc.PieChart(
-                    data=data2,
+                    h=300,
+                    data=[
+                        {"name": "Residential", "value": 40, "color": "green.6"},
+                        {"name": "Commercial", "value": 30, "color": "blue.6"},
+                        {"name": "Industrial", "value": 20, "color": "purple.6"},
+                        {"name": "Other", "value": 10, "color": "red.6"}
+                    ],
                     withLabelsLine=True,
-                    labelsPosition="inside",
+                    withTooltip=True,
+                    tooltipDataSource="segment",
+                    labelsPosition="outside",
                     labelsType="percent",
                     withLabels=True,
-                    id="pie_chart"
+                    strokeColor="white",
+                    id="doruc-chart",
+                    size="220",
+                    style={
+                        "margin": "10px",
+                        "backgroundColor": "#f9f9f9"
+                    }
                 )
             ],
             withBorder=True,
             shadow="sm",
             radius="md",
             style={"margin": "10px"},
-            id="pie_card",
+            id="doruc-card",
             className="cardChart"
-        )
+        ),
+        dmc.Card(
+            children=[
+                dmc.Text("Just Value (JV)", size="lg", className="chartLabel"),
+                dmc.DonutChart(
+                    chartLabel="Just Value (JV)",
+                    h=300,
+                    data=[
+                        {"name": "<$100k", "value": 15, "color": "red"},
+                        {"name": "$100k-$500k", "value": 45, "color": "green"},
+                        {"name": "$500k-$1M", "value": 25, "color": "blue"},
+                        {"name": ">$1M", "value": 10, "color": "orange"}
+                    ],
+                    withLabels=True,
+                    # withLabelsLine=True,
+                    withTooltip=True,
+                    tooltipDataSource="segment",
+                    strokeColor="white",
+                    strokeWidth=1,
+                    size="220",
+                    id="just-value-chart",
+                    labelColor="black",
+                    thickness="30",
+                    style={
+                        "margin": "10px",
+                        "backgroundColor": "#f4f4f9"
+                    }
+                )
+            ],
+            withBorder=True,
+            shadow="sm",
+            radius="md",
+            style={"margin": "10px"},
+            id="just-value-card",
+            className="cardChart"
+        ),
+        dmc.Card(
+            children=[
+                dmc.Text("Effective Year Built / Actual Year Built", size="lg", className="chartLabel"),
+
+                dmc.AreaChart(
+                    h=300,
+                    dataKey="year",
+                    data=[],
+
+                    series=[ {
+                                "name": "effyrblt_count",
+                                "dataKey": "effyrblt_count",
+                                "color": "indigo.6"
+                            },
+                            {
+                                "name": "actyrblt_count",
+                                "dataKey": "actyrblt_count",
+                                "color": "teal.6"
+                            }],
+                    curveType="bump",
+                    tickLine="xy",
+                    withGradient=False,
+                    withXAxis=True,
+                    withYAxis=True,
+                    withDots=False,
+                    yAxisProps={'domain': [0, 25]},
+                    id="eff-yr-blt-chart"
+                )
+            ],
+            withBorder=True,
+            shadow="sm",
+            radius="md",
+            style={"margin": "10px"},
+            id="eff-yr-blt-card",
+            className="cardChart"
+        ),
+        dmc.Card(
+            children=[
+                dmc.Text("Total Living Area (square feet) ", size="lg", className="chartLabel"),
+                dmc.BarChart(
+                    h=300,
+                    dataKey="category",
+                    data=[
+                        {"category": "<1000 sq ft", "value": 10},
+                        {"category": "1000-2000 sq ft", "value": 25},
+                        {"category": "2000-3000 sq ft", "value": 35},
+                        {"category": ">3000 sq ft", "value": 20}
+                    ],
+                    type="vertical",
+                    series=[
+                        {"name": "<1000",  "color": "violet.6"},
+                        {"name": "1000-2000",   "color": "blue.6"},
+                        {"name": "2000-3000",  "color": "teal.6"},
+                        {"name": ">3000",  "color": "yellow.6"}
+                    ],
+                    withXAxis=True,
+                    withYAxis=True,
+                    withTooltip=False,
+                    tickLine="xy",
+                    gridAxis="xy",
+                    # yAxisProps={"width": 80},
+                    # xAxisProps={"width": 80},
+                    barChartProps={"barSize": 50},
+                    id="tot-lvg-area-chart",
+                    style={ "margin": "10px", "backgroundColor": "#f4f4f9" },
+                )
+            ],
+            withBorder=True,
+            shadow="sm",
+            radius="md",
+            style={"margin": "10px"},
+            id="tot-lvg-area-card",
+            className="cardChart"
+        ),
+
     ]
     return charts

@@ -2,7 +2,7 @@ import dash_mantine_components as dmc
 from dash import html, dcc
 from .charts import create_charts
 
-charts = create_charts()
+# charts = create_charts()
 
 
 
@@ -63,6 +63,24 @@ def get_arcgis_sketch_card():
     )
 
     return arcgis_sketch_card
+
+def get_arcgis_selection_widget_card():
+    # ArcGIS Sketch Tool Card
+    arcgis_selection_widget_card = dmc.Card(
+        children=[
+            dmc.Text("Selection Tool", size="lg", className="chartLabel"),
+            html.Div(id="selection-widget-container",
+                     style={"height": "100px"})
+        ],
+        withBorder=True,
+        shadow="sm",
+        radius="md",
+        style={"margin": "10px"},
+        # id="arcgis_sketch_card",
+        className="cardChart arcgis_sketch_card"
+    )
+
+    return arcgis_selection_widget_card
 
 def get_arcgis_basemap_g_card():
     # ArcGIS Sketch Tool Card
@@ -125,7 +143,7 @@ def get_arcgis_building_stats_card():
                 children=[
                     dmc.Card(
                         children=[
-                            dcc.Graph(id="eff-yr-blt-chart")
+                            dcc.Graph(id="eff-yr-blt-graph")
                         ],
                         shadow="sm",
                         radius="md",
@@ -135,7 +153,7 @@ def get_arcgis_building_stats_card():
                     ),
                     dmc.Card(
                         children=[
-                            dcc.Graph(id="living-area-chart")
+                            dcc.Graph(id="living-area-graph")
                         ],
                         shadow="sm",
                         radius="md",
@@ -145,7 +163,7 @@ def get_arcgis_building_stats_card():
                     ),
                     dmc.Card(
                         children=[
-                            dcc.Graph(id="just-value-chart")
+                            dcc.Graph(id="just-value-graph")
                         ],
                         shadow="sm",
                         radius="md",
@@ -165,3 +183,9 @@ def get_arcgis_building_stats_card():
 
     return arcgis_building_stats_card
 
+global_widget_hover_card = dmc.Affix(
+    children=get_arcgis_selection_widget_card(),
+    position={"top": 0, "right": 10},
+    zIndex=1000,
+    id="selection_widget-hover-card-affix"
+)

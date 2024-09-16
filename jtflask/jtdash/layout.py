@@ -1,9 +1,9 @@
 from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_extensions import DeferScript, EventListener
-
 from .sidebar import sidebar, get_sidebar_components
 from .statshovercards import stats_hover_card
+from .widgets import global_widget_hover_card
 
 # Initialize sidebar components and store as globals
 (
@@ -20,15 +20,19 @@ layout = dmc.MantineProvider(
     html.Div(
         [
             DeferScript(src="../static/assets/js/main-defer.js"),
+            dcc.Store(id='chart-data-store', storage_type='local', data={}),
             html.Div(id="digital-twin-container"),
-            EventListener(
-                id="arcgis-event-listener",
-                events=[
-                    {"event": "restore-sketch-tool"},
-                    {"event": "hide-sketch-tool"},
-                ],
+            html.Div(
+                EventListener(
+                    id="dash-event-listener",
+                    events=[
+                        {"event": "update-charts"},
+                        {"event": "restore-sketch-tool"},
+                        {"event": "hide-sketch-tool"},
+                    ],
+                ),
+                id="event-listener-container"
             ),
-            dcc.Store(id="arcgis-tool-state"),
             sidebar(
                 global_sidebar_brand,
                 global_sidebar_main_container,
@@ -39,7 +43,9 @@ layout = dmc.MantineProvider(
                 global_scrollable_div_building_stats,
 
             ),
-            # stats_hover_card,
+            global_widget_hover_card,
+            html.Div(id="dummy-div"),
+            dmc.Button("Populate Charts ", id="populate-charts"),
         ]
     )
 )

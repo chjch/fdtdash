@@ -143,6 +143,7 @@ const JTSelectionSketch = (() => {
             defaultCreateOptions: {
                 hasZ: false  // default value
             },
+            creationMode: "update",
             updateOnGraphicClick: true, // Enable updating existing graphics
             defaultUpdateOptions: {
                 enableZ: false,  // default value

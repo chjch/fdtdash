@@ -1,12 +1,14 @@
 import pathlib
 from flask import Flask
 import dash
+import dash_mantine_components as dmc
 
 from .layout import layout, html_layout
 from .callbacks import register_callbacks
-from .sidebar import sidebar, get_sidebar_components
+# from .sidebar import sidebar, get_sidebar_components
 from .linecharts import means_to_work
 from .statshovercards import stats_hover_card
+from .widgets import global_widget_hover_card
 
 external_scripts = [
     # {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
@@ -19,6 +21,7 @@ external_stylesheets = [
     #     "src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css",
     #     "rel": "stylesheet",
     # },
+    # dmc.styles.CHARTS,
     {"src": "https://unpkg.com/@mantine/charts@7/styles.css"},
     {"src": "https://unpkg.com/@mantine/dates@7/styles.css"},
     {"src": "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"},

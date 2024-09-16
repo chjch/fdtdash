@@ -2,10 +2,9 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from .charts import create_charts
-from .arcgis_JS_tools import (get_arcgis_sketch_card,
+from .widgets import (get_arcgis_sketch_card,
                               get_arcgis_basemap_g_card,
                               get_arcgis_building_stats_card)
-from .widgets import get_arcgis_sketch_card
 
 
 def get_icon(icon, icon_id=None):
@@ -55,7 +54,7 @@ def get_sidebar_components():
                 **{"data-position": "center"},
             ),
             dmc.NavLink(
-                id="buildings-link",
+                id="open-buildings-link",
                 leftSection=get_icon("ph:buildings"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
@@ -79,7 +78,7 @@ def get_sidebar_components():
                 **{"data-position": "center"},
             ),
             dmc.NavLink(
-                id="maps-link",
+                id="open-basemaps-link",
                 leftSection=get_icon("hugeicons:maps-square-01"),
                 className="sidebar-icon",
                 **{"data-position": "center"},
@@ -135,7 +134,8 @@ def get_sidebar_components():
         scrollable_div_charts,
         scrollable_div_tools,
         scrollable_div_basemapGallery,
-        scrollable_div_building_stats
+        scrollable_div_building_stats,
+
     )
 
 
@@ -146,7 +146,8 @@ def sidebar(
     scrollable_div_charts,
     scrollable_div_tools,
     scrollable_div_basemapGallery,
-    scrollable_div_building_stats
+    scrollable_div_building_stats,
+
 ):
     scrollable_div_drawer = dmc.Drawer(
         children=[scrollable_div_charts, scrollable_div_tools, scrollable_div_basemapGallery, scrollable_div_building_stats],

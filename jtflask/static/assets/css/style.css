@@ -24,6 +24,12 @@ body,
     display: none;
 }
 
+#populate-charts {
+    position: fixed;
+    top: 20vh;
+    right: 24vh;
+}
+
 .splash {
     display: flex;
     position: fixed;
@@ -34,6 +40,10 @@ body,
     height: 100vh;
     background-color: black;
     z-index: 1000000;
+}
+
+.splash{
+    display: none;
 }
 
 .splash[hidden="true"] {
