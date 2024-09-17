@@ -115,6 +115,7 @@ def get_sidebar_drawer():
         opened=True,
         keepMounted=True,
         closeOnClickOutside=False,
+        closeOnEscape=False,
         withinPortal=False,
         withOverlay=False,
         withCloseButton=False,
