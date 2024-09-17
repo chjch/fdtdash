@@ -10,6 +10,7 @@
 
 :root {
 	--main-color: #5932EA;
+  
 }
 
 html,
@@ -19,6 +20,7 @@ body,
 	margin: 0;
 	height: 100vh;
 	width: 100vw;
+    --esri-view-outline: 2px solid #3A1e7A;
 }
 
 .splash {
@@ -63,50 +65,25 @@ body,
 /*}*/
 
 #uiCornerBottomRight {
-    display: flex; !important;
-    flex-direction: column; !important;
+    display: flex; 
+    flex-direction: column;
     align-items: flex-end; /* Align widgets to the right */
     padding-bottom: 20px; /* Optional: Add padding to the bottom */
 }
 
-#uiCornerBottomRight > * {
-    margin-bottom: 10px; /* Add margin between elements */
-}
-
-/*.esri-compass {*/
-/*	border-radius: 10px; !important;*/
-/*}*/
-
-/*.esri-zoom .esri-widget--button:first-child {*/
-/*    border-start-end-radius: 5px;*/
-/*    border-start-start-radius: 5px    ;*/
-/*}*/
-
- /*.esri-widget, .esri-widget--button {*/
- /*       border-radius: 50px;*/
- /*}*/
-
-/*.esri-zoom .esri-widget--button:last-child {*/
-/*    border-end-end-radius: 5px;*/
-/*    border-end-start-radius: 5px;*/
-/*    border-start-end-radius: 0px;*/
-/*    border-start-start-radius: 0px;*/
-/*}*/
-
-/*.esri-navigation-toggle calcite-button[appearance=outline-fill] {*/
-/*    border-start-end-radius: 5px;*/
-/*    border-start-start-radius: 5px;*/
-/*        border-end-end-radius: 0px;*/
-/*    border-end-start-radius: 0px;*/
-/*}*/
-
 .esri-ui-bottom-right {
+    --calcite-color-brand: #3A1e7A;
+    --calcite-ui-focus-color: transparent;
+    box-shadow: none;
 	flex-flow: column !important;
-
 }
 
 .esri-ui-bottom-right .esri-component {
 	margin-bottom: 10px !important;
+}
+
+.esri-widget--button:is(calcite-button){
+    --calcite-offset-invert-focus: 0; // Toggle for button focus color
 }
 
 calcite-icon {
@@ -143,54 +120,51 @@ calcite-button {
 
 .esri-attribution__powered-by {
     position: absolute;
-    width: 10vw;
     right: 0;
     background: rgba(255, 255, 255, 0.4);
 }
 
-#customLocateButton,
+#customLocateButton {
+    background: transparent;
+    box-shadow: none;
+    --calcite-color-brand-hover: transparent; 
+    --calcite-ui-icon-color: var(--main-color);
+}
+
 #customLocateButton calcite-button {
-    border-radius: 50%; !important;
-    --calcite-color-brand-hover: transparent; !important;
-    --calcite-ui-icon-color: var(--main-color) !important;
+    border-radius: 50px;
 }
 
 #customZoomButton,
 #customZoomButton calcite-button[title="Zoom out"] {
-    border-bottom-left-radius: 10px; !important;
-    border-bottom-right-radius: 10px; !important;
-    --calcite-color-brand-hover: transparent; !important;
-    --calcite-ui-icon-color: var(--main-color) !important;
-    border-color: var(--main-color) !important;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; 
+    --calcite-color-brand-hover: transparent;
 }
 #customZoomButton,
 #customZoomButton calcite-button[title="Zoom in"] {
 	border-top-left-radius: 10px;
-	 !important;
 	border-top-right-radius: 10px;
-	 !important;
-	--calcite-ui-icon-color: var(--main-color) !important;
 }
 
-#customNavigationToggle,
-#customNavigationToggle calcite-button[title="Toggle to pan or rotate in 3D"] {
+
+#customNavigationToggle {
+    background: transparent;
+    box-shadow: none;
+}
+
+#customNavigationToggle calcite-button:nth-child(1) {
 	border-top-left-radius: 10px;
-	 !important;
 	border-top-right-radius: 10px;
-	 !important;
-	--calcite-ui-icon-color: var(--main-color) !important;
+	--calcite-ui-icon-color: var(--main-color) !important
 }
-#customNavigationToggle,
-#customNavigationToggle calcite-button[tabIndex="-1"] {
-border-bottom-left-radius: 10px;
-	 !important;
+
+#customNavigationToggle calcite-button:nth-child(2) {
+	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
-	 !important;
-	--calcite-color-brand-hover: transparent;
-	 !important;
-	--calcite-ui-icon-color: var(--main-color) !important;
-	border-color: var(--main-color) !important;
+	--calcite-ui-icon-color: var(--main-color) !important
 }
+
 
 .mantine-w78bjd{
     border-radius: 0px;
@@ -232,4 +206,47 @@ border-bottom-left-radius: 10px;
 
 .hidden {
     display: none;
+}
+
+.hide-interface {
+    --calcite-color-brand: transparent;
+    --calcite-color-brand-press: transparent;
+    --calcite-color-brand-hover: transparent;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+}
+
+.hide-interface focus-within {
+    border: 2px solid #3A1e7A;
+}
+
+.esri-locate calcite-button:focus-within {
+    border: 2px solid #3A1e7A;
+    border-radius: 50%;
+}
+
+
+.esri-zoom calcite-button:nth-child(1):focus-within {
+    border: 2px solid #3A1e7A;
+}
+.esri-zoom calcite-button:nth-child(2):focus-within {
+    border: 2px solid #3A1e7A;
+}
+
+.esri-navigation-toggle calcite-button:nth-child(1):focus-within{
+    border: 2px solid #3A1e7A; 
+}
+
+.esri-navigation-toggle calcite-button:nth-child(2):focus-within{
+    border: 2px solid #3A1e7A; 
+}
+
+.esri-compass calcite-button:focus-within {
+    border: 2px solid #3A1e7A; 
+}
+
+.esri-fullscreen calcite-button:focus-within {
+    border: 2px solid #3A1e7A; 
 }

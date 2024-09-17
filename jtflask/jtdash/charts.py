@@ -78,7 +78,6 @@ def create_charts():
             withBorder=True,
             shadow="sm",
             radius="md",
-            style={"margin": "10px"},
             id="Scenario_card",
             className="cardChart",
         ),
@@ -105,7 +104,6 @@ def create_charts():
             withBorder=True,
             shadow="sm",
             radius="md",
-            style={"margin": "10px"},
             id="Areachart_card",
             className="cardChart",
         ),
@@ -128,7 +126,6 @@ def create_charts():
             withBorder=True,
             shadow="sm",
             radius="md",
-            style={"margin": "10px"},
             id="barchart_card",
             className="cardChart",
         ),
@@ -142,7 +139,6 @@ def create_charts():
             withBorder=True,
             shadow="sm",
             radius="md",
-            style={"margin": "10px"},
             id="donut_card",
             className="cardChart",
         ),
@@ -168,7 +164,6 @@ def create_charts():
             withBorder=True,
             shadow="sm",
             radius="md",
-            style={"margin": "10px"},
             id="line_card",
             className="cardChart",
         ),
@@ -187,12 +182,11 @@ def create_charts():
             withBorder=True,
             shadow="sm",
             radius="md",
-            style={"margin": "10px"},
             id="pie_card",
             className="cardChart",
         ),
     ]
 
     return html.Div(
-        children=charts, id="chart_scrollable_div", className="scrollable-div"
+        children=charts, id="chart_scrollable_div", className="mantine-Drawer-body-item"
     )

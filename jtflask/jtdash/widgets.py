@@ -12,7 +12,6 @@ def get_arcgis_sketch_card():
         withBorder=True,
         shadow="sm",
         radius="md",
-        style={"margin": "10px"},
         id="arcgis_sketch_card",
         className="cardChart"
     )
