@@ -10,17 +10,13 @@ const JTHighlight = (() => {
         }
     };
 
-    const highlightBuildings = (sketchGeometry, sceneLayerView) => {
+    const highlightBuildings = (objectIds, sceneLayerView) => {
         // Remove any previous highlighting
         clearHighlighting();
 
-        let spatialRelationship = "intersects";
-
-        JTSpatialQuery.runQuery(sceneLayerView, sketchGeometry, spatialRelationship).then((results) => {
-            if (results.length > 0) {
-                highlightHandle = sceneLayerView.highlight(results);
-            }
-        });
+        if (objectIds.length > 0) {
+            highlightHandle = sceneLayerView.highlight(objectIds);
+        }
     };
 
     return {

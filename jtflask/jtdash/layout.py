@@ -26,7 +26,7 @@ layout = dmc.MantineProvider(
                     {"event": "hide-sketch-tool"},
                 ],
             ),
-            dcc.Store(id="arcgis-tool-state"),
+            dcc.Store(id="chart-data-store"),
             sidebar(
                 global_sidebar_brand,
                 global_sidebar_main_container,

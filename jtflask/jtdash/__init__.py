@@ -1,19 +1,16 @@
 import pathlib
 from flask import Flask
 import dash
+from dash import clientside_callback, ClientsideFunction, Input, Output
 
 from .layout import layout, html_layout
 from .callbacks import register_callbacks
-from .sidebar import sidebar, get_sidebar_components
-from .linecharts import means_to_work
-from .statshovercards import stats_hover_card
 
 external_scripts = [
     # {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
     # {"src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"},
     # {"src": "https://unpkg.com/@turf/turf@6/turf.min.js"},
 ]
-
 external_stylesheets = [
     # {
     #     "src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css",
@@ -42,5 +39,12 @@ def init_dashboard(server: Flask):
     dashboard.index_string = html_layout
     dashboard.layout = layout
     register_callbacks(dashboard)
+    clientside_callback(
+        ClientsideFunction(
+            namespace="clientside",
+            function_name="sendToDash"
+        ),
+        Input("chart-data-store", "data"),
+    )
 
     return dashboard.server
