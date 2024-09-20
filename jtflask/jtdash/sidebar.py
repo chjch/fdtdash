@@ -1,22 +1,12 @@
 from dash import html, dcc
 import dash_mantine_components as dmc
-from dash_iconify import DashIconify
+from .basemap_gallery import get_basemap_gallery
 from .charts import create_charts
 from .widgets import get_arcgis_sketch_card
+from .utils import get_icon
 
 
-def get_icon(icon, icon_id=None):
-    return (
-        DashIconify(icon=icon, id=icon_id)
-        if icon_id
-        else DashIconify(icon=icon)
-    )
-
-
-def get_sidebar_components():
-    charts = create_charts()
-    arcgis_tools = get_arcgis_sketch_card()
-
+def get_sidebar_left_column():
     sidebar_brand = html.Div(
         [
             get_icon("solar:box-minimalistic-bold", "sidebar-brand-logo"),
@@ -33,56 +23,46 @@ def get_sidebar_components():
     )
 
     sidebar_main = html.Div(
-        [
-            dmc.NavLink(
-                id="open-charts-drawer-link",
-                # leftSection=get_icon("fluent:data-pie-20-regular", "open-charts"),
-                leftSection=DashIconify(
-                    icon="fluent:data-pie-20-regular", width="24px"
-                ),
-                className="sidebar-icon",
-                **{"data-position": "center"},
-            ),
-            dmc.NavLink(
-                id="open-arcgis-drawer-link",
-                leftSection=get_icon("solar:routing-2-linear", "open-arcgis"),
-                className="sidebar-icon",
-                **{"data-position": "center"},
-            ),
-            dmc.NavLink(
-                id="buildings-link",
-                leftSection=get_icon("ph:buildings"),
-                className="sidebar-icon",
-                **{"data-position": "center"},
-            ),
-            dmc.NavLink(
-                id="clipboard-link",
-                leftSection=get_icon("solar:clipboard-text-linear"),
-                className="sidebar-icon",
-                **{"data-position": "center"},
-            ),
-            dmc.NavLink(
-                id="layers-link",
-                leftSection=get_icon("solar:layers-minimalistic-linear"),
-                className="sidebar-icon",
-                **{"data-position": "center"},
-            ),
-            dmc.NavLink(
-                id="list-link",
-                leftSection=get_icon("la:list-ul"),
-                className="sidebar-icon",
-                **{"data-position": "center"},
-            ),
-            dmc.NavLink(
-                id="maps-link",
-                leftSection=get_icon("hugeicons:maps-square-01"),
-                className="sidebar-icon",
-                **{"data-position": "center"},
-            ),
-        ],
         className="sidebar-main sidebar-item",
         id="sidebar-main",
         style={"z": "20px"},
+        children=[
+            dmc.Button(
+                id="charts-toggle-button",
+                children=get_icon("fluent:data-pie-20-regular"),
+                className="sidebar-icon"
+            ),
+            dmc.Button(
+                id="arcgis-tools-toggle-button",
+                children=get_icon("solar:routing-2-linear", "open-arcgis"),
+                className="sidebar-icon"
+            ),
+            dmc.Button(
+                id="buildings-toggle-button",
+                children=get_icon("ph:buildings"),
+                className="sidebar-icon"
+            ),
+            dmc.Button(
+                id="clipboard-toggle-button",
+                children=get_icon("solar:clipboard-text-linear"),
+                className="sidebar-icon"
+            ),
+            dmc.Button(
+                id="layers-toggle-button",
+                children=get_icon("solar:layers-minimalistic-linear"),
+                className="sidebar-icon"
+            ),
+            dmc.Button(
+                id="legend-toggle-button",
+                children=html.Div(id="legend-svg"),
+                className="sidebar-icon"
+            ),
+            dmc.Button(
+                id="basemap-gallery-toggle-button",
+                children=html.Div(id="basemap-svg"),
+                className="sidebar-icon"
+            ),
+        ],
     )
 
     collapse_button = dmc.Button(
@@ -98,38 +78,29 @@ def get_sidebar_components():
         className="sidebar-item",
     )
 
-    scrollable_div_hidden = html.Div(
-        id="scrollable-div-hidden", className="scrollable-div"
+    return html.Div(
+        [sidebar_brand, sidebar_main, collapse_button_container],
+        id="sidebar-col1",
     )
 
-    scrollable_div_charts = html.Div(
-        children=charts, id="chart_scrollable_div", className="scrollable-div"
-    )
+def get_sidebar_drawer():
+
+    arcgis_sketch_tool_card = get_arcgis_sketch_card()
+    charts = create_charts()
+    basemap_gallery = get_basemap_gallery()
 
     scrollable_div_tools = html.Div(
-        children=arcgis_tools,
         id="arcgistools_scrollable_div",
         className="scrollable-div hidden",
+        children=[arcgis_sketch_tool_card],
     )
 
-    return (
-        sidebar_brand,
-        sidebar_main,
-        collapse_button_container,
-        scrollable_div_charts,
-        scrollable_div_tools,
-    )
-
-
-def sidebar(
-    sidebar_brand,
-    sidebar_main,
-    collapse_button_container,
-    scrollable_div_charts,
-    scrollable_div_tools,
-):
     scrollable_div_drawer = dmc.Drawer(
-        children=[scrollable_div_charts, scrollable_div_tools],
+        children=[
+            charts,
+            scrollable_div_tools,
+            basemap_gallery,
+        ],
         id="chart_scrollable_drawer",
         className="",
         padding="2",
@@ -147,13 +118,16 @@ def sidebar(
         zIndex=10000,
     )
 
+    return scrollable_div_drawer
+
+def sidebar():
+    sidebar_left_column = get_sidebar_left_column()
+    sidebar_drawer = get_sidebar_drawer()
+
     drawer_content = html.Div(
         [
-            html.Div(
-                [sidebar_brand, sidebar_main, collapse_button_container],
-                id="sidebar-col1",
-            ),
-            scrollable_div_drawer,
+            sidebar_left_column,
+            sidebar_drawer,
             dcc.Store(
                 id="drawer-content-store",
                 data={"charts": "charts", "tools": "tools"},

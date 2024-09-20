@@ -199,14 +199,6 @@ border-bottom-left-radius: 10px;
 .mantine-1t8pnl2 {
     border-radius: 0px;
 }
-.mantine-NavLink-body {
-    display: none;
-}
-
-.mantine-NavLink-icon {
-    margin: 0;
-    display: flex;
-}
 
 .iconify {
     width: 24px;
@@ -225,7 +217,11 @@ border-bottom-left-radius: 10px;
 	.iconify {
 		width: 24px;
 		/* Larger size for large screens */
-		height: 34px;
+		height: 24px;
 		/* Keep width and height the same for consistency */
 	}
+}
+
+.hidden {
+    display: none;
 }
