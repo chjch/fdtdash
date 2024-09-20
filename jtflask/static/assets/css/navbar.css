@@ -1,0 +1,220 @@
+.mantine-AppShell-root {
+  --app-shell-border-color: none !important;
+}
+
+#jaxtwin-navbar {
+  position: fixed;
+  width: 100vw;
+  height: 50px;
+  top: unset;
+  bottom: 0;
+  @media (min-width: 768px) {
+    position: fixed;
+    width: auto;
+    height: 100vh;
+    top: 0;
+    background-color: transparent;
+  }
+}
+
+#navbar-container {
+  display: flex;
+  height: 100%;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    overflow-y: scroll;
+    width: fit-content;
+  }
+}
+
+#navbar-control {
+  width: 100%;
+  height: 50px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  background: white;
+  @media (min-width: 768px) {
+    position: relative;
+    width: min-content;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 15px;
+    backdrop-filter: blur(100px);
+    background-image: url("../svg/sidebar_background.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 1;
+  }
+}
+
+#navbar-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  .iconify {
+    width: 24px;
+    height: 24px;
+  }
+  @media (min-width: 768px) {
+    flex-direction: column;
+    .iconify {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.navbar-button {
+  background: transparent;
+  color: black;
+  padding-inline: 5px;
+  filter: drop-shadow(1px 3px 2px gray);
+  @media (min-width: 768px) {
+    padding-inline: unset;
+  }
+}
+
+.mantine-Button-section {
+  margin-inline-end: unset;
+}
+
+/* hover state */
+.navbar-button:hover {
+  background-color: var(--main-color);
+  color: #ffffff;
+  border-radius: 5px;
+}
+
+#collapse-icon {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.7rem;
+  color: var(--main-color);
+}
+
+#collapse-button {
+  background-color: transparent;
+  border: #ffffff00;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 0px;
+}
+
+#collapse-button-container {
+  display: none;
+  @media (min-width: 768px) {
+    height: 35px;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+#navbar-drawer {
+  position: absolute;
+  width: 320px;
+  height: 80vh;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  overflow-y: auto;
+  background: rgb(229, 229, 229, 0.5);
+  @media (min-width: 768px) {
+    position: unset;
+    height: unset;
+    bottom: unset;
+    z-index: 0;
+  }
+}
+
+#navbar-drawer > * {
+  width: 100%;
+}
+
+#navbar-drawer::-webkit-scrollbar {
+  display: none;
+}
+
+.animate__animated.animate__slideOutLeft {
+  --animate-duration: 0.5s;
+}
+
+.animate__animated.animate__slideInLeft {
+  --animate-duration: 0.5s;
+}
+
+/* Custom slide animations */
+.slide-in {
+  animation: slideIn 0.5s forwards;
+}
+
+.slide-out {
+  animation: slideOut 0.5s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    animation-timing-function: ease;
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    animation-timing-function: ease;
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    animation-timing-function: ease;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    animation-timing-function: ease;
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.slide-left {
+  animation: slideLeft 0.5s forwards;
+}
+
+.slide-right {
+  animation: slideRight 0.5 forwards;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-1000%);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+/*  End Custom slide animations */

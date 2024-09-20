@@ -205,7 +205,7 @@ calcite-button {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .hide-interface {

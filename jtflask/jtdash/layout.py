@@ -2,30 +2,29 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_extensions import DeferScript, EventListener
 
-from .sidebar import sidebar
-from .statshovercards import stats_hover_card
+from .appshell import appshell
 
 
 layout = dmc.MantineProvider(
-    html.Div(
-        [
-            DeferScript(src="../static/assets/js/main-defer.js"),
-            html.Div(id="digital-twin-container"),
-            EventListener(
-                id="arcgis-event-listener",
-                events=[
-                    {"event": "restore-sketch-tool"},
-                    {"event": "hide-sketch-tool"},
-                ],
-            ),
-            dcc.Store(id="arcgis-tool-state"),
-            sidebar(),
-            # stats_hover_card,
-        ]
-    )
+    [
+        appshell(),
+        html.Div(
+            [
+                DeferScript(src="../static/assets/js/main-defer.js"),
+                EventListener(
+                    id="arcgis-event-listener",
+                    events=[
+                        {"event": "restore-sketch-tool"},
+                        {"event": "hide-sketch-tool"},
+                    ],
+                ),
+                dcc.Store(id="arcgis-tool-state"),
+            ]
+        ),
+    ]
 )
 
-html_layout = '''
+html_layout = """
 <!DOCTYPE html>
 <html>
     <head>
@@ -53,6 +52,7 @@ html_layout = '''
                 <img class='logo-image' src='/jtdash/assets/images/splash-logo-image.png'/>
             </div>
         </div>
+        <div id='digital-twin-container'></div>
         {%app_entry%}
         <footer>
             {%config%}
@@ -61,4 +61,4 @@ html_layout = '''
         </footer>
     </body>
 </html>
-'''
+"""

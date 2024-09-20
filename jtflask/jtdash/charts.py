@@ -188,5 +188,5 @@ def create_charts():
     ]
 
     return html.Div(
-        children=charts, id="chart_scrollable_div", className="mantine-Drawer-body-item"
+        id="charts", children=charts, 
     )

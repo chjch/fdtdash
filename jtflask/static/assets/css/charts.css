@@ -1,3 +1,9 @@
+#charts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 #yearSelectValue {
 	font-weight: 700;
 	font-size: xx-large;
@@ -30,7 +36,7 @@
 
 
 .cardChart {
-    width: 95%;
+    width: 100%;
 }
 
 .chartLabel {

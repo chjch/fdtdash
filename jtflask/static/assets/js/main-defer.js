@@ -172,15 +172,15 @@ calciteIcon.setAttribute('scale', 's')
 const calciteButton = document.createElement("calcite-button");
 
 calciteButton.addEventListener('click', () => {
-  const drawerDiv = document.querySelector('#drawer')
+  const appshell = document.querySelector('.mantine-AppShell-root')
   const currentIcon = calciteIcon.getAttribute('icon')
   if(currentIcon === 'monitor'){
     calciteIcon.setAttribute('icon', 'full-screen-exit')
-    drawer.classList.add('hidden')
+    appshell.classList.add('hidden')
   }
   else {
     calciteIcon.setAttribute('icon', 'monitor')
-    drawer.classList.remove('hidden')
+    appshell.classList.remove('hidden')
   }
 });
 calciteButton.appendChild(calciteIcon);
