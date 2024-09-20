@@ -6,6 +6,7 @@ from .tools import get_tools
 from .utils import get_icon
 from .brand import get_brand
 
+
 def get_navbar_icons():
     return html.Div(
         id="navbar-buttons",
@@ -56,13 +57,15 @@ def get_navbar_icons():
     )
 
 
-def get_left_column():
+def get_navbar_control():
     navbar_brand = get_brand()
     navbar_icons = get_navbar_icons()
 
     collapse_button = dmc.Button(
         id="collapse-button",
-        children=[get_icon(id="collapse-icon", icon="heroicons:chevron-double-left-16-solid")],
+        children=[
+            get_icon(id="collapse-icon", icon="heroicons:chevron-double-left-16-solid")
+        ],
         variant="default",
         fullWidth=False,
     )
@@ -78,7 +81,7 @@ def get_left_column():
     )
 
 
-def get_right_column():
+def get_navbar_drawer():
     charts = create_charts()
     basemap_gallery = get_basemap_gallery()
     tools = get_tools()
@@ -94,8 +97,8 @@ def get_right_column():
 
 
 def get_navbar():
-    left_column = get_left_column()
-    right_column = get_right_column()
+    navbar_control = get_navbar_control()
+    navbar_drawer = get_navbar_drawer()
 
     return html.Div(
         id="navbar-container",
@@ -104,7 +107,7 @@ def get_navbar():
                 id="drawer-content-store",
                 data={"charts": "charts", "tools": "tools"},
             ),
-            left_column,
-            right_column,
+            navbar_control,
+            navbar_drawer,
         ],
     )
