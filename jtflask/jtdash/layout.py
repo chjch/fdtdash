@@ -1,63 +1,27 @@
 from dash import html, dcc
 import dash_mantine_components as dmc
-from dash_extensions import DeferScript, EventListener
+from dash_extensions import DeferScript
 
-from .sidebar import sidebar, get_sidebar_components
+from .sidebar import sidebar
 from .statshovercards import stats_hover_card
 
-# Initialize sidebar components and store as globals
-(
-    global_sidebar_brand,
-    global_sidebar_main_container,
-    global_collapse_button_container,
-    global_scrollable_div_charts,
-    global_scrollable_div_tools,
-) = get_sidebar_components()
 
 layout = dmc.MantineProvider(
     html.Div(
         [
             DeferScript(src="../static/assets/js/main-defer.js"),
             html.Div(id="digital-twin-container"),
-            EventListener(
-                id="arcgis-event-listener",
-                events=[
-                    {"event": "restore-sketch-tool"},
-                    {"event": "hide-sketch-tool"},
-                ],
-            ),
             dcc.Store(id="chart-data-store"),
-            sidebar(
-                global_sidebar_brand,
-                global_sidebar_main_container,
-                global_collapse_button_container,
-                global_scrollable_div_charts,
-                global_scrollable_div_tools,
-            ),
+            sidebar(),
             # stats_hover_card,
         ]
     )
 )
 
-html_layout = '''
-<!DOCTYPE html>
-<html>
-    <head>
-        {%metas%}
-        <title>{%title%}</title>
-        {%favicon%}
-        {%css%}
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-        />
-    </head>
-    <style>
-        ._dash-loading {
-            display: none; !important;
-        }
-    </style>
-    <body>
+
+def html_layout(with_splash=True):
+    if with_splash:
+        splash_html_string = """
         <div class='splash'>
             <div class='logo'>
                 <div class="logo-text">
@@ -67,12 +31,36 @@ html_layout = '''
                 <img class='logo-image' src='/jtdash/assets/images/splash-logo-image.png'/>
             </div>
         </div>
-        {%app_entry%}
-        <footer>
-            {%config%}
-            {%scripts%}
-            {%renderer%}
-        </footer>
-    </body>
-</html>
-'''
+        """
+    else:
+        splash_html_string = ""
+
+    return f"""
+        <!DOCTYPE html>
+            <html>
+                <head>
+                    {{%metas%}}
+                    <title>{{%title%}}</title>
+                    {{%favicon%}}
+                    {{%css%}}
+                    <link
+                        rel="stylesheet"
+                        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+                    />
+                </head>
+                <style>
+                    ._dash-loading {{
+                        display: none; !important;
+                    }}
+                </style>
+                <body>
+                    {splash_html_string}
+                    {{%app_entry%}}
+                    <footer>
+                        {{%config%}}
+                        {{%scripts%}}
+                        {{%renderer%}}
+                    </footer>
+                </body>
+            </html>
+        """
