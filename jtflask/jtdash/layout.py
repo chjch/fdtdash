@@ -20,7 +20,6 @@ layout = dmc.MantineProvider(
     html.Div(
         [
             DeferScript(src="../static/assets/js/main-defer.js"),
-            dcc.Store(id='chart-data-store', storage_type='local', data={}),
             html.Div(id="digital-twin-container"),
             html.Div(
                 EventListener(
@@ -33,6 +32,7 @@ layout = dmc.MantineProvider(
                 ),
                 id="event-listener-container"
             ),
+            dcc.Store(id="chart-data-store"),
             sidebar(
                 global_sidebar_brand,
                 global_sidebar_main_container,
@@ -43,7 +43,6 @@ layout = dmc.MantineProvider(
                 global_scrollable_div_building_stats,
 
             ),
-            global_widget_hover_card,
             html.Div(id="dummy-div"),
             dmc.Button("Populate Charts ", id="populate-charts"),
         ]

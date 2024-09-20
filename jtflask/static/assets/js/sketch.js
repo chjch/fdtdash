@@ -127,6 +127,11 @@ const JTSelectionSketch = (() => {
         }
     };
 
+    let spatialRelationship = "intersects";
+    let highlightHandle = null;
+    let highlightedObjectIds = [];
+    let outFields = ["OBJECTID", "DORUC", "JV", "ACTYRBLT", "EFFYRBLT"];
+
     const initWidget = (sceneLayerView, container) => {
         const sketchLayer = new vendors.GraphicsLayer({
             title: "Selection Layer",
@@ -169,7 +174,13 @@ const JTSelectionSketch = (() => {
             }
             if (event.state === "complete") {
                 let sketchGeometry = event.graphic.geometry;
-                JTHighlight.highlightBuildings(sketchGeometry, sceneLayerView);
+
+                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship).then((results) => {
+                    if (results.length > 0) {
+                        // dash_clientside.clientside.sendToDash('chart-data-store', results);
+                        JTDash.sendToDash('chart-data-store', results);
+                    }
+                });
             }
         });
         // Listen to sketch widget's update event to update the filter
@@ -178,7 +189,12 @@ const JTSelectionSketch = (() => {
                 JTHighlight.clearHighlighting();
             }
             if (event.state === "complete" && event.graphics.length > 0) {
-                JTHighlight.highlightBuildings(event.graphics[0].geometry, sceneLayerView);
+                let sketchGeometry = event.graphics[0].geometry;
+                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship).then((results) => {
+                    if (results.length > 0) {
+                        JTDash.sendToDash('chart-data-store', results);
+                    }
+                });
             }
         });
         return selectionSketchWidget;

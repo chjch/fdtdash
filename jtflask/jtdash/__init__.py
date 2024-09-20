@@ -1,14 +1,13 @@
 import pathlib
 from flask import Flask
 import dash
-import dash_mantine_components as dmc
+from dash import clientside_callback, ClientsideFunction, Input, Output
 
 from .layout import layout, html_layout
 from .callbacks import register_callbacks
-# from .sidebar import sidebar, get_sidebar_components
+from .sidebar import sidebar, get_sidebar_components
 from .linecharts import means_to_work
 from .statshovercards import stats_hover_card
-from .widgets import global_widget_hover_card
 
 external_scripts = [
     # {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
@@ -45,5 +44,12 @@ def init_dashboard(server: Flask):
     dashboard.index_string = html_layout
     dashboard.layout = layout
     register_callbacks(dashboard)
+    clientside_callback(
+        ClientsideFunction(
+            namespace="clientside",
+            function_name="sendToDash"
+        ),
+        Input("chart-data-store", "data"),
+    )
 
     return dashboard.server

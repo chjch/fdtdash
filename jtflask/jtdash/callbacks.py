@@ -6,6 +6,13 @@ import random
 from datetime import datetime, timedelta
 def register_callbacks(dashboard):
     @dashboard.callback(
+        Input("chart-data-store", "data"),
+        prevent_initial_call=True
+    )
+    def print_data(data):
+        print(f"printing from callback {data}")
+
+    @dashboard.callback(
         [
             Output("chart_scrollable_div", "className"),
             Output("arcgistools_scrollable_div", "className"),
