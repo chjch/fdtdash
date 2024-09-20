@@ -1,6 +1,7 @@
 import dash_mantine_components as dmc
 from dash import html
 
+
 def get_basemap_gallery():
     basemap_gallery_card = dmc.Card(
         id="basemap-gallery-card",
@@ -19,5 +20,5 @@ def get_basemap_gallery():
         className="scrollable-div hidden",
         children=[basemap_gallery_card],
     )
-    
+
     return basemap_gallery
