@@ -1,7 +1,7 @@
 import pathlib
 from flask import Flask
 import dash
-from dash import clientside_callback, ClientsideFunction, Input, Output
+from dash import clientside_callback, ClientsideFunction, Input
 
 from .layout import layout, html_layout
 from .callbacks import register_callbacks
@@ -36,7 +36,7 @@ def init_dashboard(server: Flask):
         assets_ignore=".*defer.js$",
         title="JaxTwin: An Urban Digital Twin for Jacksonville",
     )
-    dashboard.index_string = html_layout
+    dashboard.index_string = html_layout(with_splash=False)
     dashboard.layout = layout
     register_callbacks(dashboard)
     clientside_callback(
