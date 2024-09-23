@@ -4,13 +4,8 @@ import requests
 import json
 import random
 from datetime import datetime, timedelta
+from collections import defaultdict
 def register_callbacks(dashboard):
-    @dashboard.callback(
-        Input("chart-data-store", "data"),
-        prevent_initial_call=True
-    )
-    def print_data(data):
-        print(f"printing from callback {data}")
 
     @dashboard.callback(
         [
@@ -148,30 +143,7 @@ def register_callbacks(dashboard):
         return value
 
 
-    # Callback to fetch data and update the charts
-    # @dashboard.callback(
-    #     [
-    #         Output("eff-yr-blt-chart", "data"),
-    #         Output("tot-lvg-area-chart", "data"),
-    #         Output("just-value-chart", "data"),
-    #         Output("doruc-chart", "data"),
-    #     ],
-    #     [Input("event-listener-container", "n_events")],
-    #     [State("event-listener-container", "event")],
-    # )
-    # def update_charts_from_event(event_count, event_data):
-    #     print(f"Event count: {event_count},  Event data: {event_data}")
-    #     if event_data:
-    #         chart_data = event_data['detail']['chartData']
-    #         return (
-    #             chart_data['effyrblt_chart'],
-    #             chart_data['totlvgarea_chart'],
-    #             chart_data['jv_chart'],
-    #             chart_data['doruc_chart']
-    #         )
-    #     return [], [], [], []
 
-    # Populate Charts Callback  # Added to populate charts with random data
     @dashboard.callback(
         [
             Output("eff-yr-blt-chart", "data"),
@@ -179,143 +151,95 @@ def register_callbacks(dashboard):
             Output("just-value-chart", "data"),
             Output("doruc-chart", "data"),
         ],
-        [Input("populate-charts", "n_clicks")],
-        prevent_initial_call=True,
+        [Input("chart-data-store", "data")],
+        prevent_initial_call=True
     )
-    def update_charts_from_btn(n_clicks):
-        if n_clicks:
-            # Simulate chart data by random generation
-            test_data = {
-                "totlvgarea_chart": [
-                    {"TOTLVGAREA": random.randint(700, 5000)}
-                    for _ in range(100)
-                ],
-                "jv_chart": [
-                    {"value": random.randint(50000, 1500000)}  # Random just value data
-                    for i in range(100)
-                ],
-                "doruc_chart": [
-                    {"value": random.randint(10, 100)}  # Random value between 10 and 100 for DORUC
-                    for _ in range(100)
-                ]
-            }
+    def process_store_data(data):
+        if not data:
+            return [], [], [], []  # Return empty data if no data is received
 
-            # lists to hold categorized data
-            years = list(range(1900, 2024))  # Years from 1900 to 2023
+        # Initialize data structures for processing
+        effyrblt_counts = defaultdict(int)  # To hold count of EFFYRBLT per year
+        totlvgarea_category_counts = {"NA": 0, "<1000": 0, "1000-2000": 0, "2000-3000": 0, ">3000": 0}
+        jv_category_counts = {"NA": 0, "<$100k": 0, "$100k-$500k": 0, "$500k-$1M": 0, ">$1M": 0}
+        doruc_category_counts = {"NA": 0, "Residential": 0, "Commercial": 0, "Industrial": 0, "Other": 0}
 
-            # Generate random data for both EFFYRBLT and ACTYRBLT for each year
-            effyrblt_data = [
-                {"year": year, "effyrblt_count": random.randint(0, 20), "actyrblt_count": random.randint(0, 20)}
-                for year in years
-            ]
+        # Process each entry from the received data
+        for entry in data:
+            # Process Effective Year Built (EFFYRBLT)
+            effyrblt_year = entry.get("EFFYRBLT")
+            if effyrblt_year is not None:
+                effyrblt_counts[effyrblt_year] += 1  # Count occurrences per year
 
-            # print(effyrblt_data)
+            # Process Total Living Area (TOTLVGAREA)
+            totlvgarea = entry.get("TOTLVGAREA", 0)
 
-            totlvgarea_data = []
+            # Check if the value is None or zero and categorize as "NA"
+            if totlvgarea is None or totlvgarea == 0:
+                totlvgarea_category_counts["NA"] += 1
+            elif totlvgarea < 1000:
+                totlvgarea_category_counts["<1000"] += 1
+            elif 1000 <= totlvgarea < 2000:
+                totlvgarea_category_counts["1000-2000"] += 1
+            elif 2000 <= totlvgarea < 3000:
+                totlvgarea_category_counts["2000-3000"] += 1
+            else:
+                totlvgarea_category_counts[">3000"] += 1
 
-            totlvgarea_category_counts = {
-                "<1000": 0,
-                "1000-2000": 0,
-                "2000-3000": 0,
-                ">3000": 0
-            }
+            # Process Just Value (JV)
+            jv_value = entry.get("JV", 0)
 
-            jv_category_counts = {
-                "<$100k": 0,
-                "$100k-$500k": 0,
-                "$500k-$1M": 0,
-                ">$1M": 0
-            }
+            if jv_value is None or jv_value == 0:
+                jv_category_counts["NA"] += 1
+            elif jv_value < 100000:
+                jv_category_counts["<$100k"] += 1
+            elif 100000 <= jv_value < 500000:
+                jv_category_counts["$100k-$500k"] += 1
+            elif 500000 <= jv_value < 1000000:
+                jv_category_counts["$500k-$1M"] += 1
+            else:
+                jv_category_counts[">$1M"] += 1
 
-            # Transform totlvgarea_chart data
-            for entry in test_data["totlvgarea_chart"]:
-                totlvgarea = entry["TOTLVGAREA"]
-                if totlvgarea < 1000:
-                    totlvgarea_category_counts["<1000"] += 1
-                elif 1000 <= totlvgarea < 2000:
-                    totlvgarea_category_counts["1000-2000"] += 1
-                elif 2000 <= totlvgarea < 3000:
-                    totlvgarea_category_counts["2000-3000"] += 1
-                else:
-                    totlvgarea_category_counts[">3000"] += 1
+            # Process DORUC
+            doruc_value = entry.get("DORUC", "")
+            if doruc_value is None or doruc_value == 0:
+                doruc_category_counts["NA"] += 1
+            elif 1 <= int(doruc_value) <= 25:
+                doruc_category_counts["Residential"] += 1
+            elif 26 <= int(doruc_value) <= 50:
+                doruc_category_counts["Commercial"] += 1
+            elif 51 <= int(doruc_value) <= 75:
+                doruc_category_counts["Industrial"] += 1
+            else:
+                doruc_category_counts["Other"] += 1
 
-            # Convert totlvgarea_category_counts to the format required by the BarChart
-            for category, count in totlvgarea_category_counts.items():
-                totlvgarea_data.append({"category": category, category: count})
+        # Format EFFYRBLT data to match the required format
+        effyrblt_data = [
+            {"year": year, "effyrblt_count": count}
+            for year, count in sorted(effyrblt_counts.items())
+        ]
 
-            # Transform jv_chart data into categorized ranges for the DonutChart
-            for entry in test_data["jv_chart"]:
-                jv_value = entry["value"]
-                if jv_value < 100000:
-                    jv_category_counts["<$100k"] += 1
-                elif 100000 <= jv_value < 500000:
-                    jv_category_counts["$100k-$500k"] += 1
-                elif 500000 <= jv_value < 1000000:
-                    jv_category_counts["$500k-$1M"] += 1
-                else:
-                    jv_category_counts[">$1M"] += 1
+        # Convert totlvgarea_category_counts to the format required by the BarChart
+        totlvgarea_data = [
+            {"category": category, category: count} for category, count in totlvgarea_category_counts.items()
+        ]
 
-            # Convert jv_category_counts to the format required by the DonutChart with colors
-            jv_data = [
-                {"name": "<$100k", "value": jv_category_counts["<$100k"], "color": "indigo.6"},  # Violet
-                {"name": "$100k-$500k", "value": jv_category_counts["$100k-$500k"], "color": "yellow.6"},  # Gold
-                {"name": "$500k-$1M", "value": jv_category_counts["$500k-$1M"], "color": "teal.6"},
-                # Lime Green
-                {"name": ">$1M", "value": jv_category_counts[">$1M"], "color": "gray.6"}  # Tomato
-            ]
+        # Convert jv_category_counts to the format required by the DonutChart with colors
+        jv_data = [
+            {"name": "NA", "value": jv_category_counts["NA"], "color": "gray.6"},
+            {"name": "<$100k", "value": jv_category_counts["<$100k"], "color": "indigo.6"},
+            {"name": "$100k-$500k", "value": jv_category_counts["$100k-$500k"], "color": "yellow.6"},
+            {"name": "$500k-$1M", "value": jv_category_counts["$500k-$1M"], "color": "teal.6"},
+            {"name": ">$1M", "value": jv_category_counts[">$1M"], "color": "violet.6"}
+        ]
 
-            # Weight coefficients for each category for simulating DORUC data
-            weights = {
-                "Residential": 1.2,
-                "Commercial": 1.0,
-                "Industrial": 0.8,
-                "Other": 0.2
-            }
+        # Convert doruc_category_counts to the format required by the PieChart
+        doruc_data = [
+            {"name": "NA", "value": doruc_category_counts["NA"], "color": "gray.6"},
+            {"name": "Residential", "value": doruc_category_counts["Residential"], "color": "indigo.6"},
+            {"name": "Commercial", "value": doruc_category_counts["Commercial"], "color": "yellow.6"},
+            {"name": "Industrial", "value": doruc_category_counts["Industrial"], "color": "teal.6"},
+            {"name": "Other", "value": doruc_category_counts["Other"], "color": "violet.6"}
+        ]
 
-            # Categorize DORUC values into Residential, Commercial, Industrial, and Other
-            doruc_category_counts = {
-                "Residential": 0,
-                "Commercial": 0,
-                "Industrial": 0,
-                "Other": 0
-            }
-            # Categorize DORUC values and accumulate the counts
-            for entry in test_data["doruc_chart"]:
-                doruc_value = entry["value"]
-
-                # Categorize based on the DORUC value
-                if 1 <= doruc_value <= 25:
-                    doruc_category_counts["Residential"] += 1 * weights["Residential"]
-                elif 26 <= doruc_value <= 50:
-                    doruc_category_counts["Commercial"] += 1 * weights["Commercial"]
-                elif 51 <= doruc_value <= 75:
-                    doruc_category_counts["Industrial"] += 1 * weights["Industrial"]
-                else:
-                    doruc_category_counts["Other"] += 1 * weights["Other"]
-
-            # Convert doruc_category_counts to the format required by the PieChart (only one entry per category)
-
-            # color theme 1
-            # doruc_data = [
-            #     {"name": "Residential", "value": doruc_category_counts["Residential"], "color": "#5932EA"},
-            #     {"name": "Commercial", "value": doruc_category_counts["Commercial"], "color": "#FFD700"},
-            #     {"name": "Industrial", "value": doruc_category_counts["Industrial"], "color": "#32CD32"},
-            #     {"name": "Other", "value": doruc_category_counts["Other"], "color": "#FF6347"}
-            # ]
-
-            # color theme 2
-            doruc_data = [
-                {"name": "Residential", "value": doruc_category_counts["Residential"], "color": "indigo.6"},
-                {"name": "Commercial", "value": doruc_category_counts["Commercial"], "color": "yellow.6"},
-                {"name": "Industrial", "value": doruc_category_counts["Industrial"], "color": "teal.6"},
-                {"name": "Other", "value": doruc_category_counts["Other"], "color": "gray.6"}
-            ]
-
-            # Return the data to populate the charts
-            return (effyrblt_data,
-                    totlvgarea_data,
-                    jv_data,
-                    doruc_data)
-
-        return [], [], [], []
-
+        return effyrblt_data, totlvgarea_data, jv_data, doruc_data

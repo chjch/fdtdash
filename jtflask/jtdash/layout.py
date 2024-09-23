@@ -21,17 +21,15 @@ layout = dmc.MantineProvider(
         [
             DeferScript(src="../static/assets/js/main-defer.js"),
             html.Div(id="digital-twin-container"),
-            html.Div(
-                EventListener(
-                    id="dash-event-listener",
-                    events=[
-                        {"event": "update-charts"},
-                        {"event": "restore-sketch-tool"},
-                        {"event": "hide-sketch-tool"},
-                    ],
-                ),
-                id="event-listener-container"
+            EventListener(
+                id="dash-event-listener",
+                events=[
+                    {"event": "update-charts"},
+                    {"event": "restore-sketch-tool"},
+                    {"event": "hide-sketch-tool"},
+                ],
             ),
+
             dcc.Store(id="chart-data-store"),
             sidebar(
                 global_sidebar_brand,
@@ -43,8 +41,8 @@ layout = dmc.MantineProvider(
                 global_scrollable_div_building_stats,
 
             ),
-            html.Div(id="dummy-div"),
-            dmc.Button("Populate Charts ", id="populate-charts"),
+            global_widget_hover_card,
+            # html.Div(id="dummy-div"),
         ]
     )
 )

@@ -3,6 +3,8 @@ from dash import html
 import json
 import os
 
+from pandas.io.sas.sas_constants import dataset_length
+
 # Define the relative path to the assets folder
 ASSETS_FOLDER = os.path.join(os.path.dirname(__file__), '..', 'static', 'assets')
 
@@ -61,10 +63,11 @@ def create_charts():
                 dmc.PieChart(
                     h=300,
                     data=[
-                        {"name": "Residential", "value": 40, "color": "green.6"},
+                        {"name": "NA", "value": 40, "color": "gray.6"},
+                        {"name": "Residential", "value": 40, "color": "violet.6"},
                         {"name": "Commercial", "value": 30, "color": "blue.6"},
-                        {"name": "Industrial", "value": 20, "color": "purple.6"},
-                        {"name": "Other", "value": 10, "color": "red.6"}
+                        {"name": "Industrial", "value": 20, "color": "teal.6"},
+                        {"name": "Other", "value": 10, "color": "yellow.6"}
                     ],
                     withLabelsLine=True,
                     withTooltip=True,
@@ -95,10 +98,11 @@ def create_charts():
                     chartLabel="Just Value (JV)",
                     h=300,
                     data=[
-                        {"name": "<$100k", "value": 15, "color": "red"},
-                        {"name": "$100k-$500k", "value": 45, "color": "green"},
-                        {"name": "$500k-$1M", "value": 25, "color": "blue"},
-                        {"name": ">$1M", "value": 10, "color": "orange"}
+                        {"name": "NA", "value": 15, "color": "gray.6"},
+                        {"name": "<$100k", "value": 15, "color": "violet.6"},
+                        {"name": "$100k-$500k", "value": 45, "color": "violet.6"},
+                        {"name": "$500k-$1M", "value": 25, "color": "teal.6"},
+                        {"name": ">$1M", "value": 10, "color": "yellow.6"}
                     ],
                     withLabels=True,
                     # withLabelsLine=True,
@@ -125,7 +129,8 @@ def create_charts():
         ),
         dmc.Card(
             children=[
-                dmc.Text("Effective Year Built / Actual Year Built", size="lg", className="chartLabel"),
+                # dmc.Text("Effective Year Built / Actual Year Built", size="lg", className="chartLabel"),
+                dmc.Text("Effective Year Built", size="lg", className="chartLabel"),
 
                 dmc.AreaChart(
                     h=300,
@@ -166,25 +171,24 @@ def create_charts():
                     h=300,
                     dataKey="category",
                     data=[
-                        {"category": "<1000 sq ft", "value": 10},
-                        {"category": "1000-2000 sq ft", "value": 25},
-                        {"category": "2000-3000 sq ft", "value": 35},
-                        {"category": ">3000 sq ft", "value": 20}
+                        {"category": "NA", "NA": 20},
+                        {"category": "<1000", "<1000": 10},
+                        {"category": "1000-2000", "1000-2000": 25},
+                        {"category": "2000-3000", "2000-3000": 35},
+                        {"category": ">3000", ">3000": 20}
                     ],
-                    type="vertical",
                     series=[
-                        {"name": "<1000",  "color": "violet.6"},
-                        {"name": "1000-2000",   "color": "blue.6"},
-                        {"name": "2000-3000",  "color": "teal.6"},
-                        {"name": ">3000",  "color": "yellow.6"}
+                        {"name": "NA", "label": "N/A", "color": "gray.6"},
+                        {"name": "<1000", "label": "<1000 sqft", "color": "violet.6"},
+                        {"name": "1000-2000", "label": "<1000-2000 sqft", "color": "blue.6"},
+                        {"name": "2000-3000", "label": "2000-3000 sqft", "color": "teal.6"},
+                        {"name": ">3000", "label": ">3000 sqft", "color": "yellow.6"}
                     ],
                     withXAxis=True,
                     withYAxis=True,
                     withTooltip=False,
                     tickLine="xy",
                     gridAxis="xy",
-                    # yAxisProps={"width": 80},
-                    # xAxisProps={"width": 80},
                     barChartProps={"barSize": 50},
                     id="tot-lvg-area-chart",
                     style={ "margin": "10px", "backgroundColor": "#f4f4f9" },

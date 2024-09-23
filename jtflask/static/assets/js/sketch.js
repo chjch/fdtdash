@@ -130,7 +130,7 @@ const JTSelectionSketch = (() => {
     let spatialRelationship = "intersects";
     let highlightHandle = null;
     let highlightedObjectIds = [];
-    let outFields = ["OBJECTID", "DORUC", "JV", "ACTYRBLT", "EFFYRBLT"];
+    let outFields = ["OBJECTID", "DORUC", "JV", "EFFYRBLT","TOTLVGAREA"];
 
     const initWidget = (sceneLayerView, container) => {
         const sketchLayer = new vendors.GraphicsLayer({

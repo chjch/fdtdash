@@ -112,13 +112,17 @@ def get_arcgis_building_stats_card():
                     dmc.Text("Buildings Color View", size="md", className="toolLabel"),
                     dmc.Group(
                         children=[
-                            dmc.Button("DORUC", id="doruc-button", variant="outline",
+                            dmc.Button("DORUC", id="doruc-button", variant="gradient",
+                                       gradient={"from": "#3613b8", "to": "#5932EA"},
                                        className="buildings-view-tool-button"),
-                            dmc.Button("EFFYRBLT", id="effyrblt-button", variant="outline",
+                            dmc.Button("EFFYRBLT", id="effyrblt-button", variant="gradient",
+                                       gradient={"from": "#3613b8", "to": "#5932EA"},
                                        className="buildings-view-tool-button"),
-                            dmc.Button("LIVINGAREA", id="totlvgarea-button", variant="outline",
+                            dmc.Button("LIVINGAREA", id="totlvgarea-button", variant="gradient",
+                                       gradient={"from": "#3613b8", "to": "#5932EA"},
                                         className="buildings-view-tool-button"),
-                            dmc.Button("JUSTVALUE", id="justvalue-button", variant="outline",
+                            dmc.Button("JUSTVALUE", id="justvalue-button", variant="gradient",
+                                       gradient={"from": "#3613b8", "to": "#5932EA"},
                                         className="buildings-view-tool-button"),
                         ],
                         align="center",  # Align buttons in the center
@@ -127,7 +131,9 @@ def get_arcgis_building_stats_card():
                     ),
                     html.Div(id="buffer-slider-container", style={"margin-top": "20px"}),
                     # Placeholder for buffer slider
-                    dmc.Button("Clear Geometry", id="clear-geometry-button", variant="filled", className="clear-button")
+                    dmc.Button("Reset Color", id="reset-color-button", variant="filled",
+                               color="gray",
+                               className="reset-color-button")
                 ],
                 shadow="sm",
                 radius="md",
@@ -135,43 +141,32 @@ def get_arcgis_building_stats_card():
                 style={"padding": "16px", "margin-bottom": "20px"},  # Set padding and margin
                 className="cardChart toolCard"
             ),
-
-            # Chart cards for displaying statistics
-            dmc.Grid(
-                grow=True,  # Ensure grid grows based on content
-                gutter="md",  # Medium spacing between elements
+            dmc.Card(
                 children=[
-                    dmc.Card(
+                    dmc.Text("Highlight Categories", size="md", className="toolLabel"),
+                    dmc.Group(
                         children=[
-                            dcc.Graph(id="eff-yr-blt-graph")
+                            dmc.Button("Residential", id="highlight-residential", variant="light",
+                                       color="yellow", className="highlight-category-button"),
+                            dmc.Button("Retail-Office", id="highlight-retail", variant="light",
+                                       color="blue", className="highlight-category-button"),
+                            dmc.Button("Industrial", id="highlight-industrial", variant="light",
+                                       color="purple", className="highlight-category-button"),
+                            dmc.Button("Vacant-Nonresidential", id="highlight-vacant", variant="light",
+                                       color="red", className="highlight-category-button"),
+                            dmc.Button("Agricultural", id="highlight-agricultural", variant="light",
+                                       color="green", className="highlight-category-button"),
                         ],
-                        shadow="sm",
-                        radius="md",
-                        withBorder=True,
-                        style={"padding": "16px"},  # Set padding using the style prop
-                        className="cardChart"
-                    ),
-                    dmc.Card(
-                        children=[
-                            dcc.Graph(id="living-area-graph")
-                        ],
-                        shadow="sm",
-                        radius="md",
-                        withBorder=True,
-                        style={"padding": "16px"},  # Set padding using the style prop
-                        className="cardChart"
-                    ),
-                    dmc.Card(
-                        children=[
-                            dcc.Graph(id="just-value-graph")
-                        ],
-                        shadow="sm",
-                        radius="md",
-                        withBorder=True,
-                        style={"padding": "16px"},  # Set padding using the style prop
-                        className="cardChart"
-                    ),
-                ]
+                        align="center",
+                        gap="md",
+                        className="highlight-category-buttons",
+                    )
+                ],
+                shadow="sm",
+                radius="md",
+                withBorder=True,
+                style={"padding": "16px", "margin-bottom": "20px"},
+                className="cardChart highlightCard"
             ),
         ],
         withBorder=True,

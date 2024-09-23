@@ -54,3 +54,46 @@ const JTSpatialQuery = (() => {
         attributes: attributes
     };
 })(); // IIFE
+
+// Non-spatial query to fetch features based on attribute values
+const JTNonSpatialQuery = (() => {
+    const byFieldName = (layer, fieldName) => {
+        const query = layer.createQuery();
+        query.where = `${fieldName} IS NOT NULL`; // not null
+        query.returnGeometry = false;
+        query.outFields = ["*"];
+        query.maxRecordCountFactor = 5;
+
+        return layer.queryFeatures(query).then((results) => {
+            const attributes = results.features.map(feature => feature.attributes);
+            console.log(`Fetched ${attributes.length} records with field: ${fieldName}`);
+            return attributes;
+        }).catch((error) => {
+            console.error(`Error querying by field name ${fieldName}:`, error);
+            return [];
+        });
+    };
+
+    const byFieldValue = (layer, fieldName, fieldValue) => {
+        const query = layer.createQuery();
+        query.where = `${fieldName} = '${fieldValue}'`;
+        query.returnGeometry = false;
+        query.outFields = ["*"];
+        query.maxRecordCountFactor = 5;
+
+
+        return layer.queryFeatures(query).then((results) => {
+            const attributes = results.features.map(feature => feature.attributes);
+            console.log(`Fetched ${attributes.length} records where ${fieldName} = ${fieldValue}`);
+            return attributes;
+        }).catch((error) => {
+            console.error(`Error querying by field value ${fieldName}=${fieldValue}:`, error);
+            return [];
+        });
+    };
+
+    return {
+        byFieldName: byFieldName,
+        byFieldValue: byFieldValue
+    };
+})(); // IIFE

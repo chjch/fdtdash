@@ -1,8 +1,8 @@
 import pathlib
 from flask import Flask
 import dash
+import dash_mantine_components as dmc
 from dash import clientside_callback, ClientsideFunction, Input, Output
-
 from .layout import layout, html_layout
 from .callbacks import register_callbacks
 from .sidebar import sidebar, get_sidebar_components

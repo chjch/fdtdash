@@ -24,12 +24,6 @@ body,
     display: none;
 }
 
-#populate-charts {
-    position: fixed;
-    top: 20vh;
-    right: 24vh;
-}
-
 .splash {
     display: flex;
     position: fixed;

@@ -80,7 +80,7 @@ function queryBuildings(geometry) {
 
     sceneLayer.queryFeatures(query).then(function(results) {
         const buildings = results.features.map(feature => feature.attributes);
-        sendSelectionToDash(buildings);
+        // sendSelectionToDash(buildings);
     });
 }
 let arcgisToolInstance = null
@@ -122,128 +122,35 @@ arcgisToolInstance = initializeArcGISTool()
 //         });
 // }
 
-// test: function to populate the dcc.Store with data from localStorage location @_@
-function populateStore() {
-    // Retrieve data from localStorage
-    const eff_yr_blt_chart = localStorage.getItem('eff-yr-blt-chart');
-    const tot_lvg_area_chart = localStorage.getItem('tot-lvg-area-chart');
-    const just_value_chart = localStorage.getItem('just-value-chart');
-    const doruc_chart = localStorage.getItem('doruc-chart');
-
-    // Update the dcc.Store component
-    const storeElement = document.querySelector('#chart-data-store');
-    const data = {
-        eff_yr_blt_chart: eff_yr_blt_chart ? JSON.parse(eff_yr_blt_chart) : [],
-        tot_lvg_area_chart: tot_lvg_area_chart ? JSON.parse(tot_lvg_area_chart) : [],
-        just_value_chart: just_value_chart ? JSON.parse(just_value_chart) : [],
-        doruc_chart: doruc_chart ? JSON.parse(doruc_chart) : []
-    };
-
-    // Trigger an event or store the data
-    if (storeElement) {
-        const event = new CustomEvent('updateChartData', { detail: data });
-        storeElement.dispatchEvent(event);
-    }
-}
-
-
-function sendSelectionToDash(buildings) {
-    // Prepare data for the POST request
-    const payload = {
-        buildings: buildings
-    };
-
-    // Send a POST request to the Flask backend
-    fetch('/jtdash/selection', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),  // Convert the JavaScript object to JSON
-    })
-    .then(response => response.json())  // Parse the JSON response
-    .then(data => {
-        console.log("Received response from Flask:", data);
-
-        const event = new CustomEvent("update-charts", {
-            detail: { chartData: data.selection }
-        });
-        document.getElementById('event-listener-container').dispatchEvent(event);
-        // window.dispatchEvent(event);  // Dispatch the event to trigger Dash callback
-    })
-    .catch(error => {
-        console.error("Error sending selection to Dash:", error);
-    });
-}
-
-// test: dummy update-charts event
-// window.addEventListener('update-charts', (e) => {
-//     console.log('Event received:', e);
-// });
 //
-
-// const event = new CustomEvent('update-charts', {
-//     detail: {
-//         chartData: {
-//             effyrblt_chart: [{ label: "Year Built", value: 2000 }],
-//             totlvgarea_chart: [{ label: "Living Area", value: 1500 }],
-//             jv_chart: [{ label: "Just Value", value: 300000 }],
-//             doruc_chart: [{ label: "DORUC", value: 100 }]
-//         }
-//     }
-// });
-// document.getElementById('event-listener-container').dispatchEvent(event);
-
-
-
-
-// test: event listener for the "Populate Charts" button
-// const populateChartsButton = document.getElementById('populate-charts');
-// if (populateChartsButton) {
-//     populateChartsButton.addEventListener('click', function() {
-//         const event2 = new CustomEvent('update-charts', {
-//             detail: {
-//                 chartData: {
-//                     effyrblt_chart: [{ label: "Year Built", value: 2000 }],
-//                     totlvgarea_chart: [{ label: "Living Area", value: 1500 }],
-//                     jv_chart: [{ label: "Just Value", value: 300000 }],
-//                     doruc_chart: [{ label: "DORUC", value: 100 }]
-//                 }
-//             }
+// function sendSelectionToDash(buildings) {
+//     // Prepare data for the POST request
+//     const payload = {
+//         buildings: buildings
+//     };
+//
+//     // Send a POST request to the Flask backend
+//     fetch('/jtdash/selection', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(payload),  // Convert the JavaScript object to JSON
+//     })
+//     .then(response => response.json())  // Parse the JSON response
+//     .then(data => {
+//         console.log("Received response from Flask:", data);
+//
+//         const event = new CustomEvent("update-charts", {
+//             detail: { chartData: data.selection }
 //         });
-//         document.getElementById('event-listener-container').dispatchEvent(event2);
+//         // document.getElementById('event-listener-container').dispatchEvent(event);
+//         // window.dispatchEvent(event);  // Dispatch the event to trigger Dash callback
+//     })
+//     .catch(error => {
+//         console.error("Error sending selection to Dash:", error);
 //     });
 // }
-
-// test: try to send data to dcc.Store from sendSelectionToDash function
-// function sendSelectionToDash(buildings) {
-//     fetch('/jtdash/selection', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 buildings: buildings
-//             }),
-//         }).then(response => response.json())
-//         .then(data => {
-//             console.log('Success:', data);
-//
-//             // Update the dcc.Store with the processed data from the backend
-//             const store = document.querySelector('#chart-data-store');
-//             store.dispatchEvent(new CustomEvent('store-update', { detail: data.selection }));
-//         })
-//         .catch((error) => {
-//             console.error('Error:', error);
-//         });
-// }
-
-
-// document.addEventListener('store-update', function(event) {
-//     // Update the dcc.Store with new data
-//     let storeElement = document.getElementById("chart-data-store");
-//     storeElement.data = event.detail;
-// })
 
 let basemapGallery = new vendors.BasemapGallery({
     view: view,
@@ -256,7 +163,7 @@ view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
 map.add(sceneLayer);
 map.add(graphicsLayer);
 
-
+// building statitics hardcoded
 const categories = {
     DORUC: {
         field: "DORUC",
@@ -290,12 +197,24 @@ const categories = {
             { value: 500000, color: [255, 204, 0, 0.7] },  // Orange
             { value: 1000000, color: [255, 153, 0, 0.7] }  // Dark orange
         ]
+    },
+    DEFAULT: {
+        field: null, // No specific field needed for default white color
+        colorStops: [
+            { value: 0, color: [255, 255, 255, 1] } // White for resetting
+        ]
     }
 };
 
 // Function to recolor the buildings based on selected category
 function recolorBuildings(category) {
     const selectedCategory = categories[category];
+
+    if (!selectedCategory) {
+        console.error(`Category ${category} not found.`);
+        return;
+    }
+
     let renderer = {
         type: "simple",
         symbol: {
@@ -306,23 +225,80 @@ function recolorBuildings(category) {
                 edges: null
             }]
         },
-        visualVariables: [{
+        visualVariables: []
+    };
+
+    // Apply color stops only if the category has color stops
+    if (selectedCategory.colorStops && selectedCategory.field) {
+        renderer.visualVariables = [{
             type: "color",
             field: selectedCategory.field,
             stops: selectedCategory.colorStops
-        }]
-    };
+        }];
+    } else {
+        // If category is DEFAULT, set buildings to plain white
+        renderer.symbol.symbolLayers[0].material.color = [255, 255, 255, 1];
+    }
 
     sceneLayer.renderer = renderer; // Apply renderer to the sceneLayer
 }
 
-// Create buttons to control recoloring
+function loadLUGENMapping() {
+    return fetch('/jtdash/assets/data/Parcels_To_LUGEN_Descripts_2024.csv')
+        .then(response => response.text())
+        .then(csvText => {
+            // Parse the CSV mapping
+            const lines = csvText.split('\n');
+            const mapping = {};
+
+            // CSV has headers, skip the first line
+            lines.slice(1).forEach(line => {
+                const [lucode, parUseDesc, descript, lugenCode, lugenDescript] = line.split(',');
+
+                // Store the mapping of LUCODE to LUGEN_DESCRIPT
+                if (lucode && lugenDescript) {
+                    mapping[lucode.trim()] = lugenDescript.trim();
+                }
+            });
+
+            console.log('LUGEN Mapping:', mapping);
+            return mapping;
+        })
+        .catch(error => {
+            console.error('Error loading LUGEN Mapping CSV:', error);
+            return {};
+        });
+}
+
+//filter attributes based on the LUGEN mapping and highlight buildings
+function filterAndHighlightByCategory(layerView, mapping, category) {
+    JTNonSpatialQuery.byFieldName(sceneLayer, 'DORUC')
+        .then(attributes => {
+            // Filter attributes based on the LUCODE to LUGEN_DESCRIPT mapping
+            const filteredAttributes = attributes.filter(attr => {
+                const lugenCategory = mapping[attr.DORUC];
+                return lugenCategory === category;
+            });
+            // Extract the object IDs of the filtered attributes
+            const objectIds = filteredAttributes.map(attr => attr.OBJECTID);
+            console.log(`${category} Attributes:`, filteredAttributes);
+
+            // Highlight the filtered object IDs
+            JTHighlight.highlightBuildings(objectIds, layerView);
+        })
+        .catch(error => {
+            console.error(`Error fetching attributes for category ${category}:`, error);
+        });
+}
+
+
+//buttons to control recoloring
 document.getElementById("doruc-button").addEventListener("click", () => recolorBuildings("DORUC"));
 document.getElementById("effyrblt-button").addEventListener("click", () => recolorBuildings("EFFYRBLT"));
 document.getElementById("totlvgarea-button").addEventListener("click", () => recolorBuildings("TOTLVGAREA"));
 document.getElementById("justvalue-button").addEventListener("click", () => recolorBuildings("JV"));
 
-
+document.getElementById("reset-color-button").addEventListener("click", () => recolorBuildings("DEFAULT"));
 const setElementId = (element, id) => {
     if (element) {
         element.id = id;
@@ -438,4 +414,30 @@ view.whenLayerView(sceneLayer).then((layerView) => {
         console.log("Store not found");
     }
     // view.ui.add(selectionSketch)
+
+    loadLUGENMapping().then(mapping => {
+
+    //click event to highlight Residential buildings
+        document.getElementById('highlight-residential').addEventListener('click', () => {
+            filterAndHighlightByCategory(layerView, mapping, 'RESIDENTIAL');
+        });
+
+        document.getElementById('highlight-retail').addEventListener('click', () => {
+            filterAndHighlightByCategory(layerView, mapping, 'RETAIL/OFFICE');
+        });
+
+        document.getElementById('highlight-vacant').addEventListener('click', () => {
+            filterAndHighlightByCategory(layerView, mapping, 'VACANT NONRESIDENTIAL');
+        });
+
+        document.getElementById('highlight-industrial').addEventListener('click', () => {
+            filterAndHighlightByCategory(layerView, mapping, 'INDUSTRIAL');
+        });
+
+        document.getElementById('highlight-agricultural').addEventListener('click', () => {
+            filterAndHighlightByCategory(layerView, mapping, 'AGRICULTURAL');
+        });
+
+    });
+
 });
