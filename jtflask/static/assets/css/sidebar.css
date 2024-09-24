@@ -97,7 +97,9 @@
 }
 
 .sidebar-main {
-
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #sidebar-main-container {
@@ -139,12 +141,12 @@
 
 .mantine-Drawer-content {
     max-width: 375px;
-    background: rgb(229 229 229);
     overflow: hidden;
     overflow-y: scroll;
     width: auto;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    background: rgb(229, 229, 229, 0.75);
 }
 
 .mantine-Drawer-content ::-webkit-scrollbar {
@@ -157,6 +159,18 @@
     width: -moz-available;          /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
     width: fill-available;
+}
+
+.mantine-Drawer-body-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.mantine-Drawer-body {
+    padding: 0;
 }
 
 #collapse-button-container {
@@ -192,8 +206,12 @@
 .sidebar-icon {
     background: transparent;
     color: black;
-    margin: 20px 0 20px 10px;
-    padding: 0 7px;
+    margin: 18px 0 18px 0;
+    padding: 4px 8px;
+}
+
+.mantine-Button-section {
+    margin: 0;
 }
 
 /* hover state */
@@ -251,17 +269,6 @@
 
 }
 
-
-.scrollable-div {
-    overflow-y: hidden;
-    /*height: 100%;*/
-}
-
-#scrollable-div-hidden {
-    display: none;
-    height: 200px;
-}
-
 #sidebar-affix {
     background-color: rgb(0 0 0 / 0%);
     width: 500px;
@@ -270,4 +277,8 @@
 
 #open-arcgis {
     cursor: pointer;
+}
+
+.cardChart {
+    margin: 5px;
 }
