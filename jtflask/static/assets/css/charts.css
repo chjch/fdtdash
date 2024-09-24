@@ -1,7 +1,13 @@
 #charts {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    gap: var(--navbar-drawer-padding);
+    @media (min-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.cardChart {
 }
 
 #yearSelectValue {
@@ -35,9 +41,7 @@
 }
 
 
-.cardChart {
-    width: 100%;
-}
+
 
 .chartLabel {
     font-weight: 600;

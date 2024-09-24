@@ -6,8 +6,7 @@ from .tools import get_tools
 from .utils import get_icon
 from .brand import get_brand
 
-
-def get_navbar_icons():
+def get_navbar_buttons():
     return html.Div(
         id="navbar-buttons",
         children=[
@@ -59,7 +58,7 @@ def get_navbar_icons():
 
 def get_navbar_control():
     navbar_brand = get_brand()
-    navbar_icons = get_navbar_icons()
+    navbar_icons = get_navbar_buttons()
 
     collapse_button = dmc.Button(
         id="collapse-button",

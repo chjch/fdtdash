@@ -15,7 +15,7 @@ def appshell():
         zIndex=1400,
         padding="xl",
         header={
-            "height": 70,
+            "height": 50,
         },
         navbar={
             "width": 300,
