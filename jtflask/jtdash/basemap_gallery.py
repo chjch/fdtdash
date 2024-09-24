@@ -16,7 +16,6 @@ def get_basemap_gallery():
 
     basemap_gallery = html.Div(
         id="basemap-gallery",
-        className="hidden",
         children=[basemap_gallery_card],
     )
     

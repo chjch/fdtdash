@@ -90,6 +90,11 @@
   }
 }
 
+.navbar-button-active {
+  background: var(--main-color);
+  color: white;
+}
+
 /* hover state */
 .navbar-button:hover {
   background-color: var(--main-color);

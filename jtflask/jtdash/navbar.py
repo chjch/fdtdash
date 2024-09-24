@@ -58,7 +58,7 @@ def get_navbar_buttons():
 
 def get_navbar_control():
     navbar_brand = get_brand()
-    navbar_icons = get_navbar_buttons()
+    navbar_buttons = get_navbar_buttons()
 
     collapse_button = dmc.Button(
         id="collapse-button",
@@ -76,7 +76,7 @@ def get_navbar_control():
 
     return html.Div(
         id="navbar-control",
-        children=[navbar_brand, navbar_icons, collapse_button_container],
+        children=[navbar_brand, navbar_buttons, collapse_button_container],
     )
 
 

@@ -7,7 +7,6 @@ def get_tools():
 
     return html.Div(
         id="arcgis-tools",
-        className="hidden",
         children=[arcgis_sketch_tool_card],
     )
    

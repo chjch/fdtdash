@@ -186,7 +186,8 @@ def create_charts():
             className="cardChart",
         ),
     ]
-
+    
+    #
     return html.Div(
         id="charts", children=charts, 
     )
