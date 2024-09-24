@@ -1,7 +1,21 @@
 /*global vendors*/
 // noinspection JSCheckFunctionSignatures
 
-JTSplashPage.hideSplash();
+// JTSplashPage.hideSplash();
+JTDash.svgOnHover(
+    '/jtdash/assets/svg/legend_icon.svg',
+    'legend-svg',
+    'legend-toggle-button',
+    'white',
+    'black'
+);
+JTDash.svgOnHover(
+    '/jtdash/assets/svg/basemap_icon.svg',
+    'basemap-svg',
+    'basemap-gallery-toggle-button',
+    'white',
+    'black'
+);
 
 // const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
 //     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
@@ -54,22 +68,6 @@ const graphicsLayer = new vendors.GraphicsLayer({
     }
 });
 
-// Create the Locate widget
-const locateWidget = new vendors.Locate({
-    view: view,
-    graphic: new vendors.Graphic({
-        symbol: {
-            outline: {
-                color: "white",
-                width: 1 // points
-            },
-            color: "blue",
-            size: "12px", // pixel
-            style: "circle",
-            type: "simple-marker",
-        }
-    }),
-});
 
 function queryBuildings(geometry) {
     let query = sceneLayer.createQuery();
@@ -121,15 +119,82 @@ function sendSelectionToDash(buildings) {
         });
 }
 
-let basemapToggle = new vendors.BasemapToggle({
-    view: view,  // The view that provides access to the map's "streets-vector" basemap
-    nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+//Move zoom, navigation, and compass to the bottom right
+view.ui.move(["compass", "zoom", "navigation-toggle"], "bottom-right");
+
+// Create the Locate widget
+const locateWidget = new vendors.Locate({
+    view: view,
+    graphic: new vendors.Graphic({
+        symbol: {
+            outline: {
+                color: "white",
+                width: 1, // points
+            },
+            color: "blue",
+            size: "12px", // pixel
+            style: "circle",
+            type: "simple-marker",
+        },
+    }),
+});
+view.ui.add(locateWidget, "bottom-right");
+
+//Add Fullscreen widget
+const fullscreenWidget = new vendors.Fullscreen({
+    view: view
+  });
+
+view.ui.add(fullscreenWidget, "bottom-right");
+
+//Add basemap toggle widget
+// let basemapToggle = new vendors.BasemapToggle({
+//   view: view, // The view that provides access to the map's "streets-vector" basemap
+//   nextBasemap: "hybrid", // Allows for toggling to the "hybrid" basemap
+// });
+// view.ui.add(basemapToggle, "bottom-right");
+
+// We render the basemap gallery into the container we created for it
+const baseMapGalleryContainer = document.querySelector(
+    "#basemap-gallery-card-content"
+);
+const basemapGallery = new vendors.BasemapGallery({
+    view: view,
+    container: baseMapGalleryContainer,
 });
 
-view.ui.add(locateWidget, "bottom-right");
-view.ui.move(["zoom", "navigation-toggle", "compass"], "bottom-right");
-view.ui.add(basemapToggle, "bottom-right");
+view.ui.add(basemapGallery);
 
+// Move the container into the basemap card
+document.querySelector("#basemap-gallery-card").appendChild(baseMapGalleryContainer);
+
+
+const calciteIcon = document.createElement("calcite-icon");
+calciteIcon.setAttribute('icon', 'monitor')
+calciteIcon.setAttribute('scale', 's')
+
+const calciteButton = document.createElement("calcite-button");
+
+calciteButton.addEventListener('click', () => {
+    const drawerDiv = document.querySelector('#drawer')
+    const currentIcon = calciteIcon.getAttribute('icon')
+    if(currentIcon === 'monitor') {
+        calciteIcon.setAttribute('icon', 'full-screen-exit')
+        drawerDiv.classList.add('hidden')
+    }
+    else {
+        calciteIcon.setAttribute('icon', 'monitor')
+        drawerDiv.classList.remove('hidden')
+    }
+});
+calciteButton.appendChild(calciteIcon);
+
+const calciteDiv = document.createElement("div");
+calciteDiv.classList.add('esri-component', 'hide-interface', 'esri-widget')
+calciteDiv.appendChild(calciteButton)
+
+const bottomRightContainer = document.querySelector(".esri-ui-bottom-right");
+bottomRightContainer.prepend(calciteDiv);
 
 map.add(sceneLayer);
 // map.add(tileLayer);
@@ -217,24 +282,39 @@ view.when(() => {
     // });
 
     setElementId(
-        document.querySelector('.esri-locate.esri-widget.esri-component'),
+        document.querySelector(
+            ".esri-locate.esri-widget.esri-component"
+        ),
         "customLocateButton"
     );
     setElementId(
-        document.querySelector('.esri-component.esri-zoom.esri-widget'),
+        document.querySelector(
+            ".esri-component.esri-zoom.esri-widget"
+        ),
         "customZoomButton"
     );
     setElementId(
-        document.querySelector('.esri-ui-bottom-right.esri-ui-corner'),
+        document.querySelector(
+            ".esri-ui-bottom-right.esri-ui-corner"
+        ),
         "uiCornerBottomRight"
     );
     setElementId(
-        document.querySelector('.esri-component.esri-navigation-toggle.esri-widget'),
+        document.querySelector(
+          ".esri-component.esri-navigation-toggle.esri-widget"
+        ),
         "customNavigationToggle"
     );
+    document.getElementById("customNavigationToggle")
+        .querySelector("calcite-button")
+        .shadowRoot.querySelector('button')
+        .style.setProperty('border-bottom-color', '#5932EA')
 });
 
 view.whenLayerView(sceneLayer).then((layerView) => {
-    const selectionSketch = JTSelectionSketch.initWidget(layerView, "selection-widget-container");
+    const selectionSketch = JTSelectionSketch.initWidget(
+        layerView,
+        "selection-widget-container"
+    );
     view.ui.add(selectionSketch, "top-right");
 });
