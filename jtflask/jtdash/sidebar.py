@@ -91,7 +91,7 @@ def get_sidebar_drawer():
 
     scrollable_div_tools = html.Div(
         id="arcgistools_scrollable_div",
-        className="scrollable-div hidden",
+        className="mantine-Drawer-body-item hidden",
         children=[arcgis_sketch_tool_card],
     )
 
@@ -107,6 +107,7 @@ def get_sidebar_drawer():
         opened=True,
         keepMounted=True,
         closeOnClickOutside=False,
+        closeOnEscape=False,
         withinPortal=False,
         withOverlay=False,
         withCloseButton=False,
