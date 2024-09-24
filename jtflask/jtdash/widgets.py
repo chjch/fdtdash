@@ -1,6 +1,5 @@
 import dash_mantine_components as dmc
-from dash import html, dcc
-
+from dash import html
 
 def get_arcgis_sketch_card():
     # ArcGIS Sketch Tool Card
@@ -13,7 +12,6 @@ def get_arcgis_sketch_card():
         withBorder=True,
         shadow="sm",
         radius="md",
-        style={"margin": "10px"},
         id="arcgis_sketch_card",
         className="cardChart"
     )
