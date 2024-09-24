@@ -17,7 +17,7 @@ def get_basemap_gallery():
 
     basemap_gallery = html.Div(
         id="drawer-basemap-gallery",
-        className="scrollable-div hidden",
+        className="mantine-Drawer-body-item hidden",
         children=[basemap_gallery_card],
     )
 

@@ -67,9 +67,9 @@ def register_callbacks(dashboard):
         # Update class of clicked button to slide-in animation
         def handle_button_click(button_id):
             if button_id == clicked_button_id:
-                return f"{button_id} slide-in"
+                return f"{button_id} mantine-Drawer-body-item slide-in"
             else:
-                return f"{button_id} hidden"
+                return f"{button_id} mantine-Drawer-body-item hidden "
 
         outputs = map(
             handle_button_click,
@@ -86,7 +86,7 @@ def register_callbacks(dashboard):
         outputs = list(outputs)
 
         charts_class_name = (
-            "charts-toggle-button slide-in"
+            "charts-toggle-button mantine-Drawer-body-item slide-in"
             if all(n_clicks is None for n_clicks in inputs)
             else outputs[0]
         )
