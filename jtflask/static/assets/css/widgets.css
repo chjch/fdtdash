@@ -1,0 +1,19 @@
+.buildings-view-tool-button {
+     border-radius: 5px;
+    --calcite-color-brand-hover: transparent;
+    /*--calcite-ui-icon-color: var(--main-color);*/
+    /*color: var(--main-color);*/
+}
+
+.reset-color-button{
+    --calcite-color-brand-hover: transparent;
+    --calcite-ui-icon-color: var(--main-color);
+    /*color: var(--main-color);*/
+}
+
+.toolLabel{
+    font-weight: 600;
+    padding-bottom: 20px;
+    align-self: center;
+    display: flex;
+}
