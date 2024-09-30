@@ -1,0 +1,532 @@
+[
+  {
+    "doruc": "000",
+    "description": "VACANT RESIDENTIAL",
+    "land use category": "VACANT RESIDENTIAL"
+  },
+  {
+    "doruc": "001",
+    "description": "SINGLE FAMILY",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "002",
+    "description": "MOBILE HOMES",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "003",
+    "description": "MULTI-FAMILY - 10 UNITS OR MORE",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "004",
+    "description": "CONDOMINIUMS",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "005",
+    "description": "COOPERATIVES",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "006",
+    "description": "RETIREMENT HOMES NOT ELIGIBLE FOR EXEMPTION",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "007",
+    "description": "MISCELLANEOUS RESIDENTIAL (MIGRANT CAMPS, BOARDING HOMES, ETC.)",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "008",
+    "description": "MULTI-FAMILY - FEWER THAN 10 UNITS",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "009",
+    "description": "RESIDENTIAL COMMON ELEMENTS / AREAS",
+    "land use category": "RESIDENTIAL"
+  },
+  {
+    "doruc": "010",
+    "description": "VACANT COMMERCIAL",
+    "land use category": "VACANT NONRESIDENTIAL"
+  },
+  {
+    "doruc": "011",
+    "description": "STORES, ONE STORY",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "012",
+    "description": "MIXED USE - STORE AND OFFICE OR STORE AND RESIDENTIAL COMBINATION",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "013",
+    "description": "DEPARTMENT STORES",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "014",
+    "description": "SUPERMARKETS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "015",
+    "description": "REGIONAL SHOPPING CENTERS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "016",
+    "description": "COMMUNITY SHOPPING CENTERS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "017",
+    "description": "OFFICE BUILDINGS, NON-PROFESSIONAL SERVICE BUILDINGS, ONE STORY",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "018",
+    "description": "OFFICE BUILDINGS, NON-PROFESSIONAL SERVICE BUILDINGS, MULTI-STORY",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "019",
+    "description": "PROFESSIONAL SERVICE BUILDINGS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "020",
+    "description": "AIRPORTS (PRIVATE OR COMMERCIAL), BUS TERMINALS, MARINE TERMINALS, PIERS, MARINAS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "021",
+    "description": "RESTAURANTS, CAFETERIAS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "022",
+    "description": "DRIVE-IN RESTAURANTS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "023",
+    "description": "FINANCIAL INSTITUTIONS (BANKS, SAVING AND LOAN COMPANIES, MORTGAGE COMPANIES, CREDIT SERVICES)",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "024",
+    "description": "INSURANCE COMPANY OFFICES",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "025",
+    "description": "REPAIR SERVICE SHOPS (EXCLUDING AUTOMOTIVE), RADIO AND T.V. REPAIR, REFRIGERATION SERVICE, ELECTRIC REPAIR, LAUNDRIES, LAUNDROMATS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "026",
+    "description": "SERVICE STATIONS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "027",
+    "description": "AUTO SALES, AUTO REPAIR & STORAGE, AUTO SERVICE SHOPS, BODY & FENDER SHOPS, COMMERCIAL GARAGES, FARM & MACHINERY SALES & SERVICES, AUTO RENTAL, MARINE EQUIPMENT, TRAILERS & RELATED EQUIPMENT, MOBILE HOME SALES, MOTORCYCLES, CONSTRUCTION VEHICLE SALES",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "028",
+    "description": "PARKING LOTS (COMMERCIAL OR PATRON), MOBILE HOME PARKS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "029",
+    "description": "WHOLESALE OUTLETS, PRODUCE HOUSES, MANUFACTURING OUTLETS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "030",
+    "description": "FLORISTS, GREENHOUSES",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "031",
+    "description": "DRIVE-IN THEATERS, OPEN STADIUMS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "032",
+    "description": "ENCLOSED THEATERS, ENCLOSED AUDITORIUMS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "033",
+    "description": "NIGHTCLUBS, COCKTAIL LOUNGES, BARS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "034",
+    "description": "BOWLING ALLEYS, SKATING RINKS, POOL HALLS, ENCLOSED ARENAS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "035",
+    "description": "TOURIST ATTRACTIONS, PERMANENT EXHIBITS, OTHER ENTERTAINMENT FACILITIES, FAIRGROUNDS (PRIVATELY OWNED)",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "036",
+    "description": "CAMPS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "037",
+    "description": "RACE TRACKS (HORSE, AUTO, OR DOG)",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "038",
+    "description": "GOLF COURSES, DRIVING RANGES",
+    "land use category": "RECREATION"
+  },
+  {
+    "doruc": "039",
+    "description": "HOTELS, MOTELS",
+    "land use category": "RETAIL/OFFICE"
+  },
+  {
+    "doruc": "040",
+    "description": "VACANT INDUSTRIAL",
+    "land use category": "VACANT NONRESIDENTIAL"
+  },
+  {
+    "doruc": "041",
+    "description": "LIGHT MANUFACTURING, SMALL EQUIPMENT MANUFACTURING PLANTS, SMALL MACHINE�SHOPS, INSTRUMENT MANUFACTURING, PRINTING PLANTS",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "042",
+    "description": "HEAVY INDUSTRIAL, HEAVY EQUIPMENT MANUFACTURING, LARGE MACHINE SHOPS, FOUNDRIES, STEEL FABRICATING PLANTS, AUTO OR AIRCRAFT PLANTS",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "043",
+    "description": "LUMBER YARDS, SAWMILLS, PLANING MILLS",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "044",
+    "description": "PACKING PLANTS, FRUIT AND VEGETABLE PACKING PLANTS, MEAT PACKING PLANTS",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "045",
+    "description": "CANNERIES, FRUIT AND VEGETABLE, BOTTLERS AND BREWERS, DISTILLERIES, WINERIES",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "046",
+    "description": "OTHER FOOD PROCESSING, CANDY FACTORIES, BAKERIES, POTATO CHIP FACTORIES",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "047",
+    "description": "MINERAL PROCESSING, PHOSPHATE PROCESSING, CEMENT PLANTS, REFINERIES, CLAY PLANTS, ROCK AND GRAVEL PLANTS",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "048",
+    "description": "WAREHOUSING, DISTRIBUTION TERMINALS, TRUCKING TERMINALS, VAN AND STORAGE WAREHOUSING",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "049",
+    "description": "OPEN STORAGE, NEW AND USED BUILDING SUPPLIES, JUNK YARDS, AUTO WRECKING, FUEL STORAGE, EQUIPMENT AND MATERIAL STORAGE",
+    "land use category": "INDUSTRIAL"
+  },
+  {
+    "doruc": "050",
+    "description": "IMPROVED AGRICULTURAL",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "051",
+    "description": "CROPLAND SOIL CAPABILITY CLASS I",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "052",
+    "description": "CROPLAND SOIL CAPABILITY CLASS II",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "053",
+    "description": "CROPLAND SOIL CAPABILITY CLASS III",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "054",
+    "description": "TIMBERLAND - SITE INDEX 90 AND ABOVE",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "055",
+    "description": "TIMBERLAND - SITE INDEX 80 TO 89",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "056",
+    "description": "TIMBERLAND - SITE INDEX 70 TO 79",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "057",
+    "description": "TIMBERLAND - SITE INDEX 60 TO 69",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "058",
+    "description": "TIMBERLAND - SITE INDEX 50 TO 59",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "059",
+    "description": "TIMBERLAND NOT CLASSIFIED BY SITE INDEX TO PINES",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "060",
+    "description": "GRAZING LAND SOIL CAPABILITY CLASS I",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "061",
+    "description": "GRAZING LAND SOIL CAPABILITY CLASS II",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "062",
+    "description": "GRAZING LAND SOIL CAPABILITY CLASS III",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "063",
+    "description": "GRAZING LAND SOIL CAPABILITY CLASS IV",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "064",
+    "description": "GRAZING LAND SOIL CAPABILITY CLASS V",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "065",
+    "description": "GRAZING LAND SOIL CAPABILITY CLASS VI",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "066",
+    "description": "ORCHARD GROVES, CITRUS, ETC",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "067",
+    "description": "POULTRY, BEES, TROPICAL FISH, RABBITS, ETC.",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "068",
+    "description": "DAIRIES, FEED LOTS",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "069",
+    "description": "ORNAMENTALS, MISCELLANEOUS AGRICULTURAL",
+    "land use category": "AGRICULTURAL"
+  },
+  {
+    "doruc": "070",
+    "description": "VACANT INSTITUTIONAL, WITH OR WITHOUT EXTRA FEATURES",
+    "land use category": "VACANT NONRESIDENTIAL"
+  },
+  {
+    "doruc": "071",
+    "description": "CHURCHES",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "072",
+    "description": "PRIVATE SCHOOLS AND COLLEGES",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "073",
+    "description": "PRIVATELY OWNED HOSPITALS",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "074",
+    "description": "HOMES FOR THE AGED",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "075",
+    "description": "ORPHANAGES, OTHER NON-PROFIT OR CHARITABLE SERVICES",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "076",
+    "description": "MORTUARIES, CEMETERIES, CREMATORIUMS",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "077",
+    "description": "CLUBS, LODGES, UNION HALLS",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "078",
+    "description": "SANITARIUMS, CONVALESCENT AND REST HOMES",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "079",
+    "description": "CULTURAL ORGANIZATIONS, FACILITIES",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "080",
+    "description": "VACANT GOVERNMENTAL",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "081",
+    "description": "MILITARY",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "082",
+    "description": "FOREST, PARKS, RECREATIONAL AREAS",
+    "land use category": "RECREATION"
+  },
+  {
+    "doruc": "083",
+    "description": "PUBLIC COUNTY SCHOOLS - INCLUDING ALL PROPERTY OF BOARD OF PUBLIC INSTRUCTION",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "084",
+    "description": "COLLEGES (NON-PRIVATE)",
+    "land use category": "INSTITUTIONAL"
+  },
+  {
+    "doruc": "085",
+    "description": "HOSPITALS (NON-PRIVATE)",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "086",
+    "description": "COUNTIES (OTHER THAN PUBLIC SCHOOLS, COLLEGES, HOSPITALS) INCLUDING NON-MUNICIPAL GOVERNMENT",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "087",
+    "description": "STATE, OTHER THAN MILITARY, FORESTS, PARKS, RECREATIONAL AREAS, COLLEGES, HOSPITALS",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "088",
+    "description": "FEDERAL, OTHER THAN MILITARY, FORESTS, PARKS, RECREATIONAL AREAS, HOSPITALS, COLLEGES",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "089",
+    "description": "MUNICIPAL, OTHER THAN PARKS, RECREATIONAL AREAS, COLLEGES, HOSPITALS",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "090",
+    "description": "LEASEHOLD INTERESTS (GOVERNMENT-OWNED PROPERTY LEASED BY A NON-GOVERNMENTAL LESSEE)",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "091",
+    "description": "UTILITY, GAS AND ELECTRICITY, TELEPHONE AND TELEGRAPH, LOCALLY ASSESSED RAILROADS, WATER AND SEWER SERVICE, PIPELINES, CANALS, RADIO/TELEVISION COMMUNICATION",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  },
+  {
+    "doruc": "092",
+    "description": "MINING LANDS, PETROLEUM LANDS, OR GAS LANDS",
+    "land use category": "MINING"
+  },
+  {
+    "doruc": "093",
+    "description": "SUBSURFACE RIGHTS",
+    "land use category": "MINING"
+  },
+  {
+    "doruc": "094",
+    "description": "RIGHT-OF-WAY, STREETS, ROADS, IRRIGATION CHANNEL, DITCH, ETC.",
+    "land use category": "ROW"
+  },
+  {
+    "doruc": "095",
+    "description": "RIVERS AND LAKES, SUBMERGED LANDS",
+    "land use category": "WATER"
+  },
+  {
+    "doruc": "096",
+    "description": "SEWAGE DISPOSAL, SOLID WASTE, BORROW PITS, DRAINAGE RESERVOIRS, WASTE LAND, MARSH, SAND DUNES, SWAMPS",
+    "land use category": "OTHER"
+  },
+  {
+    "doruc": "097",
+    "description": "OUTDOOR RECREATIONAL OR PARKLAND, OR HIGH-WATER RECHARGE SUBJECT TO CLASSIFIED USE ASSESSMENT",
+    "land use category": "RECREATION"
+  },
+  {
+    "doruc": "098",
+    "description": "CENTRALLY ASSESSED",
+    "land use category": "CENTRALLY ASSESSED"
+  },
+  {
+    "doruc": "099",
+    "description": "ACREAGE NOT ZONED AGRICULTURAL WITH OR WITHOUT EXTRA FEATURES",
+    "land use category": "ACREAGE NOT ZONED FOR AGRICULTURE"
+  },
+  {
+    "doruc": "100",
+    "description": "PARCELS WITH NO VALUES",
+    "land use category": "PARCELS WITH NO VALUES"
+  },
+  {
+    "doruc": "995",
+    "description": "NO DATA AVAILABLE (WATER)",
+    "land use category": "WATER"
+  },
+  {
+    "doruc": "999",
+    "description": "NO DATA AVAILABLE",
+    "land use category": "NO DATA AVAILABLE"
+  },
+  {
+    "doruc": "101",
+    "description": "PARCELS WITH NO VALUES (ROW)",
+    "land use category": "ROW"
+  },
+  {
+    "doruc": "102",
+    "description": "PARCELS WITH NO VALUES (WATER)",
+    "land use category": "WATER"
+  },
+  {
+    "doruc": "103",
+    "description": "PARCELS WITH NO VALUES (RAIL)",
+    "land use category": "PUBLIC/SEMI-PUBLIC"
+  }
+]
