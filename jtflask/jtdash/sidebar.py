@@ -2,7 +2,7 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from .basemap_gallery import get_basemap_gallery
 from .charts import create_charts
-from .widgets import get_arcgis_sketch_card
+from .widgets import get_arcgis_sketch_card, get_arcgis_building_stats_card
 from .utils import get_icon
 
 
@@ -30,37 +30,37 @@ def get_sidebar_left_column():
             dmc.Button(
                 id="charts-toggle-button",
                 children=get_icon("fluent:data-pie-20-regular"),
-                className="sidebar-icon"
+                className="sidebar-icon",
             ),
             dmc.Button(
                 id="arcgis-tools-toggle-button",
                 children=get_icon("solar:routing-2-linear", "open-arcgis"),
-                className="sidebar-icon"
+                className="sidebar-icon",
             ),
             dmc.Button(
                 id="buildings-toggle-button",
                 children=get_icon("ph:buildings"),
-                className="sidebar-icon"
+                className="sidebar-icon",
             ),
             dmc.Button(
                 id="clipboard-toggle-button",
                 children=get_icon("solar:clipboard-text-linear"),
-                className="sidebar-icon"
+                className="sidebar-icon",
             ),
             dmc.Button(
                 id="layers-toggle-button",
                 children=get_icon("solar:layers-minimalistic-linear"),
-                className="sidebar-icon"
+                className="sidebar-icon",
             ),
             dmc.Button(
                 id="legend-toggle-button",
                 children=html.Div(id="legend-svg"),
-                className="sidebar-icon"
+                className="sidebar-icon",
             ),
             dmc.Button(
                 id="basemap-gallery-toggle-button",
                 children=html.Div(id="basemap-svg"),
-                className="sidebar-icon"
+                className="sidebar-icon",
             ),
         ],
     )
@@ -83,10 +83,11 @@ def get_sidebar_left_column():
         id="sidebar-col1",
     )
 
-def get_sidebar_drawer():
 
+def get_sidebar_drawer():
     arcgis_sketch_tool_card = get_arcgis_sketch_card()
     charts = create_charts()
+    arcgis_building_stats_tool = get_arcgis_building_stats_card()
     basemap_gallery = get_basemap_gallery()
 
     scrollable_div_tools = html.Div(
@@ -94,12 +95,18 @@ def get_sidebar_drawer():
         className="mantine-Drawer-body-item hidden",
         children=[arcgis_sketch_tool_card],
     )
+    scrollable_div_building_stats = html.Div(
+        children=arcgis_building_stats_tool,
+        id="scrollable_div_bulding_stats",
+        className="mantine-Drawer-body-item hidden",
+    )
 
     scrollable_div_drawer = dmc.Drawer(
         children=[
             charts,
             scrollable_div_tools,
             basemap_gallery,
+            scrollable_div_building_stats,
         ],
         id="chart_scrollable_drawer",
         className="",
@@ -120,6 +127,7 @@ def get_sidebar_drawer():
     )
 
     return scrollable_div_drawer
+
 
 def sidebar():
     sidebar_left_column = get_sidebar_left_column()
