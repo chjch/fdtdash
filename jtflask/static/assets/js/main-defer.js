@@ -1,6 +1,16 @@
 /*global vendors*/
 // noinspection JSCheckFunctionSignatures
 
+/*
+ * main-defer.js
+ * ---------------------
+ * Purpose: This script defines and manipulates DOM elements created with
+ *          ArcGIS Maps SDK for JavaScript.
+ * Scope: Define layers, maps, and widgets used in the sceneView.
+ *        Handles event listeners, dynamic updates to the DOM.
+ *        Avoid defining specific behaviors and rules. e.g., how a query works.
+ */
+
 // JTSplashPage.hideSplash();
 JTDash.svgOnHover(
     '/jtdash/assets/svg/legend_icon.svg',
@@ -17,13 +27,16 @@ JTDash.svgOnHover(
     'black'
 );
 
-// const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
+// const bldgSceneServer = "https://services.arcgis.com" +
+//     "/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
 //     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
 
-const BLDG_JAX_DT = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
+const bldgSceneServer = "https://services.arcgis.com" +
+    "/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
     "PLW__JTAoi_Jax__WebLayer_AGOL/SceneServer"
 
-const demImageServer = "https://tiledimageservices.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
+const demImageServer = "https://tiledimageservices.arcgis.com/" +
+    "LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
     "USGS_1M_DEM_50M_Resample/ImageServer";
 
 const map = new vendors.Map({
@@ -42,7 +55,7 @@ const view = new vendors.SceneView({
 });
 
 let sceneLayer = new vendors.SceneLayer({
-    url: BLDG_JAX_DT,
+    url: bldgSceneServer,
     renderer: {
         type: "simple",
         symbol: {
@@ -68,57 +81,6 @@ const graphicsLayer = new vendors.GraphicsLayer({
     }
 });
 
-
-function queryBuildings(geometry) {
-    let query = sceneLayer.createQuery();
-    query.geometry = geometry;
-    query.spatialRelationship = "intersects";
-    query.returnGeometry = true;
-    query.outFields = ["*"];
-
-    sceneLayer.queryFeatures(query).then(function(results) {
-        const buildings = results.features.map(feature => feature.attributes);
-        sendSelectionToDash(buildings);
-    });
-}
-let arcgisToolInstance = null
-
-function initializeArcGISTool() {
-    // move sketch or reload sketch
-    console.log('initializeSketchTool statement')
-    const sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
-    JTSketchWidget.setupSketchEventListeners(sketch, tileLayer);
-    sketch.on("create", function(event) {
-        if (event.state === "complete") {
-            const geometry = event.graphic.geometry;
-            queryBuildings(geometry);
-        }
-    });
-
-    const event = new CustomEvent('arcgis-tool-initialized');
-    document.dispatchEvent(event);
-}
-
-arcgisToolInstance = initializeArcGISTool()
-
-function sendSelectionToDash(buildings) {
-    fetch('/jtdash/selection', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                buildings: buildings
-            }),
-        }).then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-}
-
 //Move zoom, navigation, and compass to the bottom right
 view.ui.move(["compass", "zoom", "navigation-toggle"], "bottom-right");
 
@@ -143,9 +105,29 @@ view.ui.add(locateWidget, "bottom-right");
 //Add Fullscreen widget
 const fullscreenWidget = new vendors.Fullscreen({
     view: view
-  });
+});
 
 view.ui.add(fullscreenWidget, "bottom-right");
+
+let arcgisToolInstance = null
+
+function initializeArcGISTool() {
+    // move sketch or reload sketch
+    // console.log('initializeSketchTool statement')
+    const sketch = JTSketchWidget.createSketch(graphicsLayer, view, "arcgis-sketch-container");
+    JTSketchWidget.setupSketchEventListeners(sketch, tileLayer);
+    sketch.on("create", function(event) {
+        if (event.state === "complete") {
+            const geometry = event.graphic.geometry;
+            queryBuildings(geometry);
+        }
+    });
+
+    const event = new CustomEvent('arcgis-tool-initialized');
+    document.dispatchEvent(event);
+}
+
+arcgisToolInstance = initializeArcGISTool()
 
 //Add basemap toggle widget
 // let basemapToggle = new vendors.BasemapToggle({
@@ -178,11 +160,10 @@ const calciteButton = document.createElement("calcite-button");
 calciteButton.addEventListener('click', () => {
     const drawerDiv = document.querySelector('#drawer')
     const currentIcon = calciteIcon.getAttribute('icon')
-    if(currentIcon === 'monitor') {
+    if (currentIcon === 'monitor') {
         calciteIcon.setAttribute('icon', 'full-screen-exit')
         drawerDiv.classList.add('hidden')
-    }
-    else {
+    } else {
         calciteIcon.setAttribute('icon', 'monitor')
         drawerDiv.classList.remove('hidden')
     }
@@ -200,12 +181,7 @@ map.add(sceneLayer);
 // map.add(tileLayer);
 map.add(graphicsLayer);
 
-const setElementId = (element, id) => {
-    if (element) {
-        element.id = id;
-    }
-}
-
+// noinspection JSIgnoredPromiseFromCall
 view.when(() => {
     view.map.basemap.referenceLayers.forEach(layer => {
         if (layer.title === "Buildings") {
@@ -281,34 +257,35 @@ view.when(() => {
     //     });
     // });
 
-    setElementId(
+    JTUtils.setElementId(
         document.querySelector(
             ".esri-locate.esri-widget.esri-component"
         ),
         "customLocateButton"
     );
-    setElementId(
+    JTUtils.setElementId(
         document.querySelector(
             ".esri-component.esri-zoom.esri-widget"
         ),
         "customZoomButton"
     );
-    setElementId(
+    JTUtils.setElementId(
+        document.querySelector(
+            ".esri-component.esri-navigation-toggle.esri-widget"
+        ),
+        "customNavigationToggle"
+    );
+    // noinspection CssInvalidHtmlTagReference
+    document.getElementById("customNavigationToggle")
+        .querySelector("calcite-button")
+        .shadowRoot.querySelector('button')
+        .style.setProperty('border-bottom-color', '#5932EA')
+    JTUtils.setElementId(
         document.querySelector(
             ".esri-ui-bottom-right.esri-ui-corner"
         ),
         "uiCornerBottomRight"
     );
-    setElementId(
-        document.querySelector(
-          ".esri-component.esri-navigation-toggle.esri-widget"
-        ),
-        "customNavigationToggle"
-    );
-    document.getElementById("customNavigationToggle")
-        .querySelector("calcite-button")
-        .shadowRoot.querySelector('button')
-        .style.setProperty('border-bottom-color', '#5932EA')
 });
 
 view.whenLayerView(sceneLayer).then((layerView) => {
@@ -317,4 +294,33 @@ view.whenLayerView(sceneLayer).then((layerView) => {
         "selection-widget-container"
     );
     view.ui.add(selectionSketch, "top-right");
+
+    const colorVariableButtons = {
+        "doruc-button": JTUtils.dorucFieldStops,
+        "effyrblt-button": JTUtils.effyrbltFieldStops,
+        "totlvgarea-button": JTUtils.totlvgareaFieldStops,
+        "justvalue-button": JTUtils.jvFieldStops,
+        "reset-color-button": JTUtils.defaultFieldStops
+    };
+    Object.keys(colorVariableButtons).forEach(buttonId => {
+        document.getElementById(buttonId).addEventListener("click", () => {
+            // noinspection JSValidateTypes
+            sceneLayer.renderer = JTBuilding.colorByValueRanges(colorVariableButtons[buttonId]);
+        });
+    });
+
+    JTUtils.dorucLandUseMapping().then(mapping => {
+        const buttons = [
+            {id: 'highlight-residential', category: 'RESIDENTIAL'},
+            {id: 'highlight-retail', category: 'RETAIL/OFFICE'},
+            {id: 'highlight-vacant', category: 'VACANT NONRESIDENTIAL'},
+            {id: 'highlight-industrial', category: 'INDUSTRIAL'},
+            {id: 'highlight-agricultural', category: 'AGRICULTURAL'}
+        ];
+        buttons.forEach(button => {
+            document.getElementById(button.id).addEventListener('click', () => {
+                JTBuilding.highlightByLandUseCategory(layerView, mapping, button.category);
+            });
+        });
+    });
 });
