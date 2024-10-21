@@ -38,13 +38,6 @@ def init_dashboard(server: Flask):
     )
     dashboard.index_string = html_layout(with_splash=False)
     dashboard.layout = layout
+    # dashboard.enable_dev_tools(debug=True)
     register_callbacks(dashboard)
-    clientside_callback(
-        ClientsideFunction(
-            namespace="clientside",
-            function_name="sendToDash"
-        ),
-        Input("chart-data-store", "data"),
-    )
-
     return dashboard.server
