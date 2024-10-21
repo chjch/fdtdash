@@ -1,3 +1,15 @@
+#charts {
+    display: flex;
+    flex-direction: row;
+    gap: var(--navbar-drawer-padding);
+    @media (min-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.cardChart {
+}
+
 #yearSelectValue {
 	font-weight: 700;
 	font-size: xx-large;
@@ -29,9 +41,7 @@
 }
 
 
-.cardChart {
-    width: 95%;
-}
+
 
 .chartLabel {
     font-weight: 600;

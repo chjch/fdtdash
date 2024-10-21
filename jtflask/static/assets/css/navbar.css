@@ -1,0 +1,193 @@
+:root {
+    --app-shell-border-color: none !important;
+    --navbar-drawer-animation-duration: 0.5s;
+    --navbar-drawer-padding: 5px;
+    --navbar-drawer-transparency: 0.5;
+    --navbar-drawer-width: 375px;
+    --navbar-mobile-header-height: 50px;
+    --navbar-mobile-card-width: 320px;
+}
+
+#jaxtwin-navbar {
+    position: fixed;
+    width: 100vw;
+    height: 50px;
+    top: unset;
+    bottom: 0;
+    @media (min-width: 768px) {
+        position: fixed;
+        width: auto;
+        height: 100vh;
+        top: 0;
+        background-color: transparent;
+    }
+}
+
+#navbar-container {
+    display: flex;
+    height: 100%;
+    @media (min-width: 768px) {
+        flex-direction: row;
+        overflow-y: scroll;
+        width: fit-content;
+    }
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#navbar-control {
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    background: white;
+    @media (min-width: 768px) {
+        position: relative;
+        width: min-content;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 25px 8px;
+        backdrop-filter: blur(100px);
+        /*background-image: url("../svg/sidebar_background.svg");*/
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        z-index: 1;
+    }
+}
+
+#navbar-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-evenly;
+    .iconify {
+        width: 24px;
+        height: 24px;
+    }
+    @media (min-width: 768px) {
+        width: unset;
+        height: 50%;
+        justify-content: space-between;
+        flex-direction: column;
+        .iconify {
+            width: 32px;
+            height: 32px;
+        }
+    }
+}
+
+.navbar-button {
+    background: transparent;
+    color: black;
+    padding-inline: 5px;
+    /*filter: drop-shadow(1px 3px 2px gray);*/
+    @media (min-width: 768px) {
+        padding-inline: unset;
+    }
+}
+
+.navbar-button-active {
+    background: var(--main-color);
+    color: white;
+}
+
+/* hover state */
+.navbar-button:hover {
+    background-color: var(--main-color);
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.mantine-Button-section {
+    margin-inline-end: unset;
+}
+
+#collapse-icon {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.7rem;
+    color: var(--main-color);
+}
+
+#collapse-button {
+    background-color: transparent;
+    border: #ffffff00;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 0px;
+}
+
+#collapse-button-container {
+    display: none;
+    @media (min-width: 768px) {
+        height: 35px;
+        width: 100%;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+#navbar-drawer {
+    position: fixed;
+    width: 100%;
+    height: 270px;
+    top: 50px;
+    display: flex;
+    flex-direction: row;
+    padding: var(--navbar-drawer-padding);
+    background: rgb(229, 229, 229, var(--navbar-drawer-transparency));
+    overflow-x: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    @media (min-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        position: unset;
+        width: var(--navbar-drawer-width);
+        height: unset;
+        bottom: unset;
+        z-index: 0;
+        overflow-y: auto;
+    }
+}
+
+#navbar-drawer > * {
+    @media (min-width: 768px) {
+        width: 100%;
+    }
+}
+
+#navbar-container::-webkit-scrollbar,
+#navbar-drawer::-webkit-scrollbar {
+    display: none;
+}
+
+.animate__animated.animate__slideOutLeft {
+    --animate-duration: var(--navbar-drawer-animation-duration);
+}
+
+.animate__animated.animate__slideInLeft {
+    --animate-duration: var(--navbar-drawer-animation-duration);
+}
+
+.animate__animated.animate__slideInUp {
+    --animate-duration: var(--navbar-drawer-animation-duration);
+}
+
+#basemap-svg,
+#legend-svg {
+    display: flex;
+}
