@@ -55,15 +55,22 @@
           });
           const sceneLayer = new SceneLayer({
               url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
-                  "PLW__JTAoi_Jax__WebLayer_AGOL/SceneServer",
+                  "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer/layers/0",
           });
-
+          const tileLayer = new ImageryTileLayer({
+              url: "https://tiledimageservices.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/USGS_1M_DEM_50M_Resample/ImageServer",
+          });
+          const floodLayer = new ImageryTileLayer({
+              url: "https://tiledimageservices.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
+                  "jtaoi_zeta_20220928_1003/ImageServer"
+          });
           const graphicsLayer = new GraphicsLayer({
               elevationInfo: {
                   mode: "relative-to-ground",
               }
           });
           map.add(sceneLayer);
+          map.add(tileLayer);
           map.add(graphicsLayer);
           // map.add(floodLayer);
           /**********************************************
@@ -157,7 +164,7 @@
                                   type: "fill", // autocasts as new FillSymbol3DLayer()
                                   material: {
                                       color: [255, 255, 0, 0.8],
-                                      // colorMixMode: "replace"
+                                      colorMixMode: "replace"
                                   },
                               }]
                           },
