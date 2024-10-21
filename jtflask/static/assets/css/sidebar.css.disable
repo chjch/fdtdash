@@ -149,7 +149,7 @@
     background: rgb(229, 229, 229, 0.75);
 }
 
-.mantine-Drawer-content ::-webkit-scrollbar {
+.mantine-Drawer-content::-webkit-scrollbar {
     display: none;
 }
 
@@ -245,7 +245,7 @@
     padding-left: 15px;
     padding-right: 15px;
     width: min-content;
-    background-image: url('../svg/sidebar_background.svg');
+    /*background-image: url('../svg/sidebar_background.svg');*/
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
