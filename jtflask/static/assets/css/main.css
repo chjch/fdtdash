@@ -168,6 +168,14 @@ calcite-button {
 	--calcite-ui-icon-color: var(--main-color) !important;
 }
 
+.mantine-NavLink-body {
+    display: none;
+}
+
+.mantine-NavLink-icon {
+    margin: 0;
+    display: flex;
+}
 
 .iconify {
     width: 24px;
@@ -192,7 +200,7 @@ calcite-button {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .hide-interface {
