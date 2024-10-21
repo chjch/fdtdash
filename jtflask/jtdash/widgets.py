@@ -3,7 +3,6 @@ from dash import html
 
 
 def get_arcgis_sketch_card():
-    # ArcGIS Sketch Tool Card
     arcgis_sketch_card = dmc.Card(
         children=[
             dmc.Text("ArcGIS Sketch Tool", size="lg", className="chartLabel"),
@@ -15,14 +14,17 @@ def get_arcgis_sketch_card():
         id="arcgis_sketch_card",
         className="cardChart",
     )
-    return arcgis_sketch_card
+    return html.Div(
+        id="arcgis-tools",
+        children=arcgis_sketch_card,
+        className="hidden",
+    )
 
 
-def get_arcgis_building_stats_card():
-    # ArcGIS Building Stats Tool Card
-    arcgis_building_stats_card = dmc.Card(
+def get_building_visualization_card():
+    return html.Div(
+        id="building-visualization-card",
         children=[
-            dmc.Text("Building Statistics", size="lg", className="chartLabel"),
             # Tool widget in its own card
             dmc.Card(
                 children=[
@@ -145,10 +147,24 @@ def get_arcgis_building_stats_card():
                 className="cardChart highlightCard",
             ),
         ],
+        # style={"margin": "10px"},
+        className="cardChart arcgis_building_stats_card hidden",
+    )
+
+
+def get_basemap_gallery():
+    basemap_gallery_card = dmc.Card(
+        id="basemap-gallery-card",
         withBorder=True,
         shadow="sm",
         radius="md",
-        style={"margin": "10px"},
-        className="cardChart arcgis_building_stats_card",
+        children=[
+            dmc.Text("Basemap Gallery", size="lg", className="chartLabel"),
+            html.Div(id="basemap-gallery-card-content"),
+        ],
     )
-    return arcgis_building_stats_card
+    return html.Div(
+        id="drawer-basemap-gallery",
+        className="mantine-Drawer-body-item hidden",
+        children=[basemap_gallery_card],
+    )
