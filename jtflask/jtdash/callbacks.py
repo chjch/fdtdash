@@ -1,7 +1,7 @@
 from collections import defaultdict
 from dash import Input, Output, State, no_update, ctx, ClientsideFunction
 
-from .sidebar import NAVBAR_BUTTONS, NAVBAR_PANELS
+from .navbar import NAVBAR_BUTTONS, NAVBAR_PANELS
 
 
 def register_callbacks(dashboard):

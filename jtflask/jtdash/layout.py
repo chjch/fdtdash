@@ -3,7 +3,7 @@ import dash_mantine_components as dmc
 from dash_extensions import DeferScript
 
 from .brand import get_brand
-from .sidebar import get_navbar_controls, get_navbar_panels
+from .navbar import get_navbar_controls, get_navbar_panels
 # from .statshovercards import stats_hover_card
 
 CHART_STORE_ID = "chart-data-store"
