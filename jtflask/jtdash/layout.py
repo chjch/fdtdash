@@ -16,11 +16,7 @@ def jtdash_appshell():
         id="navbar-container",
         children=[
             get_navbar_controls(),
-            get_navbar_panels(),
-            dcc.Store(
-                id=NAVBAR_STORE_ID,
-                data={"charts": "charts", "tools": "tools"},
-            ),
+            get_navbar_panels()
         ],
     )
     return dmc.AppShell(
@@ -44,9 +40,7 @@ def jtdash_appshell():
 layout = dmc.MantineProvider([
     jtdash_appshell(),
     DeferScript(src="../static/assets/js/main-defer.js"),
-    # html.Div(id="digital-twin-container"),
     dcc.Store(id=CHART_STORE_ID),
-    # sidebar(),
     # stats_hover_card,
 ])
 
