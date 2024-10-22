@@ -11,7 +11,7 @@
  *        Avoid defining specific behaviors and rules. e.g., how a query works.
  */
 
-// JTSplashPage.hideSplash();
+JTSplashPage.hideSplash();
 
 JTDash.loadSvg(
     '/jtdash/assets/svg/legend_icon.svg',
