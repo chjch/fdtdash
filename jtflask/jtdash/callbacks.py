@@ -1,6 +1,7 @@
 from collections import defaultdict
-from dash import Input, Output, State, no_update, ctx
-import json
+from dash import Input, Output, State, no_update, ctx, ClientsideFunction
+
+from .navbar import NAVBAR_BUTTONS, NAVBAR_PANELS
 
 
 def register_callbacks(dashboard):
@@ -173,21 +174,19 @@ def register_callbacks(dashboard):
 
     # Collapse Sidebar Callback
     @dashboard.callback(
-        [
-            Output("chart_scrollable_drawer", "opened"),
-            Output("collapse-icon", "icon"),
-        ],
+        Output("collapse-icon", "icon"),
         Input("collapse-button", "n_clicks"),
         State("chart_scrollable_drawer", "opened"),
         prevent_initial_call=True,
     )
-    def toggle_sidebar_drawer(n_clicks, is_open):
+    def toggle_sidebar_drawer(n_clicks):
+        is_open = True if n_clicks % 2 == 1 else False
         new_icon = (
             "heroicons:chevron-double-right-16-solid"
             if is_open
             else "heroicons:chevron-double-left-16-solid"
         )
-        return not is_open, new_icon
+        return new_icon
 
     # Sidebar Button Click Callback
     @dashboard.callback(
@@ -250,15 +249,15 @@ def register_callbacks(dashboard):
 
     # Scenario Chart callback
     @dashboard.callback(
-        Output("year-select-value", "children"),
+        Output("yearSelectValue", "children"),
         Input("yearSelect", "value")
     )
     def select_value(value):
         return value
 
     @dashboard.callback(
-        Output("storm-select-value", "children"),
-        Input("storm-select", "value")
+        Output("stormSelectValue", "children"),
+        Input("stormSelect", "value")
     )
     def select_value(value):
         return value

@@ -4,7 +4,7 @@ from .utils import get_icon
 
 
 # Function to create charts
-def create_charts():
+def get_charts():
     charts = [
         dmc.Card(  # scenario card: id="Scenario_card", className="cardChart"
             children=[
@@ -242,7 +242,6 @@ def create_charts():
             withBorder=True,
             shadow="sm",
             radius="md",
-            style={"margin": "10px"},
             id="just-value-card",
             className="cardChart",
         ),
@@ -358,6 +357,6 @@ def create_charts():
 
     return html.Div(
         children=charts,
-        id="chart_scrollable_div",
+        id="charts",
         className="mantine-Drawer-body-item",
     )

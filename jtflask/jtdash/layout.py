@@ -2,23 +2,50 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from dash_extensions import DeferScript
 
-from .sidebar import sidebar
-from .widgets import global_widget_hover_card
-from .statshovercards import stats_hover_card
+# from .sidebar import sidebar
+# from .widgets import global_widget_hover_card
+# from .statshovercards import stats_hover_card
+from .brand import get_brand
+from .navbar import get_navbar_controls, get_navbar_panels
+# from .statshovercards import stats_hover_card
+
+CHART_STORE_ID = "chart-data-store"
+NAVBAR_STORE_ID = "drawer-content-store"
 
 
-layout = dmc.MantineProvider(
-    html.Div(
-        [
-            DeferScript(src="../static/assets/js/main-defer.js"),
-            html.Div(id="digital-twin-container"),
-            dcc.Store(id="chart-data-store"),
-            sidebar(),
-            global_widget_hover_card,
-            # stats_hover_card,
-        ]
+def jtdash_appshell():
+    header = html.Div(id='header-container', children=[get_brand()])
+    navbar = html.Div(
+        id="navbar-container",
+        children=[
+            get_navbar_controls(),
+            get_navbar_panels()
+        ],
     )
-)
+    return dmc.AppShell(
+        [
+            dmc.AppShellHeader(id="jaxtwin-header", children=[header]),
+            dmc.AppShellNavbar(id="jaxtwin-navbar", children=[navbar]),
+        ],
+        zIndex=1400,
+        padding="xl",
+        header={
+            "height": 50,
+        },
+        navbar={
+            "width": 300,
+            "breakpoint": "sm",
+        },
+        withBorder=False,
+    )
+
+
+layout = dmc.MantineProvider([
+    jtdash_appshell(),
+    DeferScript(src="../static/assets/js/main-defer.js"),
+    dcc.Store(id=CHART_STORE_ID),
+    # stats_hover_card,
+])
 
 
 def html_layout(with_splash=True):
@@ -57,6 +84,7 @@ def html_layout(with_splash=True):
                 </style>
                 <body>
                     {splash_html_string}
+                    <div id='digital-twin-container'></div>
                     {{%app_entry%}}
                     <footer>
                         {{%config%}}

@@ -19,9 +19,9 @@ external_stylesheets = [
     #     "src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css",
     #     "rel": "stylesheet",
     # },
-    {"src": "https://unpkg.com/@mantine/dates@7.11.0/styles.css"},
+    {"src": "https://unpkg.com/@mantine/charts@7/styles.css"},
     {"src": "https://unpkg.com/@mantine/dates@7/styles.css"},
-    {"src": "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"}
+    {"src": "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"},
 ]
 
 
@@ -39,8 +39,9 @@ def init_dashboard(server: Flask):
         assets_ignore=".*defer.js$",
         title="JaxTwin: An Urban Digital Twin for Jacksonville",
     )
-    dashboard.index_string = html_layout(with_splash=False)
+    dashboard.index_string = html_layout(with_splash=True)
     dashboard.layout = layout
+    # dashboard.enable_dev_tools(debug=True)
     register_callbacks(dashboard)
     clientside_callback(
         ClientsideFunction(

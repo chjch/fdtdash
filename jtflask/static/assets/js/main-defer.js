@@ -11,20 +11,15 @@
  *        Avoid defining specific behaviors and rules. e.g., how a query works.
  */
 
-// JTSplashPage.hideSplash();
-JTDash.svgOnHover(
+JTSplashPage.hideSplash();
+
+JTDash.loadSvg(
     '/jtdash/assets/svg/legend_icon.svg',
-    'legend-svg',
-    'legend-toggle-button',
-    'white',
-    'black'
+    'legend-svg'
 );
-JTDash.svgOnHover(
+JTDash.loadSvg(
     '/jtdash/assets/svg/basemap_icon.svg',
-    'basemap-svg',
-    'basemap-gallery-toggle-button',
-    'white',
-    'black'
+    'basemap-svg'
 );
 
 const bldgSceneServer = "https://services.arcgis.com" +
@@ -128,14 +123,15 @@ calciteIcon.setAttribute('scale', 's')
 const calciteButton = document.createElement("calcite-button");
 
 calciteButton.addEventListener('click', () => {
-    const drawerDiv = document.querySelector('#drawer')
+    const appshell = document.querySelector('.mantine-AppShell-root')
     const currentIcon = calciteIcon.getAttribute('icon')
-    if (currentIcon === 'monitor') {
+    if(currentIcon === 'monitor'){
         calciteIcon.setAttribute('icon', 'full-screen-exit')
-        drawerDiv.classList.add('hidden')
-    } else {
+        appshell.classList.add('hidden')
+    }
+    else {
         calciteIcon.setAttribute('icon', 'monitor')
-        drawerDiv.classList.remove('hidden')
+        appshell.classList.remove('hidden')
     }
 });
 calciteButton.appendChild(calciteIcon);

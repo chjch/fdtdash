@@ -150,49 +150,47 @@ const JTDash = (() => {
             dashToMap: dashToMap,
             // clearOutDash: clearOutDash
 
-        }
-    });
 
-    const svgOnHover = (svgPath, svgId, svgContainerId, colorOnFocus, colorOutFocus) => {
+    const handleNavbarButtonClick = (...inputs) => {
+        //On Initial Render
+        if (inputs.every((input) => input === undefined)) {
+            handleInitialState();
+            return;
+        }
+        const collapseButtonId = "collapse-button";
+        const clickedButtonId = dash_clientside.callback_context.triggered_id;
+
+        if (navbarButtonIds.includes(clickedButtonId)) {
+            handleNavbarButtonClassUpdate(clickedButtonId);
+            handleNavbarDrawerClassUpdate(clickedButtonId);
+        }
+        if (clickedButtonId === collapseButtonId) {
+            handleCollapseButtonClick(collapseButtonId);
+        }
+    };
+
+    const loadSvg = (svgFilePath, svgId) => {
         // Fetch the SVG file and insert it into the DOM
-        fetch(svgPath)
+        fetch(svgFilePath)
             .then(response => response.text())
             .then(svgContent => {
                 document.getElementById(svgId).innerHTML = svgContent;
-
-                // Now the SVG is in the DOM, and you can manipulate it
-                const svgPaths = document.querySelectorAll(`#${svgId} path`);
-
-                document.getElementById(svgContainerId)
-                    .addEventListener('mouseover', () => {
-                        svgPaths.forEach((path) => {
-                            ['fill', 'stroke'].forEach(attr => {
-                                if (path.getAttribute(attr)) {
-                                    path.setAttribute(attr, colorOnFocus);  // Change both fill and stroke to white if they exist
-                                }
-                            });
-                        });
-                    });
-                document.getElementById(svgContainerId)
-                    .addEventListener('mouseout', () => {
-                        svgPaths.forEach((path) => {
-                            ['fill', 'stroke'].forEach(attr => {
-                                if (path.getAttribute(attr)) {
-                                    path.setAttribute(attr, colorOutFocus);  // Change both fill and stroke to white if they exist
-                                }
-                            });
-                        });
-                    });
-            });
+            }
+        );
     };
+
+    // Register functions with dash_clientside object under clientside namespace
+    // allow `sendToDash`, `handleNavbarButtonClick` to be called from Dash
+    window.dash_clientside = Object.assign({}, window.dash_clientside, {
+        clientside: {
+            sendToDash: sendToDash,
+            handleNavbarButtonClick: handleNavbarButtonClick,
+            loadSvg: loadSvg
+        },
+    });
 
     return {
         sendToDash: sendToDash,
-        svgOnHover: svgOnHover,
-        dashToMap: dashToMap,
-
-        // setSceneLayer: setSceneLayer,
-        // getCurrentLayer: () => currentLayer
-        // clearOutDash: clearOutDash
+        loadSvg: loadSvg
     };
 })();  // IIFE

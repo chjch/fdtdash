@@ -1,0 +1,30 @@
+[
+    {
+      "button_id": "charts-button",
+      "panel_id": "charts"
+    },
+    {
+      "button_id": "tools-button",
+      "panel_id": "arcgis-tools"
+    },
+    {
+      "button_id": "buildings-toggle-button",
+      "panel_id": "building-visualization-card"
+    },
+    {
+      "button_id": "layers-toggle-button",
+      "panel_id": "health-panel"
+    },
+    {
+      "button_id": "clipboard-toggle-button",
+      "panel_id": "neighborhood-panel"
+    },
+    {
+      "button_id": "legend-toggle-button",
+      "panel_id": "legend-panel"
+    },
+    {
+      "button_id": "basemaps-gallery-button",
+      "panel_id": "drawer-basemap-gallery"
+    }
+]

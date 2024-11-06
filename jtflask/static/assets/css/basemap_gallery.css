@@ -1,0 +1,68 @@
+#basemap-gallery {
+  width: 100%;
+  @media (min-width: 768px) {
+    width: unset;
+  }
+}
+
+#basemap-gallery-card {
+  display: flex;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: unset;
+  }
+}
+
+#basemap-gallery-card .chartLabel {
+  display: flex;
+  align-items: center;
+  @media (min-width: 768px) {
+    display: unset;
+    align-items: unset;
+  }
+}
+
+#basemap-gallery-card .esri-basemap-gallery__item-container {
+  display: flex;
+  flex-flow: row;
+  @media (min-width: 768px) {
+    flex-flow: column;
+  }
+}
+
+#basemap-gallery-card .esri-basemap-gallery__item {
+  flex-direction: column-reverse;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+#basemap-gallery-card .esri-basemap-gallery__item-thumbnail {
+  width: 160px;
+  @media (min-width: 768px) {
+    width: 150px;
+  }
+}
+
+#basemap-gallery-card .esri-basemap-gallery__item-content {
+  display: flex;
+  flex-direction: row;
+  @media (min-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+#basemap-gallery-card .esri-basemap-gallery__item-title {
+  font-size: 16px;
+  font-weight: 500;
+  @media (min-width: 768px) {
+    font-size: initial;
+    font-weight: initial;
+  }
+}
+
+#basemap-gallery-card .esri-basemap-gallery__item-tags-container {
+  inset-block-end: 10px;
+  @media (min-width: 768px) {
+    inset-block-end: initial;
+  }
+}

@@ -3,11 +3,11 @@ const JTBuilding = (() => {
 
     const colorByValueRanges = (fieldStops) => {
         return {
-            type: "simple",
+            type: "simple",  // autocasts as new SimpleRenderer()
             symbol: {
-                type: "mesh-3d",
+                type: "mesh-3d",  // autocasts as new MeshSymbol3D()
                 symbolLayers: [{
-                    type: "fill",
+                    type: "fill",  // autocasts as new FillSymbol3DLayer()
                     material: {
                         color: [255, 255, 255, 0.7],
                         colorMixMode: "replace"
