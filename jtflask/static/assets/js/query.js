@@ -9,6 +9,7 @@ const JTSpatialQuery = (() => {
             const query = layer.createQuery();
             query.geometry = geometry;
             query.spatialRelationship = spatialRelationship;
+            // query.maxRecordCountFactor = 10;
 
             return layer.queryObjectIds(query).then((objectIds) => {
                 if (objectIds.length > 0) {
@@ -23,7 +24,7 @@ const JTSpatialQuery = (() => {
         return debouncedQuery(layer, geometry, spatialRelationship);
     };
 
-    const attributes = (layerView, geometry, outFields, spatialRelationship) => {
+   const attributes = (layerView, geometry, outFields, spatialRelationship, highlight = true) => {
         const queryFeatures = () => {
             if (!geometry) {
                 return;
@@ -33,19 +34,23 @@ const JTSpatialQuery = (() => {
             query.outFields = outFields;
             query.spatialRelationship = spatialRelationship;
             query.returnGeometry = false;
+            query.maxRecordCountFactor = 10;
 
             return layerView.layer.queryFeatures(query).then((results) => {
                 if (results.features.length > 0) {
                     const attributes = results.features.map(feature => feature.attributes);
-                    // noinspection JSUnresolvedVariable
-                    const objectIds = attributes.map(attr => attr.OBJECTID);
-                    JTHighlight.highlightBuildings(objectIds, layerView);
+
+                    // Conditionally call highlightBuildings only if highlight is true
+                    if (highlight) {
+                        const objectIds = attributes.map(attr => attr.OBJECTID);
+                        JTHighlight.highlightBuildings(objectIds, layerView);
+                    }
+
                     return attributes;
                 }
                 return [];  // Return an empty array if no object IDs are found
             });
         };
-        // Debounce the query to prevent multiple requests from being sent
         const debouncedQuery = vendors.promiseUtils.debounce(queryFeatures);
         return debouncedQuery(layerView, geometry, outFields, spatialRelationship);
     };

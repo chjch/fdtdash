@@ -174,8 +174,8 @@ const JTSelectionSketch = (() => {
             }
             if (event.state === "complete") {
                 let sketchGeometry = event.graphic.geometry;
-
-                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship).then((results) => {
+                let higlight = true
+                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship, true).then((results) => {
                     if (results.length > 0) {
                         // dash_clientside.clientside.sendToDash('chart-data-store', results);
                         JTDash.sendToDash('chart-data-store', results);
@@ -190,17 +190,45 @@ const JTSelectionSketch = (() => {
             }
             if (event.state === "complete" && event.graphics.length > 0) {
                 let sketchGeometry = event.graphics[0].geometry;
-                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship).then((results) => {
+                let highlight  = true
+                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship, highlight).then((results) => {
                     if (results.length > 0) {
                         JTDash.sendToDash('chart-data-store', results);
                     }
                 });
             }
         });
+
+           // Add event listener for clear button
+        const clearButton = document.getElementById("clear-selection-tool-button");
+        clearButton.addEventListener('click', () => {
+            sketchLayer.removeAll();
+            JTHighlight.clearHighlighting();
+            // JTDash.clearOutDash('chart-data-store');
+        });
+
         return selectionSketchWidget;
     };
 
+     // Function to select all builds after the tool loads
+    const selectAllBuilds = (sceneLayerView) => {
+        // Use full extent of the layer to select all features
+        const layerExtent = sceneLayerView.layer.fullExtent;
+        const currentViewExtent = sceneLayerView.view.extent;
+         let highlight  = false
+        // Perform the spatial query with the layer's extent
+        JTSpatialQuery.attributes(sceneLayerView, currentViewExtent, outFields, "contains", highlight)
+            .then((results) => {
+                if (results.length > 0) {
+                    JTDash.sendToDash('chart-data-store', results);
+                }
+            });
+
+
+    };
+
     return {
-        initWidget: initWidget
+        initWidget: initWidget,
+        selectAllBuildings: selectAllBuilds
     };
 })();  // IIFE

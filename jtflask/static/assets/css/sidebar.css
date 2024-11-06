@@ -140,14 +140,22 @@
 
 
 .mantine-Drawer-content {
-    max-width: 375px;
+    /*max-width: 375px;*/
     overflow: hidden;
     overflow-y: scroll;
     width: auto;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    background: rgb(229, 229, 229, 0.75);
+    /*background: rgb(229, 229, 229, 0.75);*/
+
+    /* From https://css.glass */
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.50);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.9px);
+    -webkit-backdrop-filter: blur(4.9px);
 }
+
 
 .mantine-Drawer-content ::-webkit-scrollbar {
     display: none;
@@ -245,10 +253,11 @@
     padding-left: 15px;
     padding-right: 15px;
     width: min-content;
-    background-image: url('../svg/sidebar_background.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    border-radius: 2px;
+    /*background-image: url('../svg/navbarSVG.svg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center;*/
+    /*background-size: cover;*/
     z-index: 10001;
 }
 
@@ -279,6 +288,8 @@
     cursor: pointer;
 }
 
-.cardChart {
-    margin: 5px;
+.navbar-svg{
+    width: 100%;
+    position: absolute;
+    margin-top: 50px;
 }

@@ -27,50 +27,25 @@ JTDash.svgOnHover(
     'black'
 );
 
-// const bldgSceneServer = "https://services.arcgis.com" +
-//     "/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
-//     "PLW_Jacksonville_BLD_Merge_Join_for_web/SceneServer";
-
 const bldgSceneServer = "https://services.arcgis.com" +
     "/LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
     "PLW__JTAoi_Jax__WebLayer_AGOL/SceneServer"
 
+const Downtown_Saint_Jones_River_SceneServer = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/" +
+    "arcgis/rest/services/PLW_Jacksonville_BLD_Downtown_Saint_Jones_River/SceneServer"
+
+const Ribault_2_SceneServer = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/" +
+    "arcgis/rest/services/PLW_Jacksonville_BLD_Ribault_2/SceneServer"
+
+const Ribault_Scenic_Drive_Park_SceneServer = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/" +
+    "arcgis/rest/services/PLW_Jacksonville_BLD_Ribault_Scenic_Drive_Park/SceneServer"
+
+const Hogen_Creek_Neighborhood_SceneServer = "https://services.arcgis.com/LBbVDC0hKPAnLRpO/" +
+    "arcgis/rest/services/PLW_Jacksonville_BLD_Hogen_Creek_Neighborhood/SceneServer"
+
 const demImageServer = "https://tiledimageservices.arcgis.com/" +
     "LBbVDC0hKPAnLRpO/arcgis/rest/services/" +
     "USGS_1M_DEM_50M_Resample/ImageServer";
-
-const map = new vendors.Map({
-    basemap: "navigation-dark-3d",
-    ground: "world-elevation"
-});
-
-const view = new vendors.SceneView({
-    container: "digital-twin-container", // main div element for digital twin
-    map: map, // Reference to the map object created before the scene
-    camera: {
-        position: [-81.66916428, 30.29352027, 2569],
-        heading: 13.89,
-        tilt: 51
-    }
-});
-
-let sceneLayer = new vendors.SceneLayer({
-    url: bldgSceneServer,
-    renderer: {
-        type: "simple",
-        symbol: {
-            type: "mesh-3d",
-            symbolLayers: [{
-                type: "fill",
-                material: {
-                    color: [255, 255, 255, 0.7],
-                    colorMixMode: "replace"
-                },
-                edges: null
-            }]
-        }
-    },
-});
 
 const tileLayer = new vendors.ImageryTileLayer({
     url: demImageServer
@@ -80,6 +55,8 @@ const graphicsLayer = new vendors.GraphicsLayer({
         mode: "relative-to-ground"
     }
 });
+
+const { map, view, sceneLayer } = JTMap.initMap("digital-twin-container", bldgSceneServer);
 
 //Move zoom, navigation, and compass to the bottom right
 view.ui.move(["compass", "zoom", "navigation-toggle"], "bottom-right");
@@ -129,13 +106,6 @@ function initializeArcGISTool() {
 
 arcgisToolInstance = initializeArcGISTool()
 
-//Add basemap toggle widget
-// let basemapToggle = new vendors.BasemapToggle({
-//   view: view, // The view that provides access to the map's "streets-vector" basemap
-//   nextBasemap: "hybrid", // Allows for toggling to the "hybrid" basemap
-// });
-// view.ui.add(basemapToggle, "bottom-right");
-
 // We render the basemap gallery into the container we created for it
 const baseMapGalleryContainer = document.querySelector(
     "#basemap-gallery-card-content"
@@ -180,6 +150,15 @@ bottomRightContainer.prepend(calciteDiv);
 map.add(sceneLayer);
 // map.add(tileLayer);
 map.add(graphicsLayer);
+
+// Floating card test for building selection stats
+JTFloatingCard.init(
+    document.getElementById('building-selection-stats-card'),
+    document.getElementById('building-selection-stats-card'),  // Assuming same element for drag handle
+    document.getElementById('undock-button'),
+    document.getElementById('dock-icon'),
+    document.getElementById('digital-twin-container')
+);
 
 // noinspection JSIgnoredPromiseFromCall
 view.when(() => {
@@ -289,11 +268,14 @@ view.when(() => {
 });
 
 view.whenLayerView(sceneLayer).then((layerView) => {
+
     const selectionSketch = JTSelectionSketch.initWidget(
         layerView,
         "selection-widget-container"
     );
-    view.ui.add(selectionSketch, "top-right");
+
+     // Call selectAllBuilds after widget loads
+    JTSelectionSketch.selectAllBuildings(layerView);
 
     const colorVariableButtons = {
         "doruc-button": JTUtils.dorucFieldStops,
@@ -302,6 +284,7 @@ view.whenLayerView(sceneLayer).then((layerView) => {
         "justvalue-button": JTUtils.jvFieldStops,
         "reset-color-button": JTUtils.defaultFieldStops
     };
+
     Object.keys(colorVariableButtons).forEach(buttonId => {
         document.getElementById(buttonId).addEventListener("click", () => {
             // noinspection JSValidateTypes

@@ -2,7 +2,9 @@ from dash import html, dcc
 import dash_mantine_components as dmc
 from .basemap_gallery import get_basemap_gallery
 from .charts import create_charts
-from .widgets import get_arcgis_sketch_card, get_arcgis_building_stats_card
+from .widgets import (get_arcgis_sketch_card, get_arcgis_building_stats_card,
+                      get_layer_texture_card, get_scene_layer_selection_card,
+                      get_neighborhood_zoom_card)
 from .utils import get_icon
 
 
@@ -79,7 +81,13 @@ def get_sidebar_left_column():
     )
 
     return html.Div(
-        [sidebar_brand, sidebar_main, collapse_button_container],
+        [
+            html.Img(src="../static/assets/svg/navbarSVGmod.svg",
+                     className="navbar-svg"),
+            sidebar_brand,
+            sidebar_main,
+            collapse_button_container
+        ],
         id="sidebar-col1",
     )
 
@@ -89,6 +97,9 @@ def get_sidebar_drawer():
     charts = create_charts()
     arcgis_building_stats_tool = get_arcgis_building_stats_card()
     basemap_gallery = get_basemap_gallery()
+    layer_texture_card = get_layer_texture_card()
+    scene_layer_selection_card = get_scene_layer_selection_card()
+    neighborhood_zoom_card = get_neighborhood_zoom_card()
 
     scrollable_div_tools = html.Div(
         id="arcgistools_scrollable_div",
@@ -97,7 +108,16 @@ def get_sidebar_drawer():
     )
     scrollable_div_building_stats = html.Div(
         children=arcgis_building_stats_tool,
-        id="scrollable_div_bulding_stats",
+        id="scrollable_div_building_stats",
+        className="mantine-Drawer-body-item hidden",
+    )
+    srcollable_div_layer_tools = html.Div(
+        children=[scene_layer_selection_card,
+                  layer_texture_card,
+                  neighborhood_zoom_card,
+                  dcc.Store(id='map-action-store')
+                  ],
+        id="scrollable_div_layer_tools",
         className="mantine-Drawer-body-item hidden",
     )
 
@@ -107,6 +127,7 @@ def get_sidebar_drawer():
             scrollable_div_tools,
             basemap_gallery,
             scrollable_div_building_stats,
+            srcollable_div_layer_tools
         ],
         id="chart_scrollable_drawer",
         className="",

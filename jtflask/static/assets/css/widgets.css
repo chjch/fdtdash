@@ -11,9 +11,46 @@
     /*color: var(--main-color);*/
 }
 
-.toolLabel{
+.tool-label{
     font-weight: 600;
     padding-bottom: 20px;
     align-self: center;
     display: flex;
+}
+
+.arcgis-selection-card{
+    margin: 10px;
+    background: rgba(255, 255, 255, 0.80);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.9px);
+    -webkit-backdrop-filter: blur(4.9px);
+}
+.arcgis-selection-card-label {
+    font-weight: 600;
+    padding-bottom: 0px;
+    align-self: center;
+    display: flex;
+}
+#selection-widget-container-body{
+    flex-flow: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex
+}
+
+#clear-selection-tool-button{
+    width: 32px;
+    height: 32px;
+    border-radius: inherit;
+    --button-hover: #eeeeee !important;
+
+}
+
+.clear-selection-tool-icon{
+    width: 18px;
+    height: 18px;
+}
+
+.neighborhood-zoom-card{
+    height: 250px;
 }

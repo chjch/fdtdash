@@ -3,6 +3,7 @@ import dash_mantine_components as dmc
 from dash_extensions import DeferScript
 
 from .sidebar import sidebar
+from .widgets import global_widget_hover_card
 from .statshovercards import stats_hover_card
 
 
@@ -13,6 +14,7 @@ layout = dmc.MantineProvider(
             html.Div(id="digital-twin-container"),
             dcc.Store(id="chart-data-store"),
             sidebar(),
+            global_widget_hover_card,
             # stats_hover_card,
         ]
     )

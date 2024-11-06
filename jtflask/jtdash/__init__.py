@@ -3,6 +3,7 @@ from flask import Flask
 import dash
 from dash import clientside_callback, ClientsideFunction, Input
 
+
 from .layout import layout, html_layout
 from .callbacks import register_callbacks
 
@@ -10,15 +11,17 @@ external_scripts = [
     # {"src": "https://unpkg.com/@loaders.gl/i3s@3.3.1/dist/dist.min.js"},
     # {"src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"},
     # {"src": "https://unpkg.com/@turf/turf@6/turf.min.js"},
+    {"src": "https://cdn.jsdelivr.net/npm/interactjs@1.10.11/dist/interact.min.js"}
+
 ]
 external_stylesheets = [
     # {
     #     "src": "https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css",
     #     "rel": "stylesheet",
     # },
-    {"src": "https://unpkg.com/@mantine/charts@7/styles.css"},
+    {"src": "https://unpkg.com/@mantine/dates@7.11.0/styles.css"},
     {"src": "https://unpkg.com/@mantine/dates@7/styles.css"},
-    {"src": "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"},
+    {"src": "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"}
 ]
 
 
@@ -42,9 +45,16 @@ def init_dashboard(server: Flask):
     clientside_callback(
         ClientsideFunction(
             namespace="clientside",
-            function_name="sendToDash"
-        ),
+            function_name = ["sendToDash"]
+    ),
         Input("chart-data-store", "data"),
+    )
+    clientside_callback(
+        ClientsideFunction(
+            namespace="clientside",
+            function_name="dashToMap"
+        ),
+        Input("map-action-store", "data"),
     )
 
     return dashboard.server

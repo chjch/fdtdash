@@ -1,5 +1,6 @@
 from collections import defaultdict
 from dash import Input, Output, State, no_update, ctx
+import json
 
 
 def register_callbacks(dashboard):
@@ -10,6 +11,7 @@ def register_callbacks(dashboard):
             Output("tot-lvg-area-chart", "data"),
             Output("just-value-chart", "data"),
             Output("doruc-chart", "data"),
+            Output("building-selection-count-value", "children")
         ],
         [Input("chart-data-store", "data")],
         prevent_initial_call=True,
@@ -44,8 +46,11 @@ def register_callbacks(dashboard):
             "Other": 0,
         }
 
+        total_buildings = 0
+
         # Process each entry from the received data
         for entry in data:
+            total_buildings += 1
             # Process Effective Year Built (EFFYRBLT)
             effyrblt_year = entry.get("EFFYRBLT")
             if effyrblt_year is not None:
@@ -164,7 +169,7 @@ def register_callbacks(dashboard):
                 "color": "violet.6",
             },
         ]
-        return effyrblt_data, totlvgarea_data, jv_data, doruc_data
+        return effyrblt_data, totlvgarea_data, jv_data, doruc_data, str(total_buildings)
 
     # Collapse Sidebar Callback
     @dashboard.callback(
@@ -188,13 +193,11 @@ def register_callbacks(dashboard):
     @dashboard.callback(
         output={
             "charts_class_name": Output("chart_scrollable_div", "className"),
-            "tools_className": Output(
-                "arcgistools_scrollable_div", "className"
-            ),
-            "scrollable_div_bulding_className": Output("scrollable_div_bulding_stats", "className"),
-            "basemap_gallery_className": Output(
-                "drawer-basemap-gallery", "className"
-            ),
+            "tools_className": Output("arcgistools_scrollable_div", "className"),
+            "scrollable_div_building_className": Output("scrollable_div_building_stats",
+                                                       "className"),
+            "basemap_gallery_className": Output("drawer-basemap-gallery", "className"),
+            "scrollable_div_layer_tools": Output("scrollable_div_layer_tools", "className"),
         },
         inputs=[
             Input("charts-toggle-button", "n_clicks"),
@@ -240,21 +243,97 @@ def register_callbacks(dashboard):
         return {
             "charts_class_name": charts_class_name,
             "tools_className": outputs[1],
-            "scrollable_div_bulding_className": outputs[2],
+            "scrollable_div_building_className": outputs[2],
+            "scrollable_div_layer_tools": outputs[4],
             "basemap_gallery_className": outputs[6],
         }
 
     # Scenario Chart callback
     @dashboard.callback(
-        Output("yearSelectValue", "children"),
+        Output("year-select-value", "children"),
         Input("yearSelect", "value")
     )
     def select_value(value):
         return value
 
     @dashboard.callback(
-        Output("stormSelectValue", "children"),
-        Input("stormSelect", "value")
+        Output("storm-select-value", "children"),
+        Input("storm-select", "value")
     )
     def select_value(value):
         return value
+
+    # Dash callback to handle changes in RadioGroup and send to dashToMap
+    @dashboard.callback(
+        Output("map-action-store", "data",allow_duplicate=True),
+        Input("colorMixModeRadioGroup", "value"),
+        prevent_initial_call=True,
+    )
+    def update_texture_mode(selected_mode):
+        # Prepare the data to send to JavaScript
+        return {
+            "action": "updateLayerTexture",
+            "payload": {
+                "mode": selected_mode
+            }
+        }
+
+    # Assuming the extents dictionary is available here or imported if necessary
+    neighborhoods = {
+        "Downtown": {"xmin": -81.663, "ymin": 30.321, "xmax": -81.640, "ymax": 30.340},
+        "Riverside": {"xmin": -81.693, "ymin": 30.304, "xmax": -81.670, "ymax": 30.320},
+        "San Marco": {"xmin": -81.667, "ymin": 30.290, "xmax": -81.645, "ymax": 30.310},
+        # Add more neighborhoods with their extents as needed
+    }
+
+    @dashboard.callback(
+        Output("map-action-store", "data",allow_duplicate=True),
+        Input("neighborhood-dropdown", "value"),
+        prevent_initial_call=True,
+    )
+    def update_extent_store(selected_neighborhood):
+        if selected_neighborhood in neighborhoods:
+            extent = neighborhoods[selected_neighborhood]
+            return {
+                "action": "zoomToExtent",
+                "payload": {
+                    "extent_payload": {
+                        "xmin": extent["xmin"],
+                        "ymin": extent["ymin"],
+                        "xmax": extent["xmax"],
+                        "ymax": extent["ymax"]
+                    }
+                }
+        }
+        return None
+
+
+    # Define the callback to trigger `initMap` based on radio group selection
+    @dashboard.callback(
+        Output("map-action-store", "data", allow_duplicate=True),
+        Input("sceneLayerRadioGroup", "value"),
+        prevent_initial_call=True,
+    )
+    def update_map_layer(selected_layer, zoom_to_full_extent=True):
+
+        # URLs for each scene layer
+        layer_urls = {
+            "Downtown_Saint_Jones_River_SceneServer": "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/PLW_Jacksonville_BLD_Downtown_Saint_Jones_River/SceneServer",
+            "Ribault_2_SceneServer": "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/PLW_Jacksonville_BLD_Ribault_2/SceneServer",
+            "Ribault_Scenic_Drive_Park_SceneServer": "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/PLW_Jacksonville_BLD_Ribault_Scenic_Drive_Park/SceneServer",
+            "Hogen_Creek_Neighborhood_SceneServer": "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/PLW_Jacksonville_BLD_Hogen_Creek_Neighborhood/SceneServer",
+            "demImageServer": "https://tiledimageservices.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/USGS_1M_DEM_50M_Resample/ImageServer"
+        }
+
+        # Fetch the layer URL based on selection
+        layer_url = layer_urls.get(selected_layer)
+
+        # Return action and payload for `initMap`
+        return {
+            "action": "initMap",
+            "payload": {
+                "mapContainerId": "digital-twin-container",
+                "layerUrl": layer_url,
+                "zoomToFullExtent": zoom_to_full_extent
+            }
+        }

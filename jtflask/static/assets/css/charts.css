@@ -1,4 +1,33 @@
-#yearSelectValue {
+.floating-card {
+    width: auto !important;
+    position: absolute !important;
+    border: 1px solid #ccc;
+    resize: both;
+    overflow: visible;
+    z-index: 99999 !important;
+    cursor: move;
+}
+
+.docked-card {
+    position: relative;
+    width: 100%;
+    height: auto;
+    left: 0 !important;
+    top: 0 !important;
+}
+
+#drag-handle {
+    cursor: move;
+    user-select: none;
+}
+
+.undock-button {
+    width: fit-content;
+    position: relative;
+    right: 20px
+}
+
+#year-select-value {
 	font-weight: 700;
 	font-size: xx-large;
 	align-self: center;
@@ -6,7 +35,7 @@
 }
 
 
-#stormSelectValue {
+#storm-select-value {
     font-weight: 500;
     font-size: large;
     align-self: center;
@@ -14,7 +43,7 @@
 
 }
 
-#stormSelect {
+#storms-elect {
 	color: var(--main-color);
 	font-weight: 500;
 	font-size: medium;
@@ -56,4 +85,26 @@
 
 #pie_chart {
     height: 200px;
+}
+
+.building-stats-card-label {
+    font-weight: 600;
+    font-size: x-large;
+    /*padding-bottom: 0px;*/
+    align-self: center;
+    display: flex;
+}
+#building-selection-count-label {
+    font-weight: 600;
+    font-size: x-large;
+    /*padding-bottom: 20px;*/
+    align-self: center;
+    display: flex;
+}
+
+#building-selection-count-value {
+    font-weight: 700;
+    font-size: xx-large;
+    align-self: center;
+    font-family: 'Inter', sans-serif;
 }

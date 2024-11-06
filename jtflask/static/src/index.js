@@ -9,6 +9,7 @@ export { default as Map } from "@arcgis/core/Map";
 export { default as SceneView } from "@arcgis/core/views/SceneView";
 export { default as Query } from "@arcgis/core/rest/support/Query";
 export { default as Graphic } from "@arcgis/core/Graphic";
+export { default as Extent } from "@arcgis/core/geometry/Extent";
 
 // layers
 export { default as GeoJSONLayer } from "@arcgis/core/layers/GeoJSONLayer";

@@ -1,5 +1,6 @@
 from dash import html
 import dash_mantine_components as dmc
+from .utils import get_icon
 
 
 # Function to create charts
@@ -23,12 +24,12 @@ def create_charts():
                     mb=10,
                 ),
                 dmc.Text(
-                    id="yearSelectValue", size="lg", className="yearSelectText"
+                    id="year-select-value", size="lg", className="year-select-text"
                 ),
                 dmc.Select(
                     comboboxProps={"position": "bottom"},
                     placeholder="Storm",
-                    id="stormSelect",
+                    id="storm-select",
                     value="Category-1 Hurricane",
                     data=[
                         {"value": "Category-1 Hurricane", "label": "Storm"},
@@ -40,16 +41,124 @@ def create_charts():
                     mb=10,
                 ),
                 dmc.Text(
-                    id="stormSelectValue",
+                    id="storm-select-value",
                     size="lg",
-                    className="stormSelectText",
+                    className="storm-select-text",
                 ),
             ],
             withBorder=True,
             shadow="sm",
             radius="md",
             id="Scenario_card",
-            className="cardChart",
+            className="cardChart hidden",
+        ),
+        dmc.Card(
+            children=[
+                # Dock/Undock button
+                dmc.Button([get_icon("solar:maximize-square-3-outline", "dock-icon")],
+                           id="undock-button",
+                           className="undock-button",
+                           variant="subtle",
+                           color="gray",
+                           style={"position": "absolute",
+                                  "marginBottom": "2px",
+                                  "top": "0px",
+                                  "right": "-5px",
+                                  "size": "sm",}),
+                dmc.Text("Building Statistics", size="lg", className="chartLabel building-stats-card-label"),
+
+                # Display building count
+                dmc.Group(
+                    children=[
+                        dmc.Text("Total Buildings: ", id="building-selection-count-label", size="md"),
+                        dmc.Text(id="building-selection-count-value", size="md"),  # To be updated dynamically
+                    ],
+                    # position="apart",
+                    style={"marginBottom": "15px"}
+                ),
+
+                # Tabbed interface for each category
+                dmc.Tabs(
+                    children=[
+                        dmc.TabsList(
+                            children=[
+                                dmc.TabsTab("Residential", value="residential"),
+                                dmc.TabsTab("Commercial", value="commercial"),
+                                dmc.TabsTab("Industrial", value="industrial"),
+                                dmc.TabsTab("Other", value="other"),
+                            ]
+                        ),
+                        dmc.TabsPanel(
+                            children=[
+                                dmc.Text("Residential", size="md"),
+                                dmc.List(
+                                    children=[
+                                        dmc.ListItem("Residential buildings are mainly used for housing."),
+                                        dmc.ListItem("Typical features: single-family homes, apartments, etc."),
+                                        dmc.ListItem("This category includes all buildings used for living purposes."),
+                                    ],
+                                    style={"marginTop": "10px"}
+                                )
+                            ],
+                            value="residential",
+                        ),
+                        dmc.TabsPanel(
+                            children=[
+                                dmc.Text("Commercial", size="md"),
+                                dmc.List(
+                                    children=[
+                                        dmc.ListItem("Commercial buildings are used for business purposes."),
+                                        dmc.ListItem("Typical features: offices, retail stores, hotels, etc."),
+                                        dmc.ListItem(
+                                            "This category includes all buildings used for commercial activities."),
+                                    ],
+                                    style={"marginTop": "10px"}
+                                )
+                            ],
+                            value="commercial",
+                        ),
+                        dmc.TabsPanel(
+                            children=[
+                                dmc.Text("Industrial", size="md"),
+                                dmc.List(
+                                    children=[
+                                        dmc.ListItem("Industrial buildings are used for manufacturing or production."),
+                                        dmc.ListItem("Typical features: factories, warehouses, etc."),
+                                        dmc.ListItem(
+                                            "This category includes all buildings used for industrial purposes."),
+                                    ],
+                                    style={"marginTop": "10px"}
+                                )
+                            ],
+                            value="industrial",
+                        ),
+                        dmc.TabsPanel(
+                            children=[
+                                dmc.Text("Other", size="md"),
+                                dmc.List(
+                                    children=[
+                                        dmc.ListItem(
+                                            "This category includes buildings that do not fall under other types."),
+                                        dmc.ListItem("Examples: public spaces, entertainment venues, etc."),
+                                    ],
+                                    style={"marginTop": "10px"}
+                                )
+                            ],
+                            value="other",
+                        )
+                    ],
+                    style={"marginTop": "15px"},
+                    orientation="horizontal",
+                    # grow=True,  # Expand the tab content to fit
+                    value="residential"  # Default active tab
+                )
+            ],
+            withBorder=True,
+            shadow="sm",
+            radius="md",
+            style={"margin": "10px"},
+            id="building-selection-stats-card",
+            className="cardChart"
         ),
         dmc.Card(  # doruc card: id="doruc-card", className="cardChart"
             children=[
@@ -69,12 +178,24 @@ def create_charts():
                         {"name": "Industrial", "value": 20, "color": "teal.6"},
                         {"name": "Other", "value": 10, "color": "yellow.6"},
                     ],
+
                     withLabelsLine=True,
                     withTooltip=True,
                     tooltipDataSource="segment",
+                    tooltipProps={
+                        "style": {
+                            "backgroundColor": "white",
+                            "color": "blacks",
+                            "padding": "10px",
+                            "borderRadius": "8px",
+                            "fontSize": "18px",
+                            "boxShadow": "0px 4px 8px rgba(0, 0, 0, 0.3)"
+                        }
+                    },
                     labelsPosition="outside",
                     labelsType="percent",
                     withLabels=True,
+
                     strokeColor="white",
                     id="doruc-chart",
                     size="220",
@@ -108,6 +229,7 @@ def create_charts():
                     # withLabelsLine=True,
                     withTooltip=True,
                     tooltipDataSource="segment",
+
                     strokeColor="white",
                     strokeWidth=1,
                     size="220",
@@ -134,8 +256,11 @@ def create_charts():
                     h=300,
                     dataKey="year",
                     data=[],
+                    withLegend=False,
+                    legendProps={"verticalAlign": "bottom", "height": 50},
                     series=[
                         {
+                            "label": "Effective Year Built",
                             "name": "effyrblt_count",
                             "dataKey": "effyrblt_count",
                             "color": "indigo.6",
@@ -204,12 +329,23 @@ def create_charts():
                     ],
                     withXAxis=True,
                     withYAxis=True,
-                    withTooltip=False,
-                    tickLine="xy",
-                    gridAxis="xy",
-                    barChartProps={"barSize": 50},
+                    withTooltip=True,
+                    tooltipProps={
+                        "style": {
+                            "backgroundColor": "white",
+                            "color": "white",
+                            "padding": "10px",
+                            "borderRadius": "8px",
+                            "fontSize": "14px",
+                            "boxShadow": "0px 4px 8px rgba(0, 0, 0, 0.3)"
+                        }
+                    },
+                    tickLine="x",
+                    gridAxis="x",
+                    withLegend=False,
+                    barChartProps={"barSize": 100},
                     id="tot-lvg-area-chart",
-                    style={"margin": "10px", "backgroundColor": "#f4f4f9"},
+                    style={"margin": "10px", "backgroundColor": "green.1"},
                 ),
             ],
             withBorder=True,
