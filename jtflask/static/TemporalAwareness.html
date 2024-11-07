@@ -44,7 +44,7 @@
           promiseUtils
       ) => {
           const map = new Map({
-              basemap: "satellite",
+              basemap: "dark-gray-vector",
               ground: "world-elevation"
           });
 
@@ -451,7 +451,7 @@
               const timeSlider = new TimeSlider({
                   mode: "instant",
                   view: view,
-                  playRate: 1500,
+                  playRate: 1000,
                   timeVisible: true,
                   fullTimeExtent: {
                       start: new Date(dates[0]), // Oct 22, 2015 8 pm
