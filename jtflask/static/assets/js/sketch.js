@@ -178,7 +178,7 @@ const JTSelectionSketch = (() => {
                 JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship).then((results) => {
                     if (results.length > 0) {
                         // dash_clientside.clientside.sendToDash('chart-data-store', results);
-                        JTDash.sendToDash('chart-data-store', results);
+                        JTDash.mapToDash('chart-data-store', results);
                     }
                 });
             }
@@ -192,7 +192,7 @@ const JTSelectionSketch = (() => {
                 let sketchGeometry = event.graphics[0].geometry;
                 JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship).then((results) => {
                     if (results.length > 0) {
-                        JTDash.sendToDash('chart-data-store', results);
+                        JTDash.mapToDash('chart-data-store', results);
                     }
                 });
             }

@@ -261,7 +261,7 @@ def register_callbacks(dashboard):
     dashboard.clientside_callback(
         ClientsideFunction(
             namespace="clientside",
-            function_name="sendToDash"
+            function_name="mapToDash"
         ),
         Input("chart-data-store", "data"),
     )

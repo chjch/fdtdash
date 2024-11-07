@@ -3,7 +3,7 @@
 const JTDash = (() => {
     "use strict";
 
-    const sendToDash = (storeId, mapData) => {
+    const mapToDash = (storeId, mapData) => {
         dash_clientside.set_props(storeId, { data: mapData });
         return dash_clientside.no_update;
     };
@@ -37,17 +37,17 @@ const JTDash = (() => {
     };
 
     // Register functions with dash_clientside object under clientside namespace
-    // allow `sendToDash`, `handleNavbarButtonClick` to be called from Dash
+    // allow `mapToDash`, `handleNavbarButtonClick` to be called from Dash
     window.dash_clientside = Object.assign({}, window.dash_clientside, {
         clientside: {
-            sendToDash: sendToDash,
+            mapToDash: mapToDash,
             handleNavbarButtonClick: handleNavbarButtonClick,
             loadSvg: loadSvg
         },
     });
 
     return {
-        sendToDash: sendToDash,
+        mapToDash: mapToDash,
         loadSvg: loadSvg
     };
 })();  // IIFE
