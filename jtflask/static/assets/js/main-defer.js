@@ -58,9 +58,14 @@ let sceneLayer = new vendors.SceneLayer({
             symbolLayers: [{
                 type: "fill",
                 material: {
-                    color: [255, 255, 255, 0.7],
+                    color: [255, 255, 255, 0.8],
                     colorMixMode: "replace"
                 },
+                // edges: {
+                //     type: "solid",
+                //     color: [0, 0, 0, 0.6],
+                //     size: 0.5
+                // }
                 edges: null
             }]
         }
