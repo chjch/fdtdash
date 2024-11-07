@@ -59,8 +59,8 @@ const JTDash = (() => {
             };
         };
 
-        const setSceneLayer = (layerUrl) => {
-            if (currentLayer) {
+            const setSceneLayer = (layerUrl) => {
+                if (currentLayer) {
                 JTMap.map.remove(currentLayer);
             }
 
@@ -143,14 +143,6 @@ const JTDash = (() => {
         return dash_clientside.no_update;
     };
 
-    // Register the function with dash_clientside object under clientside namespace
-    window.dash_clientside = Object.assign({}, window.dash_clientside, {
-        clientside: {
-            sendToDash: sendToDash,
-            dashToMap: dashToMap,
-            // clearOutDash: clearOutDash
-
-
     const handleNavbarButtonClick = (...inputs) => {
         //On Initial Render
         if (inputs.every((input) => input === undefined)) {
@@ -185,7 +177,9 @@ const JTDash = (() => {
         clientside: {
             sendToDash: sendToDash,
             handleNavbarButtonClick: handleNavbarButtonClick,
-            loadSvg: loadSvg
+            loadSvg: loadSvg,
+            dashToMap: dashToMap
+            // clearOutDash: clearOutDash
         },
     });
 

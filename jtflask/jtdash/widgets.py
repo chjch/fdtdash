@@ -72,7 +72,7 @@ def get_building_visualization_card():
                     ),
                     html.Div(
                         id="buffer-slider-container",
-                        style={"margin-top": "20px"},
+                        # style={"margin-top": "20px"},
                     ),
                     # Placeholder for buffer slider
                     dmc.Button(
@@ -85,12 +85,11 @@ def get_building_visualization_card():
                 ],
                 shadow="sm",
                 radius="md",
-                withBorder=True,
+                # withBorder=True,
                 style={
-                    "padding": "16px",
-                    "margin-bottom": "20px",
-                },  # Set padding and margin
-                className="cardChart toolCard",
+                    # "padding": "16px",
+                },  # Set padding and masrgin
+                className="toolCard",
             ),
             dmc.Card(
                 children=[
@@ -144,13 +143,12 @@ def get_building_visualization_card():
                 ],
                 shadow="sm",
                 radius="md",
-                withBorder=True,
-                style={"padding": "16px", "margin-bottom": "20px"},
-                className="cardChart highlightCard",
+                # withBorder=True,
+                # style={"padding": "16px", },
+                className="highlightCard",
             ),
         ],
-        # style={"margin": "10px"},
-        className="cardChart arcgis_building_stats_card hidden",
+        className="cardChart arcgis_building_stats_card",
     )
 
 
@@ -234,7 +232,7 @@ def get_layer_texture_card():
         shadow="sm",
         radius="md",
         id="layer_texture_card",
-        className="cardChart layer-texture-card"
+        className="cardChart layer-texture-card hidden"
     )
 
     return layer_texture_card
@@ -267,7 +265,7 @@ def get_scene_layer_selection_card():
         shadow="sm",
         radius="md",
         id="scene_layer_card",
-        className="cardChart scene-layer-card"
+        className="cardChart scene-layer-card hidden"
     )
 
     return scene_layer_card
@@ -296,14 +294,14 @@ def get_neighborhood_zoom_card():
 
     neighborhood_zoom_card = dmc.Card(
         children=[
-            dmc.Text("Neighborhood Zoom Tool", size="lg", className="chartLabel"),
+            dmc.Text("Neighborhood ZoomTo", size="lg", className="chartLabel"),
             dropdown,
         ],
         withBorder=True,
         shadow="sm",
         radius="md",
-        id="neighborhood_zoom_card",
-        className="cardChart neighborhood-zoom-card",
+        id="neighborhood-panel",
+        className="cardChart neighborhood-zoom-card hidden",
 
     )
 

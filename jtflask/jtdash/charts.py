@@ -24,12 +24,12 @@ def get_charts():
                     mb=10,
                 ),
                 dmc.Text(
-                    id="year-select-value", size="lg", className="year-select-text"
+                    id="yearSelectValue", size="lg", className="yearSelectText"
                 ),
                 dmc.Select(
                     comboboxProps={"position": "bottom"},
                     placeholder="Storm",
-                    id="storm-select",
+                    id="stormSelect",
                     value="Category-1 Hurricane",
                     data=[
                         {"value": "Category-1 Hurricane", "label": "Storm"},
@@ -41,9 +41,9 @@ def get_charts():
                     mb=10,
                 ),
                 dmc.Text(
-                    id="storm-select-value",
+                    id="stormSelectValue",
                     size="lg",
-                    className="storm-select-text",
+                    className="stormSelectText",
                 ),
             ],
             withBorder=True,

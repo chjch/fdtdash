@@ -176,7 +176,6 @@ def register_callbacks(dashboard):
     @dashboard.callback(
         Output("collapse-icon", "icon"),
         Input("collapse-button", "n_clicks"),
-        State("chart_scrollable_drawer", "opened"),
         prevent_initial_call=True,
     )
     def toggle_sidebar_drawer(n_clicks):
@@ -188,64 +187,6 @@ def register_callbacks(dashboard):
         )
         return new_icon
 
-    # Sidebar Button Click Callback
-    @dashboard.callback(
-        output={
-            "charts_class_name": Output("chart_scrollable_div", "className"),
-            "tools_className": Output("arcgistools_scrollable_div", "className"),
-            "scrollable_div_building_className": Output("scrollable_div_building_stats",
-                                                       "className"),
-            "basemap_gallery_className": Output("drawer-basemap-gallery", "className"),
-            "scrollable_div_layer_tools": Output("scrollable_div_layer_tools", "className"),
-        },
-        inputs=[
-            Input("charts-toggle-button", "n_clicks"),
-            Input("arcgis-tools-toggle-button", "n_clicks"),
-            Input("buildings-toggle-button", "n_clicks"),
-            Input("clipboard-toggle-button", "n_clicks"),
-            Input("layers-toggle-button", "n_clicks"),
-            Input("legend-toggle-button", "n_clicks"),
-            Input("basemap-gallery-toggle-button", "n_clicks"),
-        ],
-    )
-    def handle_sidebar_icon_click(*inputs):
-        # Get id of clicked button
-        clicked_button_id = ctx.triggered_id if not None else ""
-
-        # Update class of clicked button to slide-in animation
-        def handle_button_click(button_id):
-            if button_id == clicked_button_id:
-                return f"{button_id} mantine-Drawer-body-item slide-in"
-            else:
-                return f"{button_id} mantine-Drawer-body-item hidden "
-
-        outputs = map(
-            handle_button_click,
-            [
-                "charts-toggle-button",
-                "arcgis-tools-toggle-button",
-                "buildings-toggle-button",
-                "clipboard-toggle-button",
-                "layers-toggle-button",
-                "legend-toggle-button",
-                "basemap-gallery-toggle-button",
-            ],
-        )
-        outputs = list(outputs)
-
-        charts_class_name = (
-            "charts-toggle-button mantine-Drawer-body-item slide-in"
-            if all(n_clicks is None for n_clicks in inputs)
-            else outputs[0]
-        )
-
-        return {
-            "charts_class_name": charts_class_name,
-            "tools_className": outputs[1],
-            "scrollable_div_building_className": outputs[2],
-            "scrollable_div_layer_tools": outputs[4],
-            "basemap_gallery_className": outputs[6],
-        }
 
     # Scenario Chart callback
     @dashboard.callback(
@@ -261,6 +202,35 @@ def register_callbacks(dashboard):
     )
     def select_value(value):
         return value
+
+    dashboard.clientside_callback(
+        ClientsideFunction(
+            namespace="clientside",
+            function_name="sendToDash"
+        ),
+        Input("chart-data-store", "data"),
+    )
+
+    dashboard.clientside_callback(
+        ClientsideFunction(
+            namespace="clientside",
+            function_name="dashToMap"
+        ),
+        Input("map-action-store", "data"),
+    )
+
+    dashboard.clientside_callback(
+        ClientsideFunction(
+            namespace="clientside",
+            function_name="handleNavbarButtonClick"
+        ),
+        # Dummy Output. Not used. Not needed in newer versions of dash
+        Output("navbar-control", "className"),
+        [
+            Input(button, "n_clicks")
+            for button in NAVBAR_BUTTONS.values()
+        ]
+    )
 
     # Dash callback to handle changes in RadioGroup and send to dashToMap
     @dashboard.callback(
@@ -279,10 +249,11 @@ def register_callbacks(dashboard):
 
     # Assuming the extents dictionary is available here or imported if necessary
     neighborhoods = {
+        # test data
         "Downtown": {"xmin": -81.663, "ymin": 30.321, "xmax": -81.640, "ymax": 30.340},
         "Riverside": {"xmin": -81.693, "ymin": 30.304, "xmax": -81.670, "ymax": 30.320},
         "San Marco": {"xmin": -81.667, "ymin": 30.290, "xmax": -81.645, "ymax": 30.310},
-        # Add more neighborhoods with their extents as needed
+
     }
 
     @dashboard.callback(

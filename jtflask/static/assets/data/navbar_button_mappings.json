@@ -13,7 +13,7 @@
     },
     {
       "button_id": "layers-toggle-button",
-      "panel_id": "health-panel"
+      "panel_id": "scene_layer_card"
     },
     {
       "button_id": "clipboard-toggle-button",
@@ -21,7 +21,7 @@
     },
     {
       "button_id": "legend-toggle-button",
-      "panel_id": "legend-panel"
+      "panel_id": "layer_texture_card"
     },
     {
       "button_id": "basemaps-gallery-button",

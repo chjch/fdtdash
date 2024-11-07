@@ -4,7 +4,10 @@ from .brand import get_brand
 from .charts import get_charts
 from .widgets import (
     get_arcgis_sketch_card,
+    get_layer_texture_card,
+    get_scene_layer_selection_card,
     get_building_visualization_card,
+    get_neighborhood_zoom_card,
     get_basemap_gallery,
 )
 from .utils import get_icon
@@ -24,9 +27,9 @@ NAVBAR_PANELS = {
     "charts": get_charts(),
     "hazard": get_arcgis_sketch_card(),
     "housing": get_building_visualization_card(),
-    "health": dmc.Card("Health", id="health-panel", className="hidden"),
-    "neighborhood": dmc.Card("Neighborhood", id="neighborhood-panel", className="hidden"),
-    "legend": dmc.Card("Legend", id="legend-panel", className="hidden"),
+    "health": get_scene_layer_selection_card(),
+    "neighborhood": get_neighborhood_zoom_card(),
+    "legend": get_layer_texture_card(),
     "basemap": get_basemap_gallery(),
 }
 
@@ -104,5 +107,7 @@ def get_navbar_controls():  # Navbar Control: brand, buttons, collapse button
 def get_navbar_panels():
     return html.Div(
         id="navbar-drawer",
-        children=[*NAVBAR_PANELS.values()],
+        children=[*NAVBAR_PANELS.values(),
+                  dcc.Store(id='map-action-store')
+                  ],
     )

@@ -3,7 +3,7 @@ import dash_mantine_components as dmc
 from dash_extensions import DeferScript
 
 # from .sidebar import sidebar
-# from .widgets import global_widget_hover_card
+from .widgets import global_widget_hover_card
 # from .statshovercards import stats_hover_card
 from .brand import get_brand
 from .navbar import get_navbar_controls, get_navbar_panels
@@ -44,6 +44,7 @@ layout = dmc.MantineProvider([
     jtdash_appshell(),
     DeferScript(src="../static/assets/js/main-defer.js"),
     dcc.Store(id=CHART_STORE_ID),
+    global_widget_hover_card,
     # stats_hover_card,
 ])
 

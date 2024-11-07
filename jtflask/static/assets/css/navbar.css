@@ -187,6 +187,7 @@
     --animate-duration: var(--navbar-drawer-animation-duration);
 }
 
+
 #basemap-svg,
 #legend-svg {
     display: flex;

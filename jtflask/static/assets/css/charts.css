@@ -27,17 +27,13 @@
     right: 20px
 }
 
-#year-select-value {
-#charts {
-    display: flex;
-    flex-direction: row;
-    gap: var(--navbar-drawer-padding);
-    @media (min-width: 768px) {
-        flex-direction: column;
-    }
-}
 
 .cardChart {
+    margin-top: 1px !important;
+    margin-bottom: 5px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    width: 98%;
 }
 
 #yearSelectValue {
@@ -68,11 +64,6 @@
 	font-weight: 500;
 	font-size: medium;
 
-}
-
-
-.cardChart {
-    width: 95%;
 }
 
 .chartLabel {

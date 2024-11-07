@@ -201,6 +201,7 @@ const JTSelectionSketch = (() => {
 
            // Add event listener for clear button
         const clearButton = document.getElementById("clear-selection-tool-button");
+
         clearButton.addEventListener('click', () => {
             sketchLayer.removeAll();
             JTHighlight.clearHighlighting();
