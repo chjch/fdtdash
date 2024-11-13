@@ -62,7 +62,7 @@ const locateWidget = new vendors.Locate({
     graphic: new vendors.Graphic({
         symbol: {
             outline: {
-                color: "white",
+                color: "whit    e",
                 width: 1, // points
             },
             color: "blue",
@@ -250,6 +250,19 @@ view.when(() => {
         ),
         "customNavigationToggle"
     );
+    JTUtils.setElementId(
+        document.querySelector(
+            ".esri-component.hide-interface.esri-widget"
+        ),
+        "customHideInterface"
+    );
+    JTUtils.setElementId(
+        document.querySelector(
+            ".esri-component.esri-fullscreen.esri-widget"
+        ),
+        "customFullscreen"
+    );
+      // esri-component esri-fullscreen esri-widget
     // noinspection CssInvalidHtmlTagReference
     document.getElementById("customNavigationToggle")
         .querySelector("calcite-button")

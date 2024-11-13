@@ -26,8 +26,6 @@ def get_building_visualization_card():
     return html.Div(
         id="building-visualization-card",
         children=[
-            dmc.Text("Building Statistics", size="lg", className="chartLabel"),
-            # Tool widget in its own card
             dmc.Card(
                 children=[
                     dmc.Text(
@@ -170,11 +168,12 @@ def get_basemap_gallery():
     )
 
 
+
 def get_arcgis_selection_widget_card():
     # ArcGIS Sketch Tool Card
     arcgis_selection_widget_card = dmc.Card(
         children=[
-            dmc.Text("Building Selection Tool", size="lg", className="chartLabel arcgis-selection-card-label"),
+            dmc.Text("Selection Tool", size="lg", className="chartLabel arcgis-selection-card-label"),
             html.Div(
             html.Div([
                 dmc.Button([

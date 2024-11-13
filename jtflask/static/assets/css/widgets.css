@@ -31,6 +31,11 @@
     align-self: center;
     display: flex;
 }
+
+#selection-widget-hover-card-affix{
+    margin: 10px;
+}
+
 #selection-widget-container-body{
     flex-flow: nowrap;
     margin-left: auto;
@@ -53,4 +58,8 @@
 
 .neighborhood-zoom-card{
     height: 250px;
+}
+
+.highlightCard{
+    margin-top: 10px;
 }

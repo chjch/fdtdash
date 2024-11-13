@@ -123,12 +123,14 @@ calcite-button {
     background: rgba(255, 255, 255, 0.4);
 }
 
+
 #customLocateButton {
     background: transparent;
     box-shadow: none;
     --calcite-color-brand-hover: transparent;
     --calcite-ui-icon-color: var(--main-color);
 }
+
 #customLocateButton calcite-button {
     border-radius: 50px;
 }
@@ -166,6 +168,23 @@ calcite-button {
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 	--calcite-ui-icon-color: var(--main-color) !important;
+}
+
+#customFullscreen {
+    --calcite-ui-icon-color: var(--main-color);
+    border-radius: 50%;
+}
+
+#customFullscreen calcite-button.esri-widget--button {
+    border-radius: 50%;
+}
+
+
+#customHideInterface {
+    box-shadow: none;
+    --calcite-color-brand-hover: transparent;
+    border-radius: 50%;
+    --calcite-ui-icon-color: var(--main-color);
 }
 
 .mantine-NavLink-body {
@@ -245,3 +264,4 @@ calcite-button {
 .esri-fullscreen calcite-button:focus-within {
     border: 2px solid #3A1e7A;
 }
+

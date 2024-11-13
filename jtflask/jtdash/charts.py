@@ -65,7 +65,7 @@ def get_charts():
                                   "top": "0px",
                                   "right": "-5px",
                                   "size": "sm",}),
-                dmc.Text("Building Statistics", size="lg", className="chartLabel building-stats-card-label"),
+                dmc.Text("Selection Statistics", size="lg", className="chartLabel building-stats-card-label"),
 
                 # Display building count
                 dmc.Group(
