@@ -115,6 +115,7 @@ const JTSketchWidget = (() => {
 
 const JTSelectionSketch = (() => {
     "use strict";
+
     // Define symbol for the filter polygons
     const sketchSymbol = {
         type: "simple-fill", // autocasts as new SimpleFillSymbol()
@@ -128,108 +129,157 @@ const JTSelectionSketch = (() => {
     };
 
     let spatialRelationship = "intersects";
-    let highlightHandle = null;
-    let highlightedObjectIds = [];
-    let outFields = ["OBJECTID", "DORUC", "JV", "EFFYRBLT","TOTLVGAREA"];
+    let outFields = ["OBJECTID", "DORUC", "JV", "EFFYRBLT", "TOTLVGAREA"];
+    let selectionSketchWidget = null;
+    let sketchLayer = null;
 
+    /**
+     * Removes the initialized Sketch widget, clears graphics, and resets state.
+     * @param {SceneView} view - The SceneView instance to clean up.
+     */
+    const unloadWidget = (view) => {
+        const parentContainer = document.getElementById("selection-widget-container");
+        if (parentContainer) {
+            console.log("Clearing child elements of the container except 'clear-selection-tool-button'...");
+            Array.from(parentContainer.children).forEach((child) => {
+                if (child.id === "clear-selection-tool-button") {
+                    // Skip the "clear-selection-tool-button"
+                    return;
+                }
+                if (typeof child.destroy === "function") {
+                    console.log("Destroying custom widget...");
+                    child.destroy();
+                }
+                parentContainer.removeChild(child);
+            });
+        }
+
+        if (sketchLayer && view) {
+            console.log("Removing graphics layer...");
+            sketchLayer.removeAll();
+            view.map.remove(sketchLayer);
+            sketchLayer = null;
+        }
+
+        JTHighlight.clearHighlighting();
+        console.log("Widget and associated layers cleared.");
+    };
+    /**
+     * Initializes the Sketch widget for a given SceneLayerView.
+     * @param {SceneLayerView} sceneLayerView - The SceneLayerView for the active SceneLayer.
+     * @param {HTMLElement} container - The container element for the Sketch widget.
+     */
     const initWidget = (sceneLayerView, container) => {
-        const sketchLayer = new vendors.GraphicsLayer({
+        if (!sceneLayerView || !sceneLayerView.view) {
+            console.error("SceneLayerView or its view is not defined. Cannot initialize Sketch widget.");
+            return;
+        }
+
+        // Unload any previous instance of the Sketch widget
+        unloadWidget(sceneLayerView.view);
+
+        // Create a new GraphicsLayer for the Sketch widget
+        sketchLayer = new vendors.GraphicsLayer({
             title: "Selection Layer",
-            elevationInfo: {
-                mode: "on-the-ground"
-            }
+            elevationInfo: {mode: "on-the-ground"}
         });
         sceneLayerView.view.map.add(sketchLayer);
-        // Create SketchViewModel
+
+        // Create the SketchViewModel
         const sketchViewModel = new vendors.SketchViewModel({
             layer: sketchLayer,
             view: sceneLayerView.view,
             polygonSymbol: sketchSymbol,
-            defaultCreateOptions: {
-                hasZ: false  // default value
-            },
+            defaultCreateOptions: {hasZ: false},
             creationMode: "update",
-            updateOnGraphicClick: true, // Enable updating existing graphics
+            updateOnGraphicClick: true,
             defaultUpdateOptions: {
-                enableZ: false,  // default value
+                enableZ: false,
                 tool: "reshape",
-                reshapeOptions: {
-                    edgeOperation: "offset"
-                }
+                reshapeOptions: {edgeOperation: "offset"}
             }
         });
-        const selectionSketchWidget = new vendors.Sketch({
+
+        // Initialize the Sketch widget
+        selectionSketchWidget = new vendors.Sketch({
             layer: sketchLayer,
             view: sceneLayerView.view,
             container: container,
             availableCreateTools: ["polygon", "rectangle", "circle"],
-            viewModel: sketchViewModel,
+            viewModel: sketchViewModel
         });
 
-        selectionSketchWidget.on("create", event => {
+        // Attach event listeners to the Sketch widget
+        selectionSketchWidget.on("create", (event) => {
             if (event.state === "start") {
-                // Clear all existing graphics when a new creation begins
                 sketchLayer.removeAll();
                 JTHighlight.clearHighlighting();
             }
             if (event.state === "complete") {
-                let sketchGeometry = event.graphic.geometry;
-                let higlight = true
-                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship, true).then((results) => {
-                    if (results.length > 0) {
-                        // dash_clientside.clientside.sendToDash('chart-data-store', results);
-                        JTDash.sendToDash('chart-data-store', results);
-                    }
-                });
+                const sketchGeometry = event.graphic.geometry;
+                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship, true)
+                    .then((results) => {
+                        if (results.length > 0) {
+                            JTDash.sendToDash("chart-data-store", results);
+                        }
+                    });
             }
         });
-        // Listen to sketch widget's update event to update the filter
-        selectionSketchWidget.on("update", event => {
+
+        selectionSketchWidget.on("update", (event) => {
             if (event.state === "start") {
                 JTHighlight.clearHighlighting();
             }
             if (event.state === "complete" && event.graphics.length > 0) {
-                let sketchGeometry = event.graphics[0].geometry;
-                let highlight  = true
-                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship, highlight).then((results) => {
-                    if (results.length > 0) {
-                        JTDash.sendToDash('chart-data-store', results);
-                    }
-                });
+                const sketchGeometry = event.graphics[0].geometry;
+                JTSpatialQuery.attributes(sceneLayerView, sketchGeometry, outFields, spatialRelationship, true)
+                    .then((results) => {
+                        if (results.length > 0) {
+                            JTDash.sendToDash("chart-data-store", results);
+                        }
+                    });
             }
         });
 
-           // Add event listener for clear button
+        // Add event listener for the clear button
         const clearButton = document.getElementById("clear-selection-tool-button");
 
-        clearButton.addEventListener('click', () => {
-            sketchLayer.removeAll();
-            JTHighlight.clearHighlighting();
-            // JTDash.clearOutDash('chart-data-store');
-        });
+        if (clearButton) {
+            clearButton.addEventListener("click", () => {
+                sketchLayer.removeAll();
+                JTHighlight.clearHighlighting();
+            });
+        }
 
+        console.log("Sketch widget initialized for the active SceneLayer.");
         return selectionSketchWidget;
     };
 
-     // Function to select all builds after the tool loads
-    const selectAllBuilds = (sceneLayerView) => {
-        // Use full extent of the layer to select all features
-        const layerExtent = sceneLayerView.layer.fullExtent;
+    /**
+     * Select all buildings within the current layer's extent.
+     * @param {SceneLayerView} sceneLayerView - The SceneLayerView for the active SceneLayer.
+     */
+    const selectAllBuildings = (sceneLayerView) => {
+        if (!sceneLayerView || !sceneLayerView.view) {
+            console.error("SceneLayerView or its view is not defined. Cannot select all buildings.");
+            return;
+        }
+
         const currentViewExtent = sceneLayerView.view.extent;
-         let highlight  = false
-        // Perform the spatial query with the layer's extent
-        JTSpatialQuery.attributes(sceneLayerView, currentViewExtent, outFields, "contains", highlight)
+        JTSpatialQuery.attributes(sceneLayerView, currentViewExtent, outFields, "contains", false)
             .then((results) => {
                 if (results.length > 0) {
-                    JTDash.sendToDash('chart-data-store', results);
+                    JTDash.sendToDash("chart-data-store", results);
                 }
+            })
+            .catch((error) => {
+                console.error("Error during selectAllBuildings:", error);
             });
-
-
     };
 
     return {
         initWidget: initWidget,
-        selectAllBuildings: selectAllBuilds
+        unloadWidget: unloadWidget,
+        selectAllBuildings: selectAllBuildings
     };
-})();  // IIFE
+})();

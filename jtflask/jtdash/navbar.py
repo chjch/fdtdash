@@ -21,6 +21,7 @@ NAVBAR_BUTTONS = {
     "legend": "legend-toggle-button",
     "basemap": "basemaps-gallery-button",
     "collapse": "collapse-button",
+    "enlarge": "enlarge-button",
 }
 
 NAVBAR_PANELS = {
@@ -77,6 +78,7 @@ def get_navbar_buttons():
     )
 
 
+
 def get_navbar_collapse_button():
     return dmc.Button(
         id=NAVBAR_BUTTONS["collapse"],
@@ -90,13 +92,26 @@ def get_navbar_collapse_button():
         fullWidth=False,
     )
 
+def get_navbar_enlarge_button():
+    return dmc.Button(
+        id=NAVBAR_BUTTONS["enlarge"],
+        children=get_icon(icon="pajamas:expand-left",
+                          icon_id="enlarge-icon"),
+        variant="default",
+        fullWidth=False,
+    )
 
 def get_navbar_controls():  # Navbar Control: brand, buttons, collapse button
     navbar_brand = get_brand()
     navbar_buttons = get_navbar_buttons()
+    # navbar_enlarge = html.Div(
+    #     id="enlarge-button-container",
+    #     children=get_navbar_enlarge_button(),
+    # )
     navbar_collapse = html.Div(
         id="collapse-button-container",
-        children=get_navbar_collapse_button(),
+        children=[get_navbar_enlarge_button(),
+                  get_navbar_collapse_button()]
     )
     return html.Div(
         id="navbar-control",

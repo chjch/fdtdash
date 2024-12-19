@@ -6,34 +6,24 @@ fetch('/jtdash/assets/data/navbar_button_mappings.json')
     .then(response => response.json())
     .then(data => {
         const mappings = data;
-        // console.log('Navbar mappings:', mappings);
-        // Create the button to drawer class map using Object.fromEntries
         navbarButtonToDrawerClassMap = Object.fromEntries(
             mappings.map(mapping => {
-                // noinspection JSUnresolvedReference
                 return [mapping.button_id, mapping.panel_id];
             })
         );
-        // noinspection JSUnresolvedReference
         navbarButtonIds = mappings.map(mapping => mapping.button_id);
-        // noinspection JSUnresolvedReference
         navbarDrawerChildrenIds = mappings.map(mapping => mapping.panel_id);
     })
     .catch(error => {
         console.error('Error loading navbar mappings:', error);
     });
 
-// const navbarButtonToDrawerClassMap = Object.fromEntries(
-//     navbarButtonIds.map((buttonId, index) => {
-//         return [buttonId, navbarDrawerChildrenIds[index]];
-//     })
-// );
-
-
 const activeNavbarButtonClass = "navbar-button-active";
 const activeNavbarDrawerClasses = ["animate__animated", "animate__slideInUp"];
 const navbarDrawerClosedClass = "animate__slideOutLeft";
 const navbarDrawerOpenedClass = "animate__slideInLeft";
+const navbarDrawerDefaultSizeClass = "navbar-drawer-default-size";
+const navbarDrawerLargeSizeClass = "navbar-drawer-large-size";
 
 const isMobile = () => window.innerWidth <= 768;
 
@@ -50,7 +40,11 @@ const handleInitialState = () => {
     defaultNavbarChild.classList.add(...activeNavbarDrawerClasses);
 
     const navbarDrawer = document.querySelector("#navbar-drawer");
-    navbarDrawer.classList.add("animate__animated", navbarDrawerOpenedClass);
+    navbarDrawer.classList.add(
+        "animate__animated",
+        navbarDrawerOpenedClass,
+        navbarDrawerDefaultSizeClass
+    );
 };
 
 const handleNavbarButtonClassUpdate = (clickedButtonId) => {
@@ -73,9 +67,7 @@ const handleNavbarButtonClassUpdate = (clickedButtonId) => {
                 navbarDrawerOpenedClass
             );
         }
-    }
-
-    if (!isMobile()) {
+    } else {
         if (navbarDrawer.classList.contains(navbarDrawerClosedClass)) {
             navbarDrawer.classList.replace(
                 navbarDrawerClosedClass,
@@ -89,6 +81,12 @@ const handleNavbarButtonClassUpdate = (clickedButtonId) => {
     );
 
     clickedButton.classList.toggle(activeNavbarButtonClass);
+
+    // Ensure the size class is maintained
+    if (!navbarDrawer.classList.contains(navbarDrawerDefaultSizeClass) &&
+        !navbarDrawer.classList.contains(navbarDrawerLargeSizeClass)) {
+        navbarDrawer.classList.add(navbarDrawerDefaultSizeClass);
+    }
 };
 
 const handleNavbarDrawerClassUpdate = (clickedButtonId) => {
@@ -121,4 +119,30 @@ const handleCollapseButtonClick = (collapseButtonId) => {
             navbarDrawerClosedClass
         );
     }
+
+    // Ensure the size class is maintained
+    if (!navbarDrawer.classList.contains(navbarDrawerDefaultSizeClass) &&
+        !navbarDrawer.classList.contains(navbarDrawerLargeSizeClass)) {
+        navbarDrawer.classList.add(navbarDrawerDefaultSizeClass);
+    }
 };
+
+const handleEnlargeButtonClick = (enlargeButtonId) => {
+    const navbarDrawer = document.querySelector("#navbar-drawer");
+    if (navbarDrawer.classList.contains(navbarDrawerDefaultSizeClass)) {
+        navbarDrawer.classList.replace(
+            navbarDrawerDefaultSizeClass,
+            navbarDrawerLargeSizeClass
+        );
+    } else {
+        navbarDrawer.classList.replace(
+            navbarDrawerLargeSizeClass,
+            navbarDrawerDefaultSizeClass
+        );
+    }
+};
+
+// Add an event listener for the enlarge button
+document.getElementById("enlarge-button")?.addEventListener("click", () => {
+    handleEnlargeButtonClick("enlarge-button");
+});

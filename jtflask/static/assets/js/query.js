@@ -6,6 +6,10 @@ const JTSpatialQuery = (() => {
             if (!geometry) {
                 return;
             }
+            if (!layer) {
+                console.error("Layer is not initialized. Cannot perform query.");
+                return Promise.resolve([]); // Avoid further errors by returning an empty array
+            }
             const query = layer.createQuery();
             query.geometry = geometry;
             query.spatialRelationship = spatialRelationship;
@@ -24,10 +28,14 @@ const JTSpatialQuery = (() => {
         return debouncedQuery(layer, geometry, spatialRelationship);
     };
 
-   const attributes = (layerView, geometry, outFields, spatialRelationship, highlight = true) => {
+    const attributes = (layerView, geometry, outFields, spatialRelationship, highlight = true) => {
         const queryFeatures = () => {
             if (!geometry) {
                 return;
+            }
+             if (!layerView.layer) {
+                    console.error("Layer is not initialized. Cannot perform query.");
+                    return Promise.resolve([]); // Avoid further errors by returning an empty array
             }
             const query = layerView.layer.createQuery();
             query.geometry = geometry;

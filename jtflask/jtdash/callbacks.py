@@ -298,11 +298,10 @@ def register_callbacks(dashboard):
         # Fetch the layer URL based on selection
         layer_url = layer_urls.get(selected_layer)
 
-        # Return action and payload for `initMap`
+        # Return action and payload for `switchSceneLayer`
         return {
-            "action": "initMap",
+            "action": "switchSceneLayer",
             "payload": {
-                "mapContainerId": "digital-twin-container",
                 "layerUrl": layer_url,
                 "zoomToFullExtent": zoom_to_full_extent
             }

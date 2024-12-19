@@ -24,7 +24,7 @@ const JTBuilding = (() => {
     };
 
     const highlightByLandUseCategory = (layerView, mapping, category) => {
-        JTAttributeQuery.byField(sceneLayer, 'DORUC', undefined,["OBJECTID", "DORUC"])
+        JTAttributeQuery.byField(JTMap.getCurrentLayer(), 'DORUC', undefined,["OBJECTID", "DORUC"])
             .then(attributes => {
                 const filteredAttributes = attributes.filter(attr => {
                     const landUseCategory = mapping[attr.DORUC];

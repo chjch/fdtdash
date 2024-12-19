@@ -19,7 +19,7 @@ const JTDash = (() => {
 
             switch (mode) {
                 case "original":
-                    sceneLayer.renderer = null;
+                    JTMap.getCurrentLayer().renderer = null;
                     return;
                 case "select":
                     color = "violet";
@@ -42,7 +42,7 @@ const JTDash = (() => {
                     return;
             }
             // Apply the new renderer to the scene layer
-            sceneLayer.renderer = {
+            JTMap.getCurrentLayer().renderer = {
                 type: "simple",
                 symbol: {
                     type: "mesh-3d",
@@ -121,13 +121,14 @@ const JTDash = (() => {
                 const {mode} = data.payload;
                 updateLayerTexture(mode);
 
-            } else if (data && data.action === "updateSceneLayer") {
-                const {layerUrl} = data.payload;
-                setSceneLayer(layerUrl);
-
             } else if (data && data.action === "initMap") {
                 const {mapContainerId,layerUrl,zoomToFullExtent} = data.payload;
                 JTMap.initMap(mapContainerId,layerUrl,zoomToFullExtent);
+
+            } else if (data.action === "switchSceneLayer") {
+                const {layerUrl, zoomToFullExtent} = data.payload;
+                switchSceneLayer(layerUrl, zoomToFullExtent);
+
 
             } else {
                 console.warn("Unknown action received from Dash:", data.action);
@@ -137,6 +138,15 @@ const JTDash = (() => {
         }
     };
 
+     const switchSceneLayer = (layerUrl, zoomToFullExtent = false) => {
+            console.log(`Switching to scene layer: ${layerUrl}`);
+
+            // Use the JTMap API to switch the scene layer
+            JTMap.switchSceneLayer(layerUrl, zoomToFullExtent);
+
+            // Update the current layer details for tracking
+            currentLayerUrl = layerUrl;
+        };
 
     const clearOutDash = (storeId) => {
         dash_clientside.set_props(storeId, {data: []});
@@ -150,6 +160,7 @@ const JTDash = (() => {
             return;
         }
         const collapseButtonId = "collapse-button";
+        const enlargeButtonId = "enlarge-button";
         const clickedButtonId = dash_clientside.callback_context.triggered_id;
 
         if (navbarButtonIds.includes(clickedButtonId)) {
@@ -158,6 +169,9 @@ const JTDash = (() => {
         }
         if (clickedButtonId === collapseButtonId) {
             handleCollapseButtonClick(collapseButtonId);
+        }
+         if (clickedButtonId === enlargeButtonId) {
+            handleEnlargeButtonClick(enlargeButtonId);
         }
     };
 

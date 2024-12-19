@@ -26,14 +26,38 @@
     position: relative;
     right: 20px
 }
-
+#charts {
+    display: flex;
+    flex-flow:row;
+        @media (min-width: 768px) {
+        display: flex;
+        flex-flow:column;
+    }
+}
 
 .cardChart {
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+       @media (min-width: 768px) {
+           flex-flow: column;
+           margin-top: 1px !important;
+           margin-bottom: 5px !important;
+           margin-left: 0px !important;
+           margin-right: 0px !important;
+           width: 98%;
+       }
+}
+
+.stat-chart {
     margin-top: 1px !important;
     margin-bottom: 5px !important;
     margin-left: 0px !important;
     margin-right: 0px !important;
     width: 98%;
+    /*border: red;*/
+    /*border-style: dashed;*/
+    /*padding: 20px;*/
 }
 
 #yearSelectValue {
@@ -89,6 +113,10 @@
 
 #pie_chart {
     height: 200px;
+}
+
+#building-selection-stats-card{
+
 }
 
 .building-stats-card-label {

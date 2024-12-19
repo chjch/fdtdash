@@ -1,11 +1,14 @@
 .buildings-view-tool-button {
      border-radius: 5px;
+    margin: 5px;
     --calcite-color-brand-hover: transparent;
     /*--calcite-ui-icon-color: var(--main-color);*/
     /*color: var(--main-color);*/
 }
 
 .reset-color-button{
+    padding: 5px;
+    margin-top: 5px;
     --calcite-color-brand-hover: transparent;
     --calcite-ui-icon-color: var(--main-color);
     /*color: var(--main-color);*/
@@ -33,7 +36,21 @@
 }
 
 #selection-widget-hover-card-affix{
-    margin: 10px;
+    height: max-content;
+    display: flex;
+    position: absolute;
+    flex-flow: column-reverse;
+    flex-direction: column-reverse;
+    bottom:  100px;
+    margin-right: auto;
+    margin-left: auto;
+    align-self: flex-end;
+    padding-right: 40px;
+    @media (min-width: 768px) {
+        align-self: unset;
+        display: unset;
+        margin: 10px;
+    }
 }
 
 #selection-widget-container-body{

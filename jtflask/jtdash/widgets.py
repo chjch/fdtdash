@@ -146,7 +146,7 @@ def get_building_visualization_card():
                 className="highlightCard",
             ),
         ],
-        className="cardChart arcgis_building_stats_card",
+        className="cardChart arcgis_building_stats_card hidden",
     )
 
 
